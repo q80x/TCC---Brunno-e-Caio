@@ -1,0 +1,97 @@
+%---------- Primeiro Capitulo: IntroduÃ§Ã£o ----------
+\chapter{Introdução}
+A situação do trânsito das médias e grandes cidades brasileiras vem se tornando cada vez mais grave.
+Tempo e dinheiro são perdidos devido a imensos congestionamentos e, estes por sua vez, resultam em grandes gastos em combustível, manutenção veicular e rodoviária.
+
+Atualmente existe um projeto de lei tramitando no Congresso Nacional, o PL nº 1.687 \cite{FlexaRibeiro2010}, que consiste principalmente em priorizar o transporte público em detrimento ao particular e também incentivar o transporte não-motorizado em detrimento do motorizado.
+Em segundo plano, vincula o planejamento urbano ao sistema de transporte, fazendo com que as cidades cresçam com um sistema de transporte ordenado.
+
+Segundo \cite{IPEA2011}, atualmente a cada 12 reais investidos no transporte particular, somente 1 é investido no transporte público.
+Para ilustrar a situação atual deste setor no país, abaixo estão relacionadas as proporções de carros e ônibus em algumas cidades brasileiras.
+
+\begin{table}[!htb]
+	\centering
+	\caption{Relação entre carros e ônibus nas principais cidades brasileiras}
+	\label{tab:carro_onibus}
+	\begin{tabular}{lcccc}
+		\hline
+		\textbf{Cidade} & \textbf{\% Carros} & \textbf{\% Ônibus} \\
+		\hline
+		\textbf{Belo Horizonte} & 77 & 23 \\
+		\textbf{Brasília} & 91 & 9 \\
+		\textbf{Curitiba} & 79 & 21 \\
+		\textbf{Porto Alegre} & 69 & 31 \\
+		\textbf{Recife} & 84 & 16 \\
+		\textbf{Rio de Janeiro} & 74 & 26 \\
+		\textbf{São Paulo} & 88 & 12 \\
+		\hline
+	\end{tabular}
+	\fonte{\cite{IPEA2011}}
+\end{table}
+
+Este mesmo estudo mostra que o número de veículos usados para transporte individual no Brasil cresce cada vez mais: o número de usuários de carros e motocicletas cresceu 9\% e 19\% ao ano , respectivamente, enquanto isso, a porcentagem do uso de transporte público foi de 68\% para 51\% do total de viagens motorizadas \cite{IPEA2011}.
+
+
+Considerando a situação atual do sistema de transporte público nacional, este projeto tem como escopo a construção de uma ferramenta que auxilie o usuário a planejar viagens utilizando este tipo de transporte.
+O objetivo de usar um sistema automatizado para o planejamento de rotas é encontrar automaticamente a maneira mais rápida de se alcançar o destino apenas através do sistema de transporte público e percorrendo, se necessário, pequenos trechos à pé.
+
+Os sistemas de transporte público são, em virtualmente todos os casos, muito menos cômodos do que utilizar um automóvel para se locomover em grandes cidades, e os que tem acesso a um automóvel raramente utilizam o transporte público. Entretanto, mesmo para essas pessoas, o transporte público pode oferecer algumas vantagens, como economia significativa em combustível, manutenção de veículo e estacionamento. Ao facilitar o planejamento de rotas, esta opção de transporte pode se tornar muito mais cômoda e confortável, já que essa tarefa pode não ser trivial.
+
+\section{Motivação}
+
+Muitas vezes, os meios de transporte público não são utilizados puramente devido ao desconhecimento das linhas de transporte presentes em um determinado centro urbano por parte dos usuários.
+Os sistemas de transporte tornaram-se cada vez mais complexos com o rápido e desordenado crescimento das cidades, o que traz uma necessidade de evolução das
+ferramentas com objetivo de auxiliar na solução de vários problemas causados pelos diversos tipos de agentes, internos ou externos ao transporte. 
+Um desses graves problemas corresponde à ausência de informações adequadas sobre o transporte público urbano.
+
+Na maioria das cidades brasileiras não existe um canal de comunicação entre os usuários do serviço de transporte público e os responsáveis pela sua disponibilidade. Quando há tal comunicação, as informações são distribuídas através de sistemas precários e com pouca confiabilidade, sendo que apenas uma pequena parcela da população toma conhecimento.
+
+Com o advento da web e a popularização dos meios computacionais, vários sistemas de informação estão surgindo com diferentes propósitos, inclusive na área de transporte público. Tais sistemas são extremamente úteis no auxílio ao planejamento de rotas, porém necessitam de informações precisas e confiáveis, o que consiste em atualizações constantes de suas bases de dados, dificultando portanto sua manutenção.
+
+Nesse contexto, este projeto visa facilitar, do ponto de vista do usuário, o planejamento de trajetos entre localidades situadas nos grandes centros urbanos, com o uso de meios de transporte públicos.
+
+\section{Justificativa}
+O seguinte projeto engloba e integra o uso de diversos conhecimentos adquiridos ao longo de um curso de engenharia de computação, principalmente na área de \emph{software}.
+Esta integração é importante para que o aluno possa pôr em prática todos os conceitos aprendidos em sala de aula e desta forma adquirir experiência em desenvolvimento de projetos da sua área de atuação.
+A seguir uma lista contendo as principais áreas de conhecimento da computação e seus respectivos conceitos utilizados no desenvolvimento deste projeto:
+
+\begin{itemize}
+	\item \textbf{Sistemas distribuídos}: foram utilizados no desenvolvimento deste projeto conceitos como arquitetura cliente-servidor e controle de concorrência.
+	\item \textbf{Desenvolvimento pra web}: o projeto como um todo consiste em uma aplicação web, sendo portanto utilizadas técnicas para desenvolvimento deste tipo de 	\emph{software}.
+	\item \textbf{Algoritmos}: adaptação e implementação de algoritmos baseados em grafos, como busca pelo caminho mínimo, busca em largura, varredura, entre outros.
+	\item \textbf{Estruturas de dados}: uso de diversos tipos de estruturas de dados, como vetores, grafos, listas encadeadas, \emph{hash maps}, enumerações, entre 		outras.
+	\item \textbf{Bancos de dados}: uso de conceitos de transações no banco de dados para grafos empregado ao sistema. 
+	\item \textbf{Engenharia de \emph{software}}: uso de diversos conceitos envolvendo esta área, como técnicas de desenvolvimento e gerência de projeto, padrões de código, 		versionadores, estabelecimento de metas, revisão de código, entre outros.
+\end{itemize}
+% TODO: justificar pq q um engenheiro de computação deve saber desenvolver esse projeto
+
+\section{Objetivos}
+
+% Acho que fica melhor sem essa linha:
+%O presente trabalho tem como objetivos:
+
+\begin{itemize}
+	\item Desenvolver uma ferramenta, na forma de serviço web, capaz de auxiliar o planejamento de trajetos urbanos com o uso de transporte público;
+	\item Desenvolver uma interface na forma de sítio eletrônico para os usuários do serviço;
+	\item Distribuir as tecnologias desenvolvidas sob a forma de \emph{software} livre, o que viabiliza futuras contribuições ao projeto e integrações a diversos outros sistemas.
+\end{itemize}
+
+\section{Apresentação do Documento}
+Este documento encontra-se estruturado em 7 capítulos, sendo:
+
+\begin{itemize}
+	\item Capítulo 1 - \textbf{INTRODUÇÃO}: neste capítulo são apresentados os objetivos e a motivação que impulsionaram o desenvolvimento do projeto, bem como a estrutura deste documento;
+
+	\item Capítulo 2 - \textbf{FUNDAMENTAÇÃO}: neste capítulo é feita uma revisão bibliográfica de todos os temas relacionados ao projeto, contendo informações fundamentais para desenvolver a metodologia proposta.
+
+	\item Capítulo 3 - \textbf{ESPECIFICAÇÃO DO \emph{SOFTWARE}}: neste capítulo é apresentado o projeto do \emph{software}, contendo desde seus requisitos até a arquitetura do sistema idealizada.
+
+	\item Capítulo 4 - \textbf{METODOLOGIA}: neste capítulo é apresentada a estratégia de desenvolvimento de \emph{software} utilizada neste projeto, bem como todas as ferramentas utilizadas neste processo. 
+
+	\item Capítulo 5 - \textbf{DESENVOLVIMENTO DO \emph{SOFTWARE}}: neste capítulo é apresentado o desenvolvimento do sistema, contendo detalhes específicos de sua implementação.
+
+	\item Capítulo 6 - \textbf{RESULTADOS}: neste capítulo são apresentados os resultados alcançados com o desenvolvimento do projeto.
+
+	\item Capítulo 7 - \textbf{CONCLUSÃO}: neste capítulo é feita uma discussão dos objetivos alcançados do projeto, a relação do mesmo com a profissão de Engenheiro de Computação e são apresentadas propostas de trabalhos futuros relacionados.
+
+\end{itemize}

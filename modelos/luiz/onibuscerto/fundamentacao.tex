@@ -1,0 +1,270 @@
+%---------- Segundo Capítulo: Fundamentação --------------
+
+\chapter{Fundamentação}
+\label{fund}
+
+O objetivo deste capítulo é descrever os resultados da revisão bibliográfica que guiaram o trabalho, assim como definir os conceitos que serão necessários para o entendimento do resto do texto. Inicialmente será descrito o problema que é o foco do trabalho, e a solução sugerida. Em seguida, os conceitos relacionados às ferramentas e tecnologias utilizadas para atacar o problema são explorados de forma breve, terminando com uma lista de implementações semelhantes já existentes do problema proposto.
+
+\section{O Problema do Menor Caminho Multi-Modal com Restrição de Itinerário}
+
+O problema de realizar o planejamento de rota em uma rede de transporte público é bastante semelhante ao conhecido problema de caminho mínimo em grafos, porém com a adição de duas restrições importantes.
+A primeira é que, como se trata de uma rede de transporte urbana, existe mais de uma maneira de de percorrer um trecho da rede, como por exemplo, utilizando o transporte público (ônibus, metro, etc) ou não (caminhada, bicicleta, etc).
+Esses diferentes modos tem características distintas e portanto precisam ser tratados separadamente.
+A segunda restrição é a de itinerário, pois o transporte público das cidades obedece horários, e o planejamento de rota precisa levar isto em consideração.
+
+Nesta seção primeiro será apresentado o problema clássico do caminho mínimo em grafos, seguido do modelo utilizado no trabalho e o algoritmo de roteamento.
+
+\subsection{O Problema do Caminho Mínimo em Grafos}
+
+Informalmente, o problema do caminho mínimo em grafos consiste em, dado um conjunto de pontos, as ligações, um custo associado a essas ligações e dois pontos específicos, encontrar um caminho entre eles que minimize o custo total, ou seja, se trata de um problema de minimização.
+O conjunto de pontos e suas ligações, assim como a função de custo associada à essas ligações, é o que se chama de grafo, ou rede quando existe um valor associado a cada ligação, o peso(ou custo).
+Existem diversos tipos de grafos e portanto existem também variações do problema do caminho mínimo, dependendo do tipo de grafo envolvido.
+Especificamente, é de interesse a variante que trata dos grafos direcionados e com pesos não-negativos nas ligações.
+
+De maneira mais formal, um grafo direcionado com pesos, ou uma rede direcionada, é um par ordenado $G = (V, A)$ onde $V$ é o conjunto dos nós do grafo(os pontos), cujos elementos são nós; e $A$ é o conjunto das arestas(as ligações) do grafo, cujos elementos são triplas ordenadas da forma $(v_1, v_2, c)$, indicando que existe uma aresta direcionada do nó $v_1$ para o nó $v_2$ com custo $c \in \mathbb{R^+}$.
+Um caminho $p$ em $G$ entre dois nós $v_o$ e $v_d$ é uma sequência alternada de nós e arestas, iniciando em $v_o$ e terminando em $v_d$ tal que cada aresta ligue os nós que vem antes e depois dela, ou seja:
+
+\begin{align*}
+& p = (v_0, a_0, v_1, a_1, v_2, \ldots ,v_{k-1}, a_{k-1}, v_k) \\
+& v_i \in V \qquad 0 \leq i \leq k \\
+& a_i = (v_i, v_{i+1}, c_i) \in A \qquad 0 \leq i \leq k-1
+\end{align*}
+onde $v_o = v_0$ e $v_d = v_k$. O custo total $C$ associado ao caminho $p$ é definido como:
+\begin{equation*}
+C(p) = \sum_{i=0}^{k-1} c_i
+\end{equation*}
+
+O problema do caminho mínimo em redes direcionadas consiste, portanto, em encontrar o caminho $p_i \in P_od$ com o menor valor de $C(p_i)$, onde $P_od$ é o conjunto de todos os caminhos possíveis entre $v_o$ e $v_d$. Existem diversos algoritmos eficientes que resolvem esse problema, como o algortimo de Bellman-Ford e o algoritmo de Dijkstra.
+
+\subsection{Modelagem da Rede Multi-Modal com Restrição de Itinerário}
+
+Para utilizar as redes direcionadas na modelagem da rede de transporte urbano, é preciso definir o que cada elemento da rede direcionada representa no mundo real. Os nós da rede representam locais, que podem ser os pontos de origem e destino usuário, ou qualquer um dos pontos de parada do transporte público. Esses nós, portanto, estão associados a coordenadas geográficas.
+As arestas direcionadas da rede representam um deslocamento entre dois locais na cidade, do local representado pelo nó de origem até o local representado pelo nó de destino. O custo da aresta representa o tempo que foi gasto no deslocamento, e portanto é sempre um número real positivo, restrição imposta pelo algoritmo de Dijkstra e também pelo algoritmo utilizado no planejador.
+
+No entanto, esse modelo não é suficiente para representar a rede de transporte urbana, ou para realizar o planejamento de rotas, pois não trata as duas restrições adicionais mencionadas anteriormente.
+Para contemplar essas restrições, o modelo precisa ser alterado.
+
+Uma rede multi-modal é uma em que cada aresta tem um modo associado. 
+No caso da rede de transporte, esse modo determina que tipo de meio transporte foi utilizado para percorrer esse trecho.
+Foram definidos dois modos: público, se a aresta representa um caminho percorrido com transporte público, como ônibus; ou privado, no caso de trecho percorrido a pé.
+Além disso, para realizar o roteamento, é necessário saber a qual serviço a aresta pertence, no caso de ser do modo privado, pois uma troca de serviço normalmente leva algum tempo que precisa ser considerado. Essa folga impede que o algoritmo forneça uma rota que, na prática, não pode ser executada por incluir descer de um ônibus e subir em outro no mesmo minuto, por exemplo. Uma folga ajuda a levar em conta os ocasionais atrasos no transporte público.
+Cada serviço representa uma viagem completa de um veículo, do seu ponto inicial até o final. Por mais que o mesmo veículo realize o percurso contrário, ou o mesmo percurso várias vezes, cada viagem é considerada um serviço separado.
+
+Toda a rede de transporte público opera segundo itinerários bem definidos, e cada veículo tem um horário previsto para chegar em cada parada, e para partir dela para a próxima.
+Cada aresta do modo privado tem, portanto, dois horários associados, o de partida no nó de origem, e o de chada no nó destino.
+A diferença entre esses dois valores é o custo de tempo do trecho.
+
+Definidos todos os elementos necessários, é possível então formalizar as redes de transporte. Uma rede de transporte é uma quádrupla ordenada $G = (V, A, M, S)$, onde $V$ é o conjunto junto dos nós do grafo, $A$ é o conjunto das arestas, $M$ é o conjunto dos modos e $S$ é o conjunto dos serviços de transporte. O conjunto dos modos possui apenas dois elementos, que são os dois modos possíveis da rede, público ou privado, ou seja, $M = \{m_{pub}, m_{pri}\}$.
+Cada um dos elementos $s_i$ do conjunto $S$ dos serviços representa um serviço único.
+O conjunto $V$ dos nós é definido exatamente como o caso mono-modal. Por fim, os elementos do conjunto das arestas são sêxtuplas ordenadas definidas da seguinte forma:
+\begin{align*}
+& A = \{ (v_o, v_d, t_p, t_c, m, s) : t_p \leq t_c \} \\
+& v_o, v_d \in V \\
+& t_c, t_p \in \mathbb{R^+} \\
+& m \in M \\
+& s = \left\{
+	\begin{array}{cl}
+		s_{pub} &  \text{se} \qquad m = m_{pub}, \\
+		s_i  & \text{caso contrário}. \\
+	\end{array}
+	\right.
+\end{align*}
+onde $t_p$ e $t_c$ são, respectivamente, os tempos de partida do nó $v_o$ e o tempo de chegada no nó $v_2$, $m$ é o modo de transporte, público ou privado, e $s$ é o serviço caso o modo seja privado, ou um indicador de que o modo é público, caso contrário.
+
+Um caminho $p$ em uma rede de transporte é similar ã definição de caminho em uma rede direcionada, mas com a seguinte restrição adicional: se $a_i = (v_o^i, v_d^i, t_p^i, t_c^i, m^i, s^i)$, então
+\begin{align*}
+t_p^{i+1} \geq t_c^i + t_{folga}
+\end{align*}
+para toda aresta no caminho, onde $t_{folga}$ é uma constante inserida para evitar planejamentos impossíveis de executar na prática e para compensar os atrasos dos meios de transporte. 
+O custo total de um caminho $p$ é definido como sendo $C(p) = t_c^{k-1} - t_p^0$.
+
+\subsection{Algoritmo de Roteamento}
+
+O algoritmo de roteamento utilizado é uma modificação do algoritmo de Dijkstra para atender às restrições adicionais, similar ao apresentado em \cite{kao2008}. O algoritmo pode ser divido em 4 etapas, e tem como entradas o nó de origem, $v_o$, o nó de destino, $v_d$, e o tempo de partida, $t_0$.
+
+Na primeira etapa, as estruturas necessárias são atualizadas. Elas incluem o conjunto dos nós já visitados pelo algoritmo, $S$, uma tabela que associa a cada nó o menor tempo em que ele pode ser alcançado, $D$, e um mapa de predecessores, $P$, que associa a cada nó já visitado a aresta que levou até ele no tempo ótimo. O conjunto $S$ é inicializado com o nó $v_o$, a tabela $D$ é inicializada com um tempo infinito para todos os nós, exceto a origem, que é inicializada com o valor $t_0$, e o mapa de predecessores também começa vazio.
+
+A seguir, em cada iteração, um nó ainda fora do conjunto $S$ segundo o critério do menor tempo que algum nó em $S$ consiga alcançá-lo. Esse nó é então adicionado ao conjunto $S$ e a aresta utilizada é adicionada como sua predecessora. Na terceira etapa, ainda na mesma iteração, a tabela $D$ é atualizada levando-se em conta as arestas do conjunto $A_v$, o conjunto das arestas que saem do nó $v$. Para isso, são consideradas as restrições de tempo do itinerário e os tempos de espera.
+
+As duas etapas anteriores são repetidas até o momento em que o nó $v_d$ é adicionado ao conjunto. Quando isso ocorre, o valor de $D(v_d)$ contém o menor tempo em que esse nó pode ser alcançado, e na etapa final o mapa de predecessores é utilizado para montar o caminho mínimo.
+
+O pseudo-código a seguir descreve o algoritmo em mais detalhes:
+
+\begin{algorithmic}
+\STATE $S \gets \{v_o\}$
+\FOR{$v \in V$}
+	\IF{$v = v_o$}
+		\STATE $D(v) = t_0$
+	\ELSE
+		\STATE $D(v) = \infty$
+	\ENDIF
+\ENDFOR
+\STATE $P \gets \{\}$
+\WHILE{$v_d \notin S$}
+	\FOR{$v_i \notin S$}
+		\STATE Encontra o elemento cujo valor $D(v_i)$ é mínimo, e o atribui a $v$.
+	\ENDFOR
+	\STATE $S \gets v$
+	\FOR{$a_i \in A_v$}
+		\IF{$a_i$ é do modo público}
+			\STATE $t_w \gets$ tempo de espera			
+			\STATE $a_p \gets P(v)$
+			\COMMENT{Verifica a aresta predecessora}
+			\IF{$a_i$ e $a_p$ são de serviços diferentes}
+				\IF{$t_w \leq t_f$}
+					\STATE Não há tempo suficiente para fazer a troca de serviço, termina a iteração.
+				\ENDIF
+			\ENDIF
+			\IF{$v_d^i \notin S \wedge D(v_d^i) \geq D(v)+t_w+(t_c^i - t_p^i)$}
+			 	\STATE $D(v_d^i) \gets D(v)+t_w+(t_c^i - t_p^i)$
+			 	\STATE $P(v_d^i) \gets v$
+			 \ENDIF
+		\ELSE
+			\IF{$v_d^i \notin S \wedge D(v_d^i) \geq D(v)+(t_c^i - t_p^i)$}
+				\STATE $D(v_d^i) \gets D(v)+(t_c^i - t_p^i)$
+				\STATE $P(v_d^i) \gets v$
+			\ENDIF
+		\ENDIF
+	\ENDFOR
+\ENDWHILE
+\STATE Monta o caminho $p$ a partir dos predecessores.
+\RETURN $C(v_d), p$
+\end{algorithmic}
+
+Além do trabalho de \cite{kao2008}, há outros trabalhos que sugerem soluções para cenários semelhantes, como as redes de transporte de cargas em \cite{Ziliaskopoulos2000486}, ou para redes multi-modais com outras características e restrições, como \cite{Lozano2001225} e \cite{Lozano2002853}. Em um artigo mais recente, Abbaspour e Samadzadegan propõe uma solução utilizando um algoritmo genético \cite{abbaspour2009}. Entretanto, como é comentado em \cite{Lozano2001225}, apesar das redes multi-modais com restrições adicionais aparecerem com frequência em problemas que envolvem redes de transporte, não há muitos artigos discutindo o problema de caminho mínimo nesse tipo de rede. 
+
+
+\section{NoSQL}
+
+NoSQL, ou ``not only SQL'' (não apenas SQL), é uma classe que agrega vários \sigla{SGBD}{Sistema Gerenciador de Banco de Dados}s com características que os diferem dos SGBDs relacionais comuns \cite{wikinosql}.
+Esses sistemas usualmente permitem que dados sejam armazenados de forma menos rígida em comparação a um esquema de tabelas do modelo relacional, e também nem sempre procuram garantir as propriedades ACID (Atomicidade, Consistência, Isolamento e Durabilidade) comuns nas transações de bancos de dados.
+O objetivo desses sistemas é proporcionar um melhor desempenho em algumas aplicações específicas, por exemplo em situações onde existe um grande volume de dados ou de requisições. Esse ganho de desempenho decorre da boa escalabilidade horizontal desses sistemas, ou do fato de eles evitarem junções (produtos cartesianos) entre tabelas.
+
+Existem várias categorias de sistemas NoSQL, de acordo com a implementação e o modo como os dados são armazenados, como por exemplo bancos de dados de documentos, bancos de dados orientados a objetos ou bancos de dados de grafos.
+Destes, apenas os bancos de dados de grafos fazem parte do escopo do trabalho.
+
+\subsection{Bancos de Dados de Grafos}
+
+%TODO: referências(wiki)
+
+Bancos de dados de grafos são bancos de dados que armazenam os dados na forma de um grafo. Existem diversos modelos de grafos que podem ser utilizados para este propósito, um exemplo de modelo que bastante utilizado é o dos grafos de propriedades, ou seja, grafos que possuem vértices, arestas e que tanto os vértices quanto as arestas podem possuir propriedades \cite{wikigraphdb}.
+Assim, ao modelar os dados de um sistema em um banco de dados de grafos, os nós representam as entidades do sistema, enquanto as arestas representam as relações entre essas entidades, e as propriedades contém as demais informações sobre essas entidades e suas relações.
+
+%inserir figura e um exemplo
+
+Esses bancos de dados em geral possuem uma melhor escalabilidade do que os bancos de dados relacionais, já que não utilizam operações de junção nas consultas.
+No entanto, sua maior vantagem é que, devido à sua estrutura, são capazes de realizar consultas próprias de grafos de maneira muito mais eficiente, como por exemplo encontrar o menor caminho entre dois nós, ou ainda descobrir se um dado nó é acessível à partir de outro, percorrendo o grafo apenas através de arestas que possuam uma determinada propriedade.
+
+%comentar sobre os bancos existentes, livres ou não, etc?
+
+\section{Métodos Ágeis}
+
+Métodos ágeis são um conjunto de práticas e métodos de desenvolvimento de \emph{software} que se consolidaram na década de 1990 e que visavam superar alguns problemas que foram identificados nos métodos de desenvolvimento tradicionais, que são mais focados em planejamentos, com ênfase numa abordagem "racional, de engenharia" \cite{Dyba:2008:ESA:1379905.1379989}. Por outro lado, os métodos ágeis partem do princípio que o andamento dos projetos costuma ser bastante imprevisível, e portanto tem um foco maior nas "pessoas e sua criatividade".
+
+Em 2001, defensores dos métodos ágeis escreveram um documento curto listando os 4 valores centrais do desenvolvimento ágil:
+
+\begin{quote}
+Estamos descobrindo maneiras melhores de desenvolver \emph{software} fazendo-o nós mesmos e ajudando outros a fazê-lo. Através deste trabalho, passamos a valorizar:
+\begin{itemize}
+
+\item    Indivíduos e interação entre eles mais que processos e ferramentas
+    
+\item    Software em funcionamento mais que documentação abrangente
+    
+\item    Colaboração com o cliente mais que negociação de contratos
+
+\item    Responder a mudanças mais que seguir um plano
+
+\end{itemize}
+Ou seja, mesmo havendo valor nos itens à direita, valorizamos mais os itens à esquerda.\cite{agilemanifesto}
+\end{quote}
+
+Alguns dos métodos de desenvolvimento dentro dos métodos ágeis são o Extreme Programming(XP) e Scrum. Algumas das técnicas comumente empregadas em métodos ágeis são programação em par, integração contínua, design patterns e desenvolvimento orientado a testes.
+
+\section{Desenvolvimento Orientado a Testes}\label{fun:tdd}
+
+Desenvolvimento orientado a testes, ou \sigla{TDD}{Test-Driven Development} na sigla em inglês, é um processo de desenvolvimento de \emph{software} que utiliza testes automatizados. O código resultante geralmente é bastante confiável devido à abundante cobertura de testes, e é produzido de maneira incremental, em passos pequenos \cite{tddandcoverage}.
+
+O processo pode ser descrito nas seguintes etapas:
+\begin{itemize}
+\item Uma nova função a ser adicionada ao \emph{software} é escolhida.
+\item O programador escreve um teste automatizado para a função ainda não implementada.
+\item Os testes são executados e verifica-se que eles falham, pois o código-fonte para a nova função ainda não foi escrito.
+\item O programador implementa a nova funcionalidade.
+\item Os testes são executados novamente, e caso algum teste falhe, retorna-se à etapa anterior, até que todos passem.
+\item O código é refatorado, e em seguida o processo é reiniciado da primeira etapa.
+\end{itemize}
+
+Os testes produzidos durante o TDD são apenas testes de unidades, e portanto devem se limitar a funcionalidades específicas. Um dos objetivos de escrever testes automatizados é que, se alguma modificação no código-fonte gera um erro em algo implementado anteriormente, esse erro é identificado imediatamente. Escrever testes automatizados que tentem cobrir várias funcionalidades do programa faz com que quanto esses testes falham seja mais difícil descobrir o que exatamente causou o erro, além de usualmente tornar a execução de testes uma tarefa demorada, principalmente em \emph{softwares} de grande porte.
+
+\subsection{Testes de \emph{Software}}
+
+Testes de \emph{software} são uma atividade no processo de desenvolvimento que visa encontrar falhas e garantir a qualidade do produto. Dependendo do processo utilizado no desenvolvimento, os testes podem estar mais focados em momentos diferentes, logo no início, no caso de TDD, ou apenas mais tarde, por um time específico de testadores, como é o caso dos processos tradicionais de desenvolvimento.
+
+Dois níveis em que os testes de \emph{software} podem ser realizados são os testes de unidade e os testes de integração. Testes de unidade testam funcionalidades específicas do programa, isoladamente, e normalmente são automatizados, ou seja, uma ferramenta é utilizada para que todos os testes sejam executados em sequência, e o resultado apresentado ao programador. Então, sempre que uma tarefa é concluída e o código é compilado, o programador executa os testes para verificar que tudo está funcionando corretamente, e caso não esteja, é capaz de identificar exatamente qual unidade está apresentando erros.
+
+Já os testes de integração testam as interfaces entre as diferentes componentes do programa, já que estas normalmente são desenvolvidas separadamente. Esses testes testes podem ser realizados de forma gradativa, adicionando uma componente de cada vez e testando se todas as partes se comunicam corretamente entre si, ou pode-se simplesmente unir todas as componentes e realizar os testes do conjunto todo, o que é conhecido como método Big Bang.
+
+%\section{Arquitetura Cliente-Servidor}
+
+\section{Licenciamento de \emph{Software}}
+
+Licenças de \emph{software} são instrumentos legais que regulam como um determinado \emph{software} pode ser distribuído e utilizado \cite{wikilicense}.
+Softwares, usualmente, não são vendidos, apenas tem seu uso licenciado, então a menos que o \emph{software} seja colocado em domínio público, os direitos do usuário que licenciou o \emph{software} e os do dono dos direitos autorais precisam ser bem definidos. Portanto, para que seus direitos autorais sejam respeitados, todo desenvolvedor de \emph{software} deve se preocupar com o licenciamento de seu trabalho.
+
+Além disso, todas as ferramentas de \emph{software} citadas neste trabalho são distribuídas sob algum tipo de licença, e portanto é necessário conhecer e entender licenças de \emph{software} para que se possa fazer um uso legítimo dessas ferramentas.
+
+Existem dois tipos principais de licenças de \emph{software}, as proprietárias e as livres e de código aberto. As licenças proprietárias se concentram em garantir que a distribuição do \emph{software} seja potencialmente rentável, assim como proteger os direitos dos distribuidores. Já as licenças livres e de código aberto se concentram em proteger os direitos dos usuários.
+
+\subsection{Software Proprietário} 
+
+Software proprietário é aquele cuja licença restringe ou proíbe diversos usos do produto, como a cópia, redistribuição, engenharia reversa ou modificação. Além disso, o usuário que licencia o \emph{software} normalmente não tem acesso ao código-fonte e a licença pode ter uma duração limitada.
+
+Quando o usuário adquire uma cópia do \emph{software}, esta costuma vir acompanhada da licença proprietária, na forma dos termos de uso do \emph{software}. O \emph{software} só pode ser utilizado se o usuário concordar com os termos de uso, e pode utilizá-lo apenas da forma prevista nos termos de uso.
+
+\subsection{Software Livre e de Código Aberto}
+
+Softwares livres e de código aberto são aqueles distribuídos com uma licença que permite que o usuário possa, além de utilizar, também analisar e melhorar o \emph{software}, através do código fonte. Licenças de \emph{software} livre e de código aberto tem duas definições diferentes, baseadas em conceitos parecidos, o de \emph{software} livre e o de \emph{software} de código aberto. Neste trabalho utilizaremos o o conceito de \emph{software} livre.
+
+Software livre, como definido pela \sigla{FSF}{Free Software Foundation}(Free Software Foundation), é aquele cuja licença dá ao usuário 4 liberdades básicas\cite{GNUFreeSoftware}:
+
+\begin{itemize}
+
+\item A liberdade de executar o programa, para qualquer propósito (liberdade número 0).
+\item A liberdade de estudar como o programa funciona, e adaptá-lo para as suas necessidades (liberdade número 1).
+\item A liberdade de redistribuir cópias de modo que você possa ajudar o seu próximo (liberdade número 2).
+\item A liberdade de distribuir cópias de sua versão modificada do programa para os outros (liberdade número 3).
+
+\end{itemize}
+
+Para satisfazer as liberdades 1 e 3, o usuário precisa ter acesso ao código fonte do \emph{software}.
+
+O objetivo dessa categoria de licenças é garantir ao desenvolvedor do \emph{software} que qualquer um que receba o seu trabalho terá todas as liberdades listadas. Além disso, muitas licenças de \emph{software} livre também são \emph{copyleft}, ou seja, exigem que trabalhos derivados mantenham todas as liberdades originais. Assim, algum terceiro fica impedido de, com base no trabalho original, realizar alguma modificação e em seguida distribuir a versão modificada sob uma licença proprietária, por exemplo.
+
+%TODO: Listar/descrever licenças de software livre?
+
+\section{Soluções Existentes}
+
+Nesta seção serão apresentadas algumas das outras soluções de \emph{software} existentes que realizam planejamento de rotas através do transporte público. Elas serão dividas de acordo com o tipo de licença do \emph{software} em questão.
+
+\subsection{Soluções Proprietárias}
+
+\begin{itemize}
+
+\item London Journey Planner \cite{tfl}
+
+O London Journey Planner é um serviço oferecido pela prefeitura de Londres que realiza planejamento de rotas pela cidade, considerando vários meios de transporte público, além de trajetos de bicicleta. O usuário pode configurar o planejador para escolher os tipos de transporte que deseja utilizar, tempo máximo de caminhada, realizar o planejamento a partir do horário de partida ou do horário de chegada, além de levar em conta necessidades especiais, como a opção de evitar escadas. O planejador costuma retornar várias rotas possíveis para que o usuário possa escolher, e ainda disponibiliza mapas e até informações de obras ou outras situações que possam gerar atrasos.
+
+\item Google Transit \cite{googletransit}
+
+O Google Transit é um um planejador integrado ao serviço de mapas do Google em 2005, cobrindo inicialmente o serviço de metrô da cidade de Portland. Com o passar dos anos, mais cidades ao redor do mundo foram incluídas e hoje o serviço está disponível em centenas de cidades ao redor do mundo. No Brasil, ele cobre as cidades Belo Horizonte, Rio de Janeiro e São Paulo. O Google Transit também oferece várias sugestões de rotas para que o usuário escolha.
+
+\end{itemize}
+
+\subsection{Solução Livres}
+
+Uma solução livre é o Open Trip Planner \cite{otp}, um projeto ainda em desenvolvimento, distribuído sob a licença \sigla{LGPLv3}{Lesser General Public License Version 3}. É escrito em linguagem Java e, portanto, multiplataforma, e conta com a colaboração de diversos desenvolvedores ao redor do mundo. Embora ainda em desenvolvimento, o Open Trip Planner é utilizado pelas agências de transporte em algumas cidades. Além disso, em sua página é disponibilizada uma bibliografia com artigos relacionados a planejamento de rotas e o código-fonte completo do projeto.
+
+\section{Considerações}
+
+Depois de percorrer a não muito extensa porém instrutiva bibliografia sobre o problema, que ajudou a formular uma abordagem de trabalho, e de analisar como esse assunto foi tratado por outros desenvolvedores, é possível partir agora para uma especificação mais concreta de uma solução. Esse será o objetivo do próximo capítulo.

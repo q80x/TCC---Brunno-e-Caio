@@ -1,0 +1,348 @@
+%---------- Quinto Capítulo: Desenvolvimento do Software ----------
+\chapter{Desenvolvimento do \emph{Software}}
+\label{chap:desenv}
+
+Utilizando a metodologia e o projeto do sistema apresentados nos capítulos \ref{metod} e \ref{specs}, respectivamente, inicou-se o desenvolvimento efetivo do sistema.
+Primeiramente foi criado um projeto Maven principal denominado \texttt{onibuscerto}, o qual foi dividido em quatro subprojetos: 
+\begin{itemize}
+	\item \texttt{onibuscerto-api}: contém classes que são de utilidade comum a todos os projetos do sistema, como classes que representam coordenadas geográficas e aquelas que compõem os objetos resposta que contém informações do caminho determinado.
+	\item \texttt{onibuscerto-core}: consiste no módulo \emph{Core} definido no projeto do \emph{software} (seção \ref{specs}). 
+	Contém as representações das entidades originárias dos arquivos GTFS e faz a interface do sistema com o banco de dados.
+	\item \texttt{onibuscerto-importer}: consiste no módulo \emph{Importer} definido no projeto do \emph{software} (seção \ref{specs}).
+	Responsável pela importação dos dados contidos nos arquivos GTFS para o sistema através das funcionalidades do \emph{Core}.
+	\item \texttt{onibuscerto-service}: consiste nos módulos \emph{Web Service} e o Cliente \emph{Web} definidos na seção \ref{specs}.
+\end{itemize}
+
+Nas subseções a seguir serão descritos detalhes a respeito da implementação de cada subprojeto.
+
+%\section{Configuração do ambiente de desenvolvimento}
+
+\section{onibuscerto-core}
+
+O \emph{Core} consiste basicamente na interface do sistema com o banco de dados, contendo portanto as representações das entidades originárias dos arquivos GTFS.
+Estas representações nada mais são do que \emph{wrappers}, ou seja, classes no sistema que são responsáveis pelo encapsulamento das entidades do banco de dados.
+Cada uma destas classes é implementação de uma respectiva interface, e tem o intuito de referenciar um nó ou aresta do grafo armazenado.
+
+O \emph{Core} foi organizado de tal forma que todas as suas classes de entidades possuam suas respectivas \emph{factories}.
+Como já comentado, \emph{factory} consiste em uma interface com o objetivo de criação de famílias de objetos dependentes ou correlacionados.
+Desta forma, toda criação de entidades é realizada através de uma \emph{factory}, centralizando este processo a somente uma classe por entidade.
+
+Cada \emph{factory} de entidade pertencente ao arquivo GTFS é armazenada no banco de dados como um nó de referência, o qual possui uma relação para cada nó de sua respectiva entidade.
+Esta organização das \emph{factories} no grafo pode ser observada na figura \ref{fig:grafoFactory}.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.7\textwidth]{./imgs/grafoFactory.png}
+	\caption[Arquitetura do sistema]{Visão geral da organização das \emph{factories} do grafo.}
+	\fonte{Autoria Própria}
+	\label{fig:grafoFactory}
+\end{figure}
+
+A partir do nó de referência do grafo tem-se relações às \emph{factories} de todas as entidades (relação no formato [Entidades X]), sendo que estas tem relações a cada nó de seu tipo entidade (relação no formato [Entidade X]).
+Com estas relações, a \emph{factory} pode ser utilizada para acessar todas as entidades do mesmo tipo, bastando percorrer o grafo.
+
+O uso deste tipo de arquitetura torna o sistema flexível quanto ao SGBD, sendo que se necessária alguma modificação basta atualizar as \emph{factories} de acordo com o novo banco de dados. 
+A seguir serão descritas todas as entidades pertencentes ao sistema, bem como a classe responsável pela interface com o banco de dados.
+
+\subsection{Entidades}
+As entidades que compõem o \emph{Core}, juntamente com suas \emph{factories}, são representadas através de interfaces e suas respectivas implementações por meio de classes no sistema. 
+Desta forma toda entidade é representada no sistema através de duas interfaces e suas respectivas implementações, as quais obedecem o seguinte padrão de nomenclatura e localização (nesse contexto, \texttt{Entidade} consiste em uma representação genérica de qualquer tipo de entidade presente no sistema):
+\begin{itemize}
+	\item \texttt{Entidade}: interface da entidade do tipo \texttt{Entidade}.
+		  Este tipo de representação é localizado no pacote \texttt{com.onibuscerto.core.entities}.
+	\item \texttt{EntidadeFactory}: interface referente a \emph{factory} da \texttt{Entidade}.
+		  Todas as interfaces de \emph{factories} estão localizadas no pacote \texttt{com.onibuscerto.core.factories} do subprojeto \texttt{onibuscerto-core}.
+	\item \texttt{EntidadeImpl}: implementação da interface \texttt{Entidade}.
+		  Todos estas implementações estão disponibilizados no pacote \texttt{com.onibuscerto.core}.
+	\item \texttt{EntidadeFactoryImpl}: implementação da \emph{factory} da entidade de nome \texttt{Entidade}.
+		  Estas implementações estão disponibilizadas no pacote \texttt{com.onibuscerto.core}.
+\end{itemize}
+
+Cada entidade do sistema possui suas respectivas propriedades, as quais são armazenadas no próprio nó ou aresta do grafo (dependendo de como a entidade foi armazenada no banco de dados) através de pares chave/valor, sendo estas disponíveis para futuras consultas.
+
+A seguir serão descritos detalhes de implementação das classes que encapsulam as entidades, as quais em conjunto formam o grafo armazenado no banco de dados do sistema.
+
+\subsubsection{Location}
+Entidade responsável principalmente por representar pontos através de coordenadas geográficas, bem como suas conexões com outros pontos.
+Contém basicamente em quatro atributos: 
+
+\begin{itemize}
+	\item \texttt{latitude}: latitude do ponto \emph{Location} em questão.
+	\item \texttt{longitude}: longitude do ponto \emph{Location} em questão.
+	\item \texttt{outgoingConnections}: coleção de conexões de entrada da \emph{Location}, representadas pela entidade do tipo \emph{Connection} (ver seção 					  \ref{conn}).
+	\item \texttt{incomingConnections}: coleção de conexões de saida da \emph{Location}, também representadas pela entidade do tipo \emph{Connection} (ver seção 			  	  \ref{conn}).
+\end{itemize}
+
+A \emph{factory} designada a esta entidade denomina-se \emph{LocationFactory} e, para este tipo de entidade, tem a funcionalidade de criar todas as entidades do tipo \emph{Location}, inclusive  suas extensões, como é o caso da entidade \emph{Stop} descrita na subseção \ref{stop}.
+
+Esta entidade é utilizada principalmente para demarcar os pontos de origem e destino fornecidos pelo usuário que não consistem em uma parada para embarque e desembarque de passageiros.
+Esta demarcação é importante para que estes pontos sejam adicionados ao grafo, desta forma contribuindo para um melhor refinamento na busca da rota com tempo de viagem mínimo.
+
+\subsubsection{Stop}
+\label{stop}
+Uma \emph{Stop} consiste em uma parada de veículos para embarque e desembarque de passageiros.
+Como esta também é representada por coordenadas geográficas então optou-se por implementá-la como um caso específico de uma \emph{Location}, ou seja, uma \emph{Stop} herda atributos de \emph{Location}. Desta forma, além dos atributos de \emph{Location}, cada entidade deste tipo possui os seguintes atributos:
+
+\begin{itemize}
+	\item \texttt{id}: identifica exclusivamente uma parada ou estação, porém diversos trajetos podem usar a mesma parada.
+	\item \texttt{name}: nome de uma parada ou estação.
+\end{itemize}
+
+Como uma \emph{Stop} é uma especificação de \emph{Location}, utiliza-se a mesma \emph{LocationFactory}, porém neste caso com as seguintes funcionalidades:
+\begin{itemize}
+	\item Além de criar \emph{Locations}, utiliza-se esta \emph{factory} também para criar entidades \emph{Stop} e adicioná-las a seus respectivos índices no banco 		de dados, com o intuito de facilitar futuras buscas.
+	\item Retornar todas as \emph{Stops} do sistema em forma de uma coleção, através de simples uma busca no grafo do sistema.
+	\item Retornar uma determinada \emph{Stop} com base em sua ID utilizando o índice referente a este tipo de entidade.
+\end{itemize}
+
+A informação de todas as \emph{Stops} é essencial para o funcionamento do sistema, pois sem as localizações das paradas de veículos é impossível fornecer uma rota entre dois pontos utilizando transporte público.
+
+\subsubsection{Route}
+Uma \emph{Route} contém informações sobre as rotas que formam o sistema transporte público.
+Sua principal função é a de caracterizar uma linha de transporte de maneira geral, ou seja, independentemente de horários e sentidos percorridos por seus veículos.
+Desta forma, este tipo de entidade contém as seguintes propriedades:
+
+\begin{itemize}
+	\item \texttt{route\_id}: identifica exclusivamente uma rota.
+	\item \texttt{route\_short\_name}: nome abreviado de uma rota.
+	\item \texttt{route\_short\_name}: nome abreviado de uma rota.
+	Geralmente é um identificador curto e abstrato, como por exemplo "32", "100X" ou "verde" que os passageiros usem para identificar um trajeto, mas que não dê 			nenhuma indicação dos locais atendidos pela rota. 
+	É atríbuida uma sequência de carateres vazia se a mesma não possuir um \texttt{route\_short\_name}.
+	\item \texttt{route\_long\_name}:  nome completo de uma rota. 
+	Este normalmente é mais descritivo que o \texttt{route\_short\_name}, incluindo informações sobre os locais atendidos pela mesma (por exemplo "Santa Cândida/Capão 	Raso"). 
+	É atribuída uma sequência vazia caso a rota não tenha este campo preenchido.
+	\item \texttt{route\_type}: especifica o tipo de veículo utilizado pela rota. É representado por um número inteiro especificado da seguinte forma:
+		\begin{itemize}
+			\item 0 - Bonde, ônibus elétrico.
+			\item 1 - Metrô, trem subterrâneo.
+			\item 2 - Via férrea.
+			\item 3 - Ônibus.
+			\item 4 - Balsa.
+			\item 5 - Teleférico.
+			\item 6 - Gôndola, teleférico suspenso.
+			\item 7 - Funicular (qualquer sistema de trilho projetado para subir ladeiras).
+		\end{itemize}
+	\item \texttt{route\_color}: define uma cor que corresponde à rota, ou seja, a cor do trajeto desenhado no mapa da interface. A cor deve ser informada como um 			número hexadecimal de seis caracteres, por exemplo 00FFFF. 
+	Caso este campo esteja vazio, a cor padrão atribuída a rota é branco (FFFFFF).
+	\item \texttt{trips}: consiste em uma coleção contendo todas as viagens que compõem esta rota (ver subseção \ref{trip}).
+	Estas são adquiridas percorrendo o grafo através das relações entre determinada \emph{Route} e suas \emph{Trips}.
+\end{itemize}
+
+A \emph{factory} atribuída a uma \emph{Route} é denominada \emph{RouteFactory}, e tem as seguintes funcionalidades:
+\begin{itemize}
+	\item Criar entidades do tipo \emph{Route} e adicioná-las a seus respectivos índices no banco de dados, com o intuito de facilitar futuras buscas.
+	\item Retornar todas as \emph{Routes} do sistema em forma de uma coleção, através de simples uma busca no grafo do sistema.
+	\item Retornar uma determinada \emph{Route} com base em sua ID utilizando o índice referente a este tipo de entidade.
+\end{itemize}
+
+Esta entidade é essencial para o funcionamento do sistema pois contém todas as informações a respeito das linhas de transporte público da cidade em questão.
+Além disso, esta é responsável por organizar informações a respeito de \emph{Trips} e suas respectivas \emph{Stops} em uma forma de hierarquia no banco de dados através de relações, ou seja, uma \emph{Route} possui várias \emph{Trips} e estas possuem várias \emph{Stops}.
+
+\subsubsection{Trip}
+\label{trip}
+Representa as viagens e suas rotas, sendo que define-se viagem no sistema como uma seqüência de duas ou mais paradas que ocorrem em um horário específico (ver subseção \ref{stoptime}).
+Desta forma, a principal função de uma \emph{Trip} é de reunir informações a respeito do trajeto percorrido, ou seja, todas as paradas ou estações que compõem a viagem bem como os horários em que o veículo chega e sai de cada uma destas.
+Para cumprir tal objetivo, este tipo de entidade contém os seguintes atributos:
+
+\begin{itemize}
+	\item \texttt{id}: identificador único de uma \emph{Trip}.
+	\item \texttt{route}: rota a qual a \emph{Trip} pertence.
+	É adquirida através da relação entre \emph{Route} e \emph{Trip}.
+	\item \texttt{stop\_times}: coleção contendo todas as entidades \emph{StopTime} (ver subseção \ref{stoptime}) que compõem a \emph{Trip}.
+	Esta coleção é preenchida ao percorrer as relações entre \emph{Trip} e \emph{StopTime} no grafo do sistema.
+\end{itemize}
+
+A \emph{factory} atribuída a uma \emph{Trip} é denominada \emph{TripFactory}, e tem as seguintes funcionalidades:
+\begin{itemize}
+	\item Criar entidades do tipo \emph{Trip} e adicioná-las a seus respectivos índices no banco de dados.
+	\item Retornar todas as \emph{Trips} do sistema em forma de uma coleção, através de simples uma busca no grafo do sistema.
+	\item Retornar uma determinada \emph{Trip} com base em sua ID utilizando o índice referente a este tipo de entidade.
+\end{itemize}
+
+A entidade \emph{Trip} é primordial para o funcionamento do sistema pois reune informações como nome do trajeto e horários de chegada e partida de veículos em cada parada ou estação que compõe determinada linha, as quais são base de qualquer sistema de transporte público.
+
+\subsubsection{StopTime}
+\label{stoptime}
+A entidade do tipo \emph{StopTime} relaciona os horários de partida e chegada dos veículos em paradas ou estações específicas em cada \emph{Trip} (ver subseção \ref{trip}).
+Para tal, esta possui os seguintes atributos armazenados no grafo:
+\begin{itemize}
+	\item \texttt{trip}: referência a \emph{Trip} a qual a \emph{StopTime} pertence.
+	Especificado através de uma relação entre estas duas entidades no grafo.
+	\item \texttt{stop}: referência a \emph{Stop} a qual a \emph{StopTime} pertence.
+	Especificado através de uma relação entre estas duas entidades no grafo.
+	\item \texttt{arrival\_time}: consiste na hora de chegada em uma parada ou estação específica (\emph{Stop}), de uma viagem específica (\emph{Trip}), em uma rota 	(\emph{Route}). 
+	O horário é definido a partir da meia-noite, no dia do início do serviço e deve possuir oito dígitos no formato HH:MM:SS (o formato H:MM:SS também é aceito, se       
+	a hora iniciar com 0).
+	\item \texttt{departure\_time}: especifica o horário de partida de uma parada específica (\emph{Stop}) de uma determinada viagem (\emph{Trip}) em uma rota 				(\emph{Route}).
+	O horário é definido a partir da meia-noite, no dia do início do serviço, obedecendo o padrão HH:MM:SS (o formato H:MM:SS também é aceito, se a hora iniciar com 	0).
+	\item \texttt{stop\_sequence}: identifica a ordem das paradas de uma viagem em particular. 
+	Representado por inteiros não negativos que variam em ordem crescente ao longo da viagem.
+	\item \texttt{next\_stoptime}: referência através de uma relação no grafo à próxima \emph{StopTime} da \emph{Trip} em questão.
+	Informação baseada no campo \texttt{stop\_sequence}.
+	\item \texttt{previous\_stoptime}: referência através de uma relação no grafo à \emph{StopTime} anterior da \emph{Trip} em questão.
+	Informação baseada no campo \texttt{stop\_sequence}.
+\end{itemize}
+
+Como esta não possui uma \texttt{id} específica, a única função de sua \emph{factory}, denominada \emph{StopTimeFactory}, é a de criação deste tipo de entidade.
+
+Sua principal função é a de relacionar as entidades \emph{Stop} com horários de chegada e partida de veículos de uma determinada \emph{Trip}.
+Desta forma, essa informação é essencial para o funcionamento do sistema pois o algoritmo para busca do caminho mínimo é inteiramente baseado nestes horários para calcular o tempo total gasto na viagem.
+
+\subsubsection{Connection}
+\label{conn}
+Uma \emph{Connection} consiste em uma conexão entre dois pontos na forma de aresta no grafo, contendo informações do tipo custo de tempo e par origem e destino da mesma.
+Estes pontos podem ser do tipo \emph{Location} (não consistindo em uma parada ou estação) e \emph{Stop}, sendo que dependendo de qual par de origem e destino a conexão possui, ela pode ser de dois tipos:
+
+\begin{itemize}
+	\item \emph{WalkingConnection}: consiste em uma conexão entre dois pontos quaisquer a qual é percorrida a pé. 
+	Geralmente esta conexão é entre a origem/destino da viagem e uma parada de veículos ou diretamente entre origem e destino, sendo que neste último caso a viagem 		inteira é percorrida a pé, sem a necessidade do uso de transporte público.
+	O custo de tempo deste tipo de conexão é calculado com base na distância entre seus pontos de origem e destino e a velocidade de caminhada.
+	\item \emph{TransportConnection}: consiste em uma conexão entre duas paradas, portanto esta é exclusivamente percorrida por algum tipo de veículo pertencente ao 	sistema de transporte público da cidade em questão.
+	O custo de tempo deste tipo de entidade é calculado através da subtração entre os horários de chegada do veículo no destino e o de partida da origem.
+	Além deste, possui referência à \emph{Trip} a qual pertence.
+\end{itemize}
+
+Todas estes tipos de \emph{Connection} possuem atributos e métodos semelhantes, portanto decidiu-se por definir uma interface chamada \emph{Connection} que serve como base para implementação de \emph{WalkingConnection} e \emph{TransportConnection}.
+
+A mesma \emph{factory} (denominada \emph{ConnectionFactory}) é utilizada para ambos os tipos de \emph{Connection}, com o intuito de criar separadamente estes tipos de entidade na forma de relação entre dois pontos armazenados no grafo.
+
+O algoritmo de busca do caminho mínimo do sistema utiliza estes tipos de entidades para percorrer o grafo e calcular o trajeto com menor tempo de viagem, sendo seu resultado retornado na forma de coleção de \emph{Connections}.
+
+\subsection{DatabaseController}
+O \texttt{DatabaseController} é a classe principal do subprojeto \emph{Core} responsável por interfacear o sistema com o banco de dados, ou seja, toda transação ou acesso ao banco de dados tem de ser feito através desta classe.
+Para tal, esta possui referências às \emph{factories} de todas as entidades do sistema, bem como métodos para iniciar e finalizar transações no banco.
+
+É nesta classe que está localizado o método \texttt{getShortestPath}, responsável pela busca do caminho com tempo de viagem mínimo. 
+Este recebe três parâmetros:
+
+\begin{itemize}
+	\item \texttt{source}: ponto de origem da rota consultada na forma de objeto \texttt{Location}, fornecido pelo usuário.
+	\item \texttt{target}: ponto de destino da rota consultada na forma de objeto \texttt{Location}, fornecido pelo usuário.
+	\item \texttt{time}: inteiro que representa o horário de partida da origem em segundos.
+\end{itemize}
+
+O mesmo foi implementado de acordo com a descrição especificada no capítulo \ref{fund} e retorna o trajeto resultante na forma de uma coleção de entidades \texttt{Connection}, a qual contém todas as conexões necessárias, desde trechos percorridos com veículos de transporte público até caminhos a pé.
+
+Considera-se esta classe como principal do subprojeto \emph{Core} pois a mesma possui o método que implementa a principal funcionalidade do sistema como um todo: a de buscar a rota que minimiza o tempo de viagem total dados os pontos de partida e destino juntamente com o horário de saída do usuário da origem.
+
+\section{onibuscerto-importer}
+Este subprojeto é responsável por importar efetivamente as informações contidas nos arquivos GTFS para o banco de dados do sistema.
+É composto por basicamente 2 classes: \texttt{GTFSImporter} e \texttt{ImporterMain}.
+O primeiro consiste nos métodos de importação de cada entidade definida no \emph{Core} e o segundo é simplesmente a execução destes através de um método \texttt{main}.
+
+A importação dos dados é feita através da varredura linha a linha dos arquivos GTFS e adição dos dados no banco através de uma referência a \emph{DatabaseController}.
+A classe \texttt{GTFSImporter} possui um método para cada tipo de entidade cuja importação é necessária para o funcionamento do sistema, sendo que cada um destes métodos seguem o algoritmo a seguir:
+
+\begin{enumerate}
+	\item Instanciar \texttt{EntidadeFactory} através da referência à \texttt{DatabaseController}.
+	\item Iniciar leitura do arquivo GTFS corresnpondente a \texttt{Entidade}, sendo que o caminho ao arquivo em questão é fornecido como parâmetro do algoritmo.
+	\item Criar nova \texttt{Entidade} através da \texttt{EntidadeFactory} com base nos dados contidos na linha atual do arquivo GTFS.
+	\item Adicionar à \texttt{Entidade} criada no passo 3 seus atributos especificados na linha atual.
+	\item Se ainda existir linhas não lidas no arquivo GTFS, ler a próxima linha e voltar ao passo 3.
+	\item Caso contrário, fim da importação.
+\end{enumerate}
+
+O principal método da classe \texttt{GTFSImporter} é definido como \texttt{importData}, o qual é responsável por iniciar uma transação no banco de dados através do \emph{DatabaseController} e então executar as seguintes funções:
+
+\begin{itemize}
+	\item \texttt{importStops}: cria uma \emph{Stop} para cada linha do arquivo \texttt{stops.txt} e adiciona os atributos \texttt{name}, \texttt{latitude} e 				\texttt{longitude}.
+	\item \texttt{importRoutes}: cria uma \emph{Route} para cada linha do arquivo \texttt{routes.txt} e adiciona os atributos \texttt{short\_name}, 						\texttt{long\_name}, \texttt{type} e \texttt{color} (se este for especificado).
+	\item \texttt{importTrips}: cria uma \emph{Trip} para cada linha do arquivo \texttt{trips.txt} e adiciona o atributo \texttt{route} através de uma relação no 			grafo.
+	\item \texttt{importStopTimes}: cria uma \emph{StopTime} para cada linha do arquivo \texttt{stop\_times.txt} e adiciona os atributos \texttt{trip}, 					\texttt{arrival\_time}, \texttt{departure\_time}, \texttt{stop}, \texttt{stop} e \texttt{stop\_sequence}.
+	\item \texttt{linkStopTimes}: responsável por construir a sequência de \emph{StopTimes} para todas as \emph{Trips} do banco de dados baseado no atributo 				\texttt{stop\_sequence} de \emph{StopTime}.
+	\item \texttt{createConnections}: para todas as \emph{Trips} do sistema, cria entidades \emph{TransportConnection} ligando cada \emph{StopTime} consecutiva e, 			para todos os pares de \emph{Stops} distantes de até no máximo um quilômetro, cria uma \emph{WalkingConnection}.
+\end{itemize}
+
+Este subprojeto é uma das partes essenciais ao projeto, pois sua função é a de popular o banco de dados do sistema para que o usuário possa efetivamente consultar por rotas de tempo mínimo de viagem.
+
+\section{onibuscerto-service}
+
+O subprojeto \texttt{onibuscerto-service} é onde encontram-se os Servlets responsáveis por executar consultas na base de dados construída através do \emph{Importer}.
+Os Servlets funcionam sob a forma de \emph{web services} e, sendo assim, todas as consultas são feitas pelos clientes através de requisições \sigla{HTTP}{Hypertext Transfer Protocol} do tipo GET ou POST.
+As implementações dos Servlets residem no pacote \texttt{com.onibuscerto.service.servlets}.
+
+Atualmente, apenas consultas que determinam a rota com o menor tempo de viagem entre duas coordenadas geográficas estão implementadas.
+Estas consultas são de responsabilidade do Servlet implementado na classe \texttt{RouteServlet}.
+No início do seu ciclo de vida, este é responsável por obter uma instância da classe \texttt{DatabaseController} do \emph{Core}, a qual será utilizada para acessar o banco de dados e resolver as consultas.
+Em seguida, assim como um Servlet comum, este muda para um estado no qual está disponível para atender requisições dos clientes.
+Por fim, ao ser destruído, o \texttt{RouteServlet} deve chamar o método \texttt{close} do \texttt{DatabaseController}, com o objetivo de fechar a conexão com o banco de dados.
+O ciclo de vida completo de um Servlet é ilustrado na Figura \ref{fig:servletciclo}.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.4\textwidth]{./imgs/servletciclo.png}
+	\caption[Ciclo de vida de um Servlet]{Ciclo de vida de um Servlet}
+	\fonte{\citeonline{infocenter}}
+	\label{fig:servletciclo}
+\end{figure}
+
+Enquanto o \texttt{RouteServlet} está ativo, ou seja, respondendo consultas, este recebe requisições HTTP do tipo POST com os seguintes parâmetros:
+\begin{itemize}
+	\item \texttt{start.latitude}: latitude do ponto de origem.
+	\item \texttt{start.longitude}: longitude do ponto de origem.
+	\item \texttt{end.lagitude}: lagitude do ponto de destino.
+	\item \texttt{end.longitude}: longitude do ponto de destino.
+	\item \texttt{departure}: horário de saída do ponto de origem, uma \emph{string} no formato \texttt{"HH:MM"}.
+\end{itemize}
+
+Ao receber estes parâmetros, o \texttt{RouteServlet} executa os seguintes passos:
+\begin{enumerate}
+	\item Converte as posições geográficas passadas como parâmetros para a consulta através de HTTP POST para objetos da classe \texttt{GlobalPosition}, do subprojeto \texttt{onibuscerto-api}.
+	\item Cria nós no banco de dados para representar os nós de origem e destino, através da \texttt{LocationFactory}.
+	\item Cria conexões do tipo \texttt{WalkingConnection} entre os recém-criados nós de origem e destino e todas as entidades do tipo \texttt{Stop} do grafo, de forma a representar os trechos que podem ser percorridos a pé pelo usuário.
+	\item Executa a consulta no grafo através do método \texttt{getShortestPath} do \texttt{DatabaseController} e recebe o caminho encontrado sob a forma de um objeto do tipo \texttt{Collection<Connection>}.
+	\item Converte o resultado da consulta para uma coleção de objetos da classe \texttt{QueryResponseConnection}, do subprojeto \texttt{onibuscerto-api}, ou seja, um objeto do tipo \texttt{Collection<QueryResposeConnection>}.
+	\item Serializa o objeto \texttt{Collection<QueryResponseConnection>} para uma \emph{string} no formato \sigla{JSON}{JavaScript Object Notation}, o qual será finalmente enviado para o cliente do usuário.
+\end{enumerate}
+
+Tendo o funcionamento do \texttt{RouteServlet} em vista, a aplicação cliente é responsável apenas por enviar uma requisição HTTP POST para o serviço com os parâmetros no formato especificado e, por fim, interpretar os resultados retornados pelo servidor.
+Uma pequena aplicação de exemplo que executa consultas no \emph{Service}, escrita em linguagem Python, é apresentada no Apêndice \ref{ape:exemplodeuso}.
+
+\subsection{Cliente \emph{Web}}
+
+Além dos Servlets responsáveis pelo funcionamento do \emph{web service}, o projeto \texttt{onibuscerto-service} é onde também reside o código-fonte do cliente \emph{web}.
+Situado no diretório \texttt{src/main/webapp/} deste projeto, o cliente \emph{web} é composto pelos seguintes arquivos:
+
+\begin{itemize}
+	\item \texttt{index.html}: estrutura em \sigla{HTML}{Hypertext Markup Language} do \emph{layout} da página que é exibida para os usuários do cliente.
+	\item \texttt{style.css}: descrição das folhas de estilo \sigla{CSS}{Cascading Style Sheets} utilizadas para renderizar o \emph{layout} da página.
+	\item \texttt{script.js}: código-fonte principal do cliente, em linguagem JavaScript, responsável por todas as funcionalidades e interação do cliente \emph{web} com o service e o usuário.
+\end{itemize}
+
+Além destes arquivos, juntamente com a distribuição do cliente \emph{web} estão empacotadas as bibliotecas jQuery e jQuery UI, utilizadas para simplificar o desenvolvimento do \emph{software} em JavaScript.
+Estas bibliotecas encontram-se no diretório \texttt{src/main/webapp/js/} do projeto.
+As imagens utilizadas no \emph{layout} da página estão presentes no diretório \texttt{src/main/webapp/img/}.
+
+A interface do cliente \emph{web} é composta basicamente por dois elementos: uma barra lateral e a visualização do mapa da região.
+Na barra lateral está presente um formulário, através do qual o usuário pode digitar os endereços de origem e destino do caminho e o horário de partida.
+Esta mesma barra é atualizada com uma descrição textual do caminho determinado pelo sistema, assim que o usuário inicia a consulta ao clicar no botão de busca.
+Além disso, é possível introduzir os endereços de origem e destino clicando com o botão direito do mouse no mapa.
+A figura \ref{fig:clienteweb} apresenta a interface do cliente \emph{web} com o resultado de uma consulta.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./imgs/clienteweb.png}
+	\caption[Interface do cliente \emph{web}]{Interface do cliente \emph{web}}
+	\fonte{Autoria Própria}
+	\label{fig:clienteweb}
+\end{figure}
+
+A renderização do mapa é feita através da \sigla{API}{Application Programming Interface} do Google Maps \cite{gmapsapi}, a qual permite utilizar, através de chamadas JavaScript, os mapas deste serviço de forma gratuita, contanto que o serviço que faça uso dos mapas também o seja \cite{gmapsterms}.
+Esta API também conta com funcionalidades para o desenho de poli-linhas e o posicionamento de marcadores, tornando-se ideal para apresentar os resultados da consulta retornados pelo \emph{web service}.
+
+Para realizar o processo de \emph{geocoding}, ou seja, a conversão de endereços completos como, por exemplo, ``1600 Amphitheatre Parkway, Mountain View, CA'' em coordenadas geográficas como $(37.423021, -122.083739)$, foi utilizada a API de \emph{Geocoding} do Google \cite{geocodingapi}.
+De forma semelhante à API do Google Maps, esta API permite realizar este tipo de consulta diretamente através de JavaScript, sendo fornecido um endereço completo e retornando a latitude e longitude do endereço em questão.
+
+O cliente \emph{web} pode ser utilizado simplesmente ao hospedar os arquivos do mesmo em um servidor HTTP.
+No entanto, é importante notar que, caso o endereço do \emph{web service} seja diferente da página inicial do cliente \emph{web}, é necessário adaptar o endereço que é feito na requisição do mesmo, no arquivo \texttt{script.js}.
+Apesar disso, ao iniciar o servidor de desenvolvimento, o cliente \emph{web} é automaticamente servido através do mesmo.
+Maiores detalhes com relação à execução do \emph{software} em um ambiente de desenvolvimento estão disponíveis no Apêndice \ref{ape:guia}.
+
+\section{Considerações}
+Durante o desenvolvimento do sistema procurou-se seguir de maneira fiel a especificação definida no capítulo \ref{specs}, o que facilitou o andamento desta etapa. Afirma-se isto pois como praticamente todas as decisões de arquitetura e técnicas de desenvolvimento de \emph{software} foram definidas anteriormente na especificação, várias dificuldades de implementação foram previstas e evitadas. 
+
+Uma das dificuldades evitadas com a especificação do \emph{software} foi o interfaceamento do sistema com o banco de dados, o qual foi implementado para abstrair a conexão entre os mesmos, tornando o sistema mais versátil e flexível para ser integrado com outros bancos de dados futuramente.
+Desta forma, caso necessário seria rápido e fácil adapatar o sistema para uma troca de banco de dados.
+Outra decisão estratégica foi a separação do sistema em subprojetos, pois, além de organizar o sistema de acordo com suas funcionalidades específicas, possibilitou o desenvolvimento paralelo de cada módulo, o que aumentou a eficiência de implementação.
+
+Após muito estudo sobre as possibilidades existentes, definiu-se como o projeto seria organizado e implementado nos mínimos detalhes, desde as técnicas de engenharia de \emph{software} até decisões críticas de implementação, bastando a fase de desenvolvimento do sistema somente executar o plano projetado.
