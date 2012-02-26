@@ -17,36 +17,39 @@ Processing - ICASSP, v. 1, n. 1, p. 869–872, 2007.
 WANG, Z. et al. Image quality assessment: From error visibility to structural similarity.
 IEEE TRANSACTIONS ON IMAGE PROCESSING, v. 13, n. 4, Abril 2004.
 
-[5]
-Okamoto Jun e Kurita Takaaki. Video Quality Objective Assessment Device, Assessment
-Method, and Program. 2006. KR 20070061855 (A).
-
-[6]
-Ong, Ee Ping Yang, Xiaokang Lin, Weisi Lu, Zhongkang Yao e Susu. Method and System
-for Video Quality Measurements. 2007. SG 7,733,372.
-
-[7]
+[5] http://ieeexplore.ieee.org/xpl/freeabs_all.jsp?arnumber=4217223
+http://ispl.korea.ac.kr/conference/ICASSP2007/pdfs/0100889.pdf
 ONG, E. P. Video quality metrics - an analysis for low bit rate videos. IEEE International
 Conference on Acoustics, Speech and Signal Processing - ICASSP, v. 1, p. I–889–I–892,
 Abril. 2007.
 
 ===============
+Patentes:
+[1] 
+Okamoto Jun e Kurita Takaaki. Video Quality Objective Assessment Device, Assessment
+Method, and Program. 2006. KR 20070061855 (A).
+
+[2]
+Ong, Ee Ping Yang, Xiaokang Lin, Weisi Lu, Zhongkang Yao e Susu. Method and System
+for Video Quality Measurements. 2007. SG 7,733,372.
+
+===============
 Teses:
-[1]
+[1] http://www.dominiopublico.gov.br/pesquisa/DetalheObraForm.do?select_action=&co_obra=174917
 SILVA, E. S. R. da. Especificação, Projeto e Desenvolvimento de Ferramentas de Auxílio
 à Avaliação Subjetiva de Vídeo. Dissertação (Mestrado) — Universidade tecnológica
 federal do Paraná, Outubro 2009.
 
-[2]
+[2] http://www.teses.usp.br/teses/disponiveis/3/3142/tde-28042009-170527/pt-br.php
 FONSECA, R. N. da. Algoritmos para avaliação da qualidade de vídeo em sistemas de
 televisão digital. Dissertação (Mestrado) — Escola politécnica da universidade de São
 Paulo, 2008.
 
-[3]
+[3] http://files.dirppg.ct.utfpr.edu.br/cpgei/Ano_2009/dissertacoes/Dissertacao_498_2009.pdf
 ALBINI, F. L. P. Geração e avaliação de artefatos em vídeo digital. Dissertação
 (Mestrado) — Universidade Tecnológica Federal do Paraná, Março 2009.
 
-[4]
+[4] http://www.lume.ufrgs.br/bitstream/handle/10183/18246/000726445.pdf?sequence=1
 DARONCO, L. C. Avaliação Subjetiva de Qualidade Aplicada à Codificação de Vídeo
 Escalável. Dissertação (Mestrado) — Universidade federal do Rio Grande do Sul, 2009.
 
