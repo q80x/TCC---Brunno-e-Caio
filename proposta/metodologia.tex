@@ -99,9 +99,25 @@ Em se tratando de vídeos digitais, os artefatos de maior notoriedade são: bloc
 Poder adicionar artefatos de forma artificial e controlada à vídeos digitais é de grande importância no campo de avaliação de vídeos (tanto na avaliação objetiva quanto na avaliação subjetiva) uma vez que, a partir de algoritmos, é possível simular distorções reais. Estes algoritmos não são padronizados, mas existem algumas recomendações internacionais, como por exemplo a recomendação P.930 da ITU \cite{itup930} que descreve os princípios para reproduzir as distorções relativas à compressão de vídeo sem efetivamente precisar comprimí-lo.
 
 \section{Processo de desenvolvimento}
-O desenvolvimento do presente trabalho..
+O desenvolvimento do presente trabalho consistirá em 6 fases, resumidas na Tabela \ref{tab:metodologia}. Cada fase consiste em algumas atividades que podem ser realizadas de forma paralela, pois são independentes.
 
-\begin{table}
+Na fase 1 serão realizadas duas atividades fundamentais: compreender os conceitos envolvidos na avaliação, compressão, transmissão e codificação de vídeos e também a análise do \emph{software}
+SASQV a fim de avaliar o que será reaproveitado ou adequado à atual proposta. Com isso, na fase 2 será possível avaliar de forma mais consistente os requisitos funcionais das ferramentas 
+e da interface a serem desenvolvidas, assim como definir o escopo do trabalho.
+
+A fase 3 consiste do desenvolvimento em paralelo das ferramentas de degradação e da interface gráfica. Buscando reaproveitar e readequar o SASQV se optou por utilizar a mesma
+linguagem de programação: Java. Também é considerada a possibilidade de desenvolver as ferramentas em linguagem C++, por apresentar um desempenho levemente superior 
+e possuir uma vasta gama de ferramentas de vídeo comparável à disponível em Java. O controle de versão será efetuado por meio da ferramenta Git, o que também possibilita a utilização do 
+serviço GitHub, uma ferramenta de desenvolvimento colaborativo que diponibiliza repositórios de código gratuitos.
+
+O teste e validação das ferramentas será efetuado na fase 4 do projeto. ?? não sei mais o q colocar aqui??
+Assim que terminada a fase 4 será feita a integração entre as ferramentas e a interface, gerando uma única ferramenta ao final.
+
+Por fim, a fase 6 se utilizará de uma base de vídeos de referência, ainda a ser escolhida, e da ferramenta desenvolvida para produzir uma base de vídeos degradados. 
+Esta base será objeto de avaliação do trabalho escrito, buscando estabelecer comparações entre as degradações artificiais geradas pela ferramenta e as degradações reais observadas pelos telespectadores.
+Também será parte do trabalho avaliar a magnitude do impacto das diversas degradações obtidas ao se avaliar os vídeos degradados por métricas objetivas.
+
+\begin{table}[htb]
 	\centering
 	\caption{Tabela de fases do desenvolvimento}
 	\label{tab:metodologia}
@@ -111,13 +127,13 @@ O desenvolvimento do presente trabalho..
 	\hline
 	\textbf{1.} & 1. Revisão bibliográfica, compreensão de conceitos \\
 		& 2. Análise do SASQV \\
-	\textbf{1,5.} & 1. Levantamento de requisitos \\
-	\textbf{2.} & 1. Desenvolvimento das ferramentas de degradação \\
+	\textbf{2.} & 1. Levantamento de requisitos \\
+	\textbf{3.} & 1. Desenvolvimento das ferramentas de degradação \\
 		& 2. Desenvolvimento da interface \\
-	\textbf{3.} & 1. Teste e validação das Ferramentas. \\
+	\textbf{4.} & 1. Teste e validação das Ferramentas. \\
 		& 2. Testes da Interface \\
-	\textbf{4.} & 1. Integração: ferramentas e interface \\
-	\textbf{5.} & 1. Geração e avaliação de uma base de vídeos \\
+	\textbf{5.} & 1. Integração: ferramentas e interface \\
+	\textbf{6.} & 1. Geração e avaliação de uma base de vídeos \\
 	\hline
 	\end{tabular}
 \end{table}	
