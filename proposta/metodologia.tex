@@ -10,7 +10,7 @@ Através da transmissão digital de dados é possível atingir uma quantidade de
 
 Surge deste contexto o interesse pela televisão digital em meados da década de 1970, no Japão, em que o principal objetivo era o de conseguir alta definição de imagem. Atualmente, muitos países estão num período de transição para a televisão digital, como o caso do Brasil.
 
-A adoção da transmissão digital tem inúmeras vantagens sobre a transmissão analógica, algumas sintetizadas na \ref{tab:padroes}. Merecem destaque vantagens como a maior resolução da imagem transmitida (Full HD 1920x1080 pixels), fornecendo ao usuário uma imagem mais nítida e com muito mais detalhes; até 6 canais de áudio que permitem a utilização de equipamentos de som mais sofisticados (em comparação aos dois canais do modo estéreo da transmissão analógica); transmissão de conteúdos simultâneos por uma mesma emissora (até 6 canais em definição padrão SDTV 720x480 pixels - resolução menor que a Full HD); possibilidade de conteúdos interativos dos mais diversos e sinal livre de interferência.
+A adoção da transmissão digital tem inúmeras vantagens sobre a transmissão analógica, algumas sintetizadas na Tabela \ref{tab:padroes}. Merecem destaque vantagens como a maior resolução da imagem transmitida (Full HD 1920x1080 pixels), fornecendo ao usuário uma imagem mais nítida e com muito mais detalhes; até 6 canais de áudio que permitem a utilização de equipamentos de som mais sofisticados (em comparação aos dois canais do modo estéreo da transmissão analógica); transmissão de conteúdos simultâneos por uma mesma emissora (até 6 canais em definição padrão SDTV 720x480 pixels - resolução menor que a Full HD); possibilidade de conteúdos interativos dos mais diversos e sinal livre de interferência.
 
 \begin{table}[!htb]
 	\centering
@@ -33,7 +33,7 @@ A adoção da transmissão digital tem inúmeras vantagens sobre a transmissão 
 
 \subsection{Avaliação de vídeos}
 
-Para que seja possível transmitir vídeos digitalmente é necessário, primeiramente, que o vídeo passe por um processo chamado codificação. O objetivo principal da codificação de vídeos é a compressão de dados que torna viável seu armazenamento e transmissão \cite{daronco}. Desta forma, a compressão consome necessariamente fidelidade, ou seja, o problema da codificação é a troca entre nível de compressão e nível de fidelidade entre o vídeo original e o vídeo comprimido \cite{daronco}. 
+Para que seja possível transmitir vídeos digitalmente é necessário, primeiramente, que o vídeo passe por um processo chamado codificação. O objetivo principal da codificação de vídeos é a compressão de dados que torna viável seu armazenamento e transmissão \cite{daronco}. Desta forma, a compressão tende a diminuir a fidelidade, ou seja, o problema da codificação é encontrar um compromisso entre o nível de compressão necessário para transmitir pelo canal e o nível de fidelidade que se deseja exibir para o espectador \cite{daronco}. 
 
 Apesar de a transmissão digital garantir que a interferência à ruídos seja mínima, a qualidade da imagem não depende somente de interferência, como foi visto. A compressão de vídeos é excelente na perspectiva do transmissor já que o custo do equipamento torna-se menor, porém na perspectiva do receptor/usuário a compressão pode comprometer muito a qualidade.
 
@@ -43,7 +43,7 @@ Diversas metodologias foram criadas para avaliar a qualidade da informação mul
 
 A avaliação objetiva tenta, através de algoritmos, fazer uma previsão aproximada da qualidade observada pelos observadores \cite{albini}. Os métodos mais simples e mais difundidos são definidos estatisticamente como o erro médio quadrático (MSE - Mean Squared Error) e a razão sinal-ruído de pico (PSNR - Peak Signal to Noise Ratio) \cite{emmersonsilva} entre os dados originais e os dados recebidos (no caso de vídeos, o cálculo é aplicado pixel a pixel).
 
-A avaliação subjetiva depende de observadores (humanos) que atribuem notas a partir de suas opiniões sobre a qualidade. Posteriormente, uma análise estatística dos dados coletados é realizada, resultando em uma nota chamada MOS (Mean Opinion Score) \cite{itup930} \cite{albini}. Estes tipos de avaliação possuem algumas recomendações estabelecidas por órgãos internacionais com a finalidade de padronizar os procedimentos e ambientes de avaliação, alguns exemplos destas normas podem ser observados na \ref{tab:recomendacoes}:
+A avaliação subjetiva depende de observadores (humanos) que atribuem notas a partir de suas opiniões sobre a qualidade. Posteriormente, uma análise estatística dos dados coletados é realizada, resultando em uma nota chamada MOS (Mean Opinion Score) \cite{itup930} \cite{albini}. Estes tipos de avaliação possuem algumas recomendações estabelecidas por órgãos internacionais com a finalidade de padronizar os procedimentos e ambientes de avaliação, alguns exemplos destas normas podem ser observados na Tabela \ref{tab:recomendacoes}:
 
 \begin{table}
 	\centering
@@ -85,12 +85,12 @@ As imagens digitalmente transmitidas, embora suscetíveis à um grande número d
 	\fonte{\cite{panagiotopoulou}}
 \end{figure}
 
-Em se tratando de vídeos digitais, os artefatos de maior notoriedade são: blocagem, embaçamento, efeito vibrante e ruído (blockiness, blurriness, ringing, e noisiness) \cite{farias2007}. Estes efeitos podem ser observados na Figura~\ref{fig:artefatosdigitais}, a seguir:
+Em se tratando de vídeos digitais, os artefatos de maior notoriedade são: blocagem, borramento, efeito vibrante e ruído (blockiness, blurriness, ringing, e noisiness) \cite{farias2007}. Estes efeitos podem ser observados na Figura~\ref{fig:artefatosdigitais}, a seguir:
 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[scale=0.45]{./imgs/figura1.png}
-	\caption{Principais artefatos em vídeos digitais: (a) blocagem; (b) embaraçamento; (c) ruído e (d) efeito vibrante.}
+	\caption{Principais artefatos em vídeos digitais: (a) blocagem; (b) borramento; (c) ruído e (d) efeito vibrante.}
 	\label{fig:artefatosdigitais}
 	\fonte{\cite{farias2007}}
 \end{figure}
@@ -98,3 +98,5 @@ Em se tratando de vídeos digitais, os artefatos de maior notoriedade são: bloc
 
 Poder adicionar artefatos de forma artificial e controlada à vídeos digitais é de grande importância no campo de avaliação de vídeos (tanto na avaliação objetiva quanto na avaliação subjetiva) uma vez que, a partir de algoritmos, é possível simular distorções reais. Estes algoritmos não são padronizados, mas existem algumas recomendações internacionais, como por exemplo a recomendação P.930 da ITU \cite{itup930} que descreve os princípios para reproduzir as distorções relativas à compressão de vídeo sem efetivamente precisar comprimí-lo.
 
+\section{Processo de desenvolvimento}
+	Vamos fazer assim =).
