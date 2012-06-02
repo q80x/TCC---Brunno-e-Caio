@@ -1,14 +1,43 @@
 %----------- Terceiro Capítulo: Metodologia --------------
 
-\chapter{Metodologia}
-(ou especifiação) 10 --- 20 pags
+\chapter{Especificação} %(ou especifiação) 10 --- 20 pags
 
-introdução --- desenvolvimento --- consideraçoes
+O \emph{software} a ser desenvolvido neste trabalho deverá fornecer uma ferramenta flexível de degradação de vídeo digital e também de avaliação subjetiva e objetiva das mídias.
+Neste capítulo serão apresentados os requisitos de tal sistema, assim como as especificações de desenvolvimento, arquitetura e funcionamento.
 
-\section{Desenvolvimento}
-\subsection{Análise de Requisitos}
+\section{Análise de Requisitos}
+
+A análise de requisitos é parte fundamental de qualquer projeto, buscando atender da melhor forma as necessidades dos futuros usuários.
+Esta sessão descreve os requisitos levantados após o estudo e planejamento da ferramenta.
+
 \subsection{Requisitos Funcionais}
+
+Requisitos funcionais são aqueles determinados pelas funcionalidades exigidas do sistema, ou seja, as ações que se espera que o sistema execute. 
+Foram levantados os seguintes requisitos funcionais:
+
+\begin{itemize}
+	\item O \emph{software} deverá possuir ferramentas de degradação de vídeos digitais.
+	\item O \emph{software} deverá possuir uma ferramenta de simulação de transmissão \emph{streaming}.
+	\item O \emph{software} deverá ser capaz de criar e gerenciar sessões de avaliação subjetiva.
+	\item O \emph{software} deverá ser capaz de exibir os vídeos existentes na base de dados.
+	\item O \emph{software} deverá exibir os resultados das avaliações objetivas e subjetivas de forma gráfica.
+\end{itemize}
+
 \subsection{Não-Funcionais}
+
+Requisitos não-funcionais são aqueles ditados por restrições ou exigências de qualidade ou de operação, tais como performance, segurança ou tecnologias envolvidas.
+Abaixo se encontram os requisitos não funcionais levantados:
+
+% TODO dividir por categorias: padronização, usabilidade, tecnologias envolvidas.
+
+\begin{itemize}
+	\item As ferramentas de degradação e métricas objetivas deverão operar sobre vídeos em formato YUV planificado com subamostragem 4:2:0.
+	\item A ferramenta de simulação deverá operar sobre vídeos no formato \sigla{H.262}{Padrão de compressão de vídeo digital também conhecido MPEG-2 Part 2} encapsulados em um Transport Stream (\sigla{TS}{Transport Stream}).
+	\item O sistema deve fornecer documentação detalhada de auxílio ao uso das ferramentas.
+	\item A ferramenta de exibição deverá ser executada em um sistema capaz de prover um \emph{display} com resolução igual ou maior que a dos vídeos a serem exibidos.
+	% TODO verificar a versão da JRE necessária para rodar a interface
+	\item A interface gráfica do sistema necessita que haja um \emph{Java Runtime Environment} (\sigla{JRE}{Java Runtime Environment}) instalado no sistema operacional.
+\end{itemize}
 
 \section{Especificações do Software}
 \subsection{Linguagens}
@@ -19,4 +48,4 @@ introdução --- desenvolvimento --- consideraçoes
 \subsubsection{Gerador de Vídeos}
 \subsubsection{Gerenciador de Sessão}
 \subsection{Diagramas de Caso de Uso}
-\section{Resumo e Conclusão do Capítulo}
+\section{Considerações}
