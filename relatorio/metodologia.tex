@@ -23,7 +23,7 @@ Foram levantados os seguintes requisitos funcionais:
 	\item O \emph{software} deverá exibir os resultados das avaliações objetivas e subjetivas de forma gráfica.
 \end{itemize}
 
-\subsection{Não-Funcionais}
+\subsection{Requisitos Não-Funcionais}
 
 Requisitos não-funcionais são aqueles ditados por restrições ou exigências de qualidade ou de operação, tais como performance, segurança ou tecnologias envolvidas.
 Abaixo se encontram os requisitos não funcionais levantados:
@@ -40,12 +40,45 @@ Abaixo se encontram os requisitos não funcionais levantados:
 \end{itemize}
 
 \section{Especificações do Software}
+
+Esta seção tem o propósito de descrever a arquitetura proposta para o SASQV2, assim como abordar as diferentes linguagens e bibliotecas que ajudam a integrar o programa.
+
+\subsection{Arquitetura do Sistema}
+
+Por se tratar da continuação do desenvolvimento do projeto SASQV, este trabalho reutiliza e adapta grande parte dos componentes existentes no trabalho original. 
+A Figura \ref{fig:arquitetura} mostra uma comparação entre as visões gerais de ambos os projetos. A diferença mais notável entre estas arquiteturas é a separação dos componentes de serviço e o de ferramentas, além de também recriar o componente de interface gráfica para melhor atender às necessidades do sistema. 
+Mais detalhes sobre cada componente da arquitetura são descritos em seções específicas a seguir.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./imgs/arquitetura.png}
+	\caption{Visão geral das arquiteturas dos sistemas SASQV e SASQV2.}
+	\label{fig:arquitetura}
+	\fonte{Autoria Própria.}
+\end{figure}
+
+\subsubsection{Banco de Dados}
+
+O componente banco de dados foi completamente reaproveitado, seguindo as mesma especificações do SASQV. 
+O Sistema Gerenciador de Banco de Dados (\sigla{SGBD}{Sistema Gerenciador de Banco de Dados}) escolhido foi o MySQL, atualmente o SGDB \emph{open source} mais utilizado no mundo \cite{mysqlmarket}.
+O MySQL foi lançado e desenvolvido em 1995 pela empresa Sueca MySQL AB, atualmente incorporada pela Oracle Corporation, na forma de um SGDB que fornece um servidor multi-usuários para bancos de dados relacionais \cite{wikipediamysql}. 
+Juntamente do MySQL também é utilizado o MySQL Workbench, uma ferramenta distribuida pela Oracle que concilia um cliente MySQL, uma ferramenta de \emph{Database Moddeling} e um administrador de servidor MySQL.
+
+O modelo Entidade-Relacionamento (\sigla{ER}{Entidade-Relacionamento}) é o mesmo utilizado pelo SASQV, como mostrado na Figura \ref{fig:diagramaER}.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./imgs/diagramaER.png}
+	\caption{Diagrama Entidade-Relacionamento do SASQV2}
+	\label{fig:diagramaER}
+	\fonte{Autoria Própria}
+\end{figure}
+
+\subsubsection{Model}
+\subsubsection{Service}
+\subsubsection{Ferramentas}
+\subsubsection{Interface Gráfica}
 \subsection{Linguagens}
 \subsection{Bibliotecas}
-\subsection{Arquitetura do Sistema}
-\subsubsection{SASQV Original e Alterações}
-\subsubsection{Ferramentas}
-\subsubsection{Gerador de Vídeos}
-\subsubsection{Gerenciador de Sessão}
 \subsection{Diagramas de Caso de Uso}
 \section{Considerações}
