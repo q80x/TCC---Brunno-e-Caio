@@ -83,7 +83,23 @@ A biblioteca provê um mapeamento flexível entre objetos Java e tipos SQL, elim
 Estima-se que até cerca de 30\% do código de uma aplicação possa ser poupado utilizando MOR, além de incrementar a portabilidade do sistema suportando diversas implementações de Bancos de Dados SQL em troca de um pequeno \emph{overhead} de performance.
 
 \subsubsection{Service}
+
+Este elemento também foi reaproveitado, no entanto sofreu diversas adaptações em sua estrutura para comportar novas funcionalidades e continuar suportando as antigas.
+O componente presente no SASQV se trata de uma fachada de serviço responsável por interpretar mensagens provenientes da interface e distribuí-las em uma das três formas a seguir:
+
+\begin{enumerate}
+	\item Executar uma ação de degradação ou métrica objetiva.
+	\item Repassar uma ação para o dispositivo sem-fio e esperar por resposta.
+	\item Repassar uma ação para o elemento model e esperar por resposta.
+\end{enumerate}
+
+Na arquitetura do SASQV2 a interpretação de mensagens foi descartada, uma vez que foi prosposta a implementação de uma nova interface em linguagem Java, e deu lugar a métodos de finalidades distintas dentro de cada ação enumerada acima. % TODO verificar se o acima pode virar abaixo?!!?
+Com isso execução de tarefas de degradação ou avaliação por métrica objetiva, antes executadas localmente, passaram a ser delegadas para um novo componente chamado Ferramentas, descrito em \ref{met:ferramentas}.
+Já o conteúdo dos métodos que repassam as ações para o dispositivo sem-fio e para o model permanecem muito semelhantes aos encontrados na interpretação de mensagens originalmente feito no SASQV, sofrendo apenas pequenas modificações para acomodar a nova estrutura.
+
 \subsubsection{Ferramentas}
+\label{met:ferramentas}
+
 \subsubsection{Interface Gráfica}
 \subsection{Linguagens}
 \subsection{Bibliotecas}
