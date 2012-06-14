@@ -9,14 +9,345 @@ introducao --- desenvolvimento --- considerações
 \section{Sistema Visual Humano}
 
 \section{Vídeo Digital}
+Imagem é um registro aproximado de um instante de tempo do mundo real, pois representa uma quantidade de informação limitada suficiente para que qualquer pessoa possa, posteriormente, reconhecer aquela representação assimilando-a à uma realidade. Primeiramente, imagens são registros porque contém em si a captura de cores num instante de tempo, que nada mais são que intensidades luminosas (ondas eletromagnéticas que o olho humano é capaz de perceber).
+
+Imagens são registros aproximados, ou limitados, pois dependem da tecnologia que as obtém e manipulam: as cores nem sempre são fiéis, a iluminação pode acabar atrapalhando a nitidez e a saturação, etc. Por fim, imagens são registros suficientes porque permitem sua associação a situações e formas reais por qualquer pessoa apesar de suas limitações. (sempre? ilusões ou diferentes posições podem dar impressões erradas)
+
+A tecnologia na obtenção de imagens se expande a cada dia, seja aprimorando as técnicas já utilizadas, seja criando novas técnicas. Até algumas décadas atrás, a única forma de obtenção era a analógica: através de filmes sensíveis a luz que a ela deveriam ser expostos por um infinitésimo de segundo através de um obturador; fitas magnéticas, etc.
+
+Para a obtenção de sinais digitais, o sinal analógico (uma imagem é um sinal analógico) deve ser submetido às fases de amostragem e quantização, em que uma amostra é gerada em um instante de tempo \cite{REHME}.
+
+Atualmente a forma digital de captura de imagens e vídeos, criada no fim da década de 1960, está bastante difundida por causa das vantagens que oferece, entre elas:
+
+\begin{itemize}
+	\item Editar, adicionar efeitos, corrigir imperfeições, enfim, a manipulação é mais fácil e algumas operações só podem ser realizadas neste formato;
+	\item O arquivo não perde a qualidade ao longo do tempo, como acontece com fitas magnéticas e filmes, onde o meio de armazenamento afeta diretamente a qualidade do conteúdo;
+	\item A cópia é fiel, não causando modificação no conteúdo;
+	\item O custo de armazenamento tem se tornado cada vez mais baixo;
+	\item A integração com outras tecnologias e equipamentos é mais simples;
+	\item Possibilidade de correção de erros a partir de checksums e redundância;
+	\item Possibilidade de compressão com ou sem perdas;
+	\item A repetibilidade da informação, em qualquer momento.
+\end{itemize}
+
+Vídeos digitais nada mais são que sequência de imagens digitais, e todos os conceitos do segundo valem para o primeiro. O contrário pode não ser verdadeiro, uma vez que num vídeo a presença da variável tempo permite-lhe operações exclusivas, como por exemplo a compressão temporal ou codificação inter-frame, detalhada mais adiante.
+
+A gama de aplicações de vídeos digitais é ampla. Alguns exemplos são: transmissão de TV, streaming via internet, exames médicos, uso pessoal, web cams, câmeras em celulares e smartphones, câmeras de segurança, cinema, imagens via satélite, XXXX .
+
+As limitações da tecnologia digital residem na capacidade de armazenamento de dados digitais, velocidade de armazenamento, dispositivos de captura e até mesmo na capacidade humana (por exemplo, de diferenciar cores, tonalidades, etc). Essas limitações moldam a representação digital de imagens, que são formadas por pixels (menor estrutura representativa de cor). Desta forma, a informação que se pode agregar a cada pixel é limitada e, consequentemente, afeta diretamente a quantidade de cores que cada pixel pode assumir.
+
+Antes de explicar sobre o processo de quantização que determinará o conteúdo de cada pixel e seu formato, é importante que o conceito de modelo de cores seja introduzido.
+
+Um modelo de cores é um modelo matemático que associa números a cores, ou seja, é uma função matemática de tuplas, de normalmente três ou quatro variáveis, que representam cores no espaço correspondente.
+
+Várias são as formas de construir um modelo de cores e dentre alguns deles estão: RGB (componentes red-green-blue) figura, YUV (componentes luminância-crominância-crominância) figura e CMYK (componentes cyan-magenta-yellow-black) figura.
+
+% FIGURASSSSSSSSSSS xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+O modelo de cores RGB possui três componentes e a partir da combinação delas é possível criar uma infinidade de cores. Da mesma forma, o modelo de cores CMYK combina as componentes ciano, magenta, amarelo e preto para formar cores. Já no modelo YUV existe uma componente de luminância, ou brilho, e duas componentes de cor efetivamente (na realidade, essas componentes são respectivamente a diferença entre valores padrões de azul e vermelho e a luminância).
+
+De posse destes conceitos iniciais, o significado de quantização torna-se mais simples. Numa imagem analógica, cada partícula da imagem pode assumir infinitos valores pois a intensidade luminosa registrada, por exemplo num filme, é uma grandeza física com domínio real. Já numa imagem digital, cada pixel deve ter uma quantidade finita de informação para que possa ser armazenado. Desta necessidade de se limitar o tamanho da informação surge o conceito de quantização: um espaço de cores é dividido em subespaços em que apenas uma cor o representa. Este processo pode ser visto como uma compressão com perdas, pois várias cores são perdidas.
+
+Partindo-se da quantização, é necessário determinar a quantidade de bits por pixel (bpp ou profundidade de cor) que é equivalente ao número de níveis de intensidade de cada componente de cor do espaço de cores desejado. Por exemplo, utilizando-se 8 bits para cada componente do modelo RGB, o espaço de cores fica limitado a 256 valores para cada componente que, combinados, geram mais de 16 milhões de cores.
+
+No espaço de cores RGB mostrado na figura a seguir, é possível observar o efeito da quantização. Os eixos, que a princípio tinham como domínio os reais, foram discretizados para assumir apenas valores inteiros não-negativos. Cada componente pode assumir seis valores e a combinação delas gera um total de 6^3 = 216 cores. Desta forma, pode-se perceber que cada subespaço assumiu um único valor para representá-lo, ignorando as tonalidades de transição entre cada ponto do espaço.
+
+% FIGURA xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+A quantização e a quantidade de bits por pixel representam uma das vantagens da utilização de formatos digitais pois muita informação redundante aos olhos humanos (tons de cores muito próximos, por exemplo) pode ser removida. Neste aspecto, um ponto chave da fisiologia humana que favorece a compressão de imagens é o fato de a acuidade visual ser maior em relação à luminância do que à crominância [Fonte: http://books.google.com.br/books?id=_s2BlAeR66YC&pg=PA209&redir_esc=y#v=onepage&q&f=false].
+
+Um conceito importante que aproveita esta característica da visão humana é a subamostragem. Este conceito define que a resolução da camada de crominância pode ser menor que a resolução da camada de luminância, ou seja, para um conjunto de pixels, cada um possuirá seu valor de luminância, porém o de crominância poderá ser repetido, desta forma economizando recursos (BRICE, 2000). A figura a seguir apresenta, em colunas, alguns esquemas de subamostragem:
+
+% FIGURA xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+Onde:
+\begin{itemize}
+	\item J - largura da amostra de referência, normalmente igual a 4;
+	\item a - número de amostras de crominância (Cb, Cr) na primeira 
+	\item b - número de amostras de crominância (Cb, Cr) na segunda linha.
+\end{itemize}
+
+O fator alpha (coeficiente de opacidade) pode ser considerado na notação, mas normalmente é omitido por ter valor igual a J. A notação dos esquemas é obtida considerando-se J:a:b. Desta forma, no esquema 4:1:1 é obtida uma amostra de crominância para cada linha; no esquema 4:2:0 são obtidas duas amostras na primeira linha que serão repetidas na segunda; no esquema 4:2:2 uma amostra de crominância é feita para cada conjunto de dois pixels (na horizontal) e, por fim, no esquema 4:4:4 não há subamostragem, uma vez que a crominância é amostrada para cada pixel, não ocorrendo compressão por não haver possibilidade de repetição.
+
+Em valores reais, considerando-se 24 bpp (8 para cada componente de crominância e 8 para a componente de luminância), uma imagem sem subamostragem (esquema 4:4:4) de dimensões 4x2, como a da figura, equivaleria à 24x4x2 = 192 bits. A tabela a seguir sintetiza o valor em bits desta mesma imagem para cada esquema de subamostragem:
+
+% TABELA xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+O vídeo digital com qualidade \emph{standard} (SDTV - Standard Definition Television) é definido pela norma SMPTE 259M (Society of Motion Picture and Television Engeneers). Possui dimensões de 720x480 pixels com esquema de subamostragem 4:2:2. O padrão de DVD (Digital Video Disk) utiliza o esquema 4:2:0 de subamostragem.
+
+\subsection{Arquivo em formato bruto}
+
+É possível armazenar diretamente os valores das amostras num arquivo. Este tipo de arquivo, conhecido como arquivo raw, ou bruto, não passa por qualquer processamento, codificação ou encapsulamento. Existe uma infinidade de formatos de arquivo de vídeo bruto, cada um com uma organização particular que ordena os valores das componentes de cada pixel, entre eles os formatos: AYUV, UYVY, CYUV, YUY2, Y41P, Y411, YUVP, Y211, YV16, YV9, Y800 [Fonte: http://www.fourcc.org/yuv.php].
+
+A figura mostra a organização de um arquivo no formato IYUV (ou I420) de subamostragem 4:2:0 e o respectivo fluxo de bytes em memória. Primeiramente são armazenados os valores de luminância de cada pixel, os valores de crominância U (Cb) para cada conjunto de 4 pixels e os de crominância V (Cr) para o mesmo conjunto.
+
+% FIGURA xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+\section{Codificação}
+
+O objetivo principal da codificação de vídeos é a compressão de dados que torna viável seu armazenamento e transmissão \cite{daronco}.
+
+A codificação ou compressão é o processo que reduz o número de bits de dados digitais a fim de se diminuir a necessidade por recursos, tais como espaço de armazenamento e banda de transmissão. A compressão possui duas categorias básicas: pode ser sem perdas, isto é, apenas informações estatisticamente redundantes são removidas conservando a informação original; e pode ser com perdas, em que informações menos relevantes são descartadas pela necessidade imposta.
+
+Um exemplo de como a compressão é importante atualmente pode ser verificado na transmissão de vídeos por streaming. Considerando-se apenas os valores de luminância (escala de cinza) de um vídeo com definição standard (SD - Standard Definition) de 640x480 pixels com 8 BPP, tem-se que cada quadro de imagem ocupa 8x640x480 = 2.45 Mbits de memória. Se o vídeo deve ser apresentado a uma taxa de 30 FPS (frames per second - quadros por segundo), a banda necessária para transmitir o vídeo deve ser de 30x2.45 Mbits/s = 73.50 Mbps. Adicionando-se informações de cor e de áudio, esta taxa chega facilmente aos 270 Mbps numa qualidade SD, e ultrapassa 1.4 Gbps numa qualidade HD (High Definition - alta definição), valores que teriam um custo impraticável para usuários domésticos e até mesmo para empresas. [Fonte: jg-je-ab-ieee-int-comp-jan09.pdf]. A codificação permite que até 98\% do sinal digital original seja removido sem que haja uma degradação inaceitável na qualidade da imagem [Fonte: MPEG2 mpeg2_bk_cab_tm_ae.pdf]
+
+Embora represente uma redução na utilização de recursos, a compressão encontra limites dependendo da aplicação. Da mesma maneira que dados digitais podem ser comprimidos, para serem utilizados novamente precisam passar por um processo inverso, de descompressão.
+
+(MOVER PARA BAIXO) Numa aplicação dependente de transmissão via rede, como por exemplo uma vídeo-conferência, a compressão permite que a visualização seja próxima do tempo real, ou seja, a imagem capturada pela câmera é codificada, enviada pela rede, decodificada pelo receptor e apresentada na tela em questão de milisegundos. (ficou estranho) Sem a compressão seria necessária uma alta taxa de transmissão, como visto no exemplo anterior, porém com uma compressão muito elevada a aplicação poderia apresentar um vídeo de forma fragmentada, uma vez que precisaria de muito tempo para concluir os processos de compressão/descompressão e apresentar a imagem recebida.
+
+Percebe-se desta forma que existe uma troca entre método e taxa de compressão, degradação da qualidade aceitável e recursos disponíveis, ambos dependentes da aplicação.
+
+A imagem apresenta o processo de obtenção, codificação (etapa A), transmissão, recepção e decodificação (etapa B) de um sinal de áudio e/ou vídeo sendo, por fim, apresentado. As etapas de conversão A/D (analógico-digital) e conversão D/A (digital-analógico) podem ser suprimidas caso a conversão A/D já seja realizada nos equipamentos de obtenção de dados e caso os monitores e dispositivos de armazenamento sejam digitais (REHME).
+
+% FIGURA xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+As etapas gerais da compressão são:
+
+\begin{itemize}
+	\item obter as diferenças entre quadros;
+	\item estimar movimento;
+	\item realizar transformações nos domínios espacial e de frequência.
+\end{itemize}
+
+A compressão espacial opera num mesmo frame e tem por objetivo remover possíveis redundâncias para diminuir a quantidade de dados que o representam. Já a compressão temporal opera numa sequência de frames, buscando encontrar semelhanças entre eles, uma vez que em frames sucessivos ocorrem poucas modificações, na maior parte do tempo. Desta forma, a parte do frame que não sofreu alterações é repetida do anterior e apenas a parte modificada é efetivamente utilizada para descrever o frame a ser apresentado.
+
+De acordo com REHME: “Para a compressão temporal, precisa-se de um ponto de partida ou quadro-chave. Depois dele, apenas as diferenças são descritas”.
+
+Em relação aos mecanismos de codificação de fonte, REHME afirma que “quanto mais sofisticados forem, normalmente melhor é a relação qualidade versus taxa de bits, porém apresentam maior custo em termos de capacidade de processamento e maior tempo requerido para executar a compressão. Para várias situações, o aumento do atraso entre a captura da imagem e sua apresentação não é tolerável”, como exemplificado anteriormente.
+
+Em 1987, a International Electrotechnical Commission (IEC - Comissão Eletrotécnica Internacional) juntamente com a International Organization for Standardization (ISO - Organização Internacional para Padronização) organizou um grupo de especialistas com o objetivo de padronizar a compressão de áudio e vídeo digitais, mais conhecido como Moving Picture Experts Group, ou MPEG. No primeiro encontro, realizado em 1988, após o sucesso da digitalização do sinal de áudio (de natureza analógica) e posterior compressão para o desenvolvimento do popular CD (com áudio de alta qualidade), percebeu-se que aplicar a ideia na transmissão de TV diminuiria a largura de banda necessária, possibilitando a emissão de programas interativos, serviços de internet e ainda mais programas [Fonte: MPEG2 mpeg2_bk_cab_tm_ae.pdf]
+
+O MPEG desenvolveu uma série de protocolos para questões  que surgiram ao longo do desenvolvimento de novas tecnologias, novos equipamentos e novos padrões internacionais, a fim de padronizar emissões digitais. Os padrões desenvolvidos incluem MPEG-1, MPEG-2, MPEG-4 e, mais recentemente, MPEG-7.
+
+Atualmente, a indústria de transmissão de TV se baseia principalmente no padrão MPEG-2 para transmitir sinal de vídeo digital, áudio e dados pela rede. Este é o padrão para transmissão digital [Fonte: MPEG2 mpeg2_bk_cab_tm_ae.pdf], pois é o único que 
 
 \section{Artefatos}
 
-\section{Descrição das Métricas Subjetivas e Objetivas Utilizadas}
-\subsection{Métricas Subjetivas}
+\section{Métricas de Avaliação}
+
+A compressão tende a diminuir a fidelidade, ou seja, o problema da codificação é encontrar um equilíbrio entre o nível de compressão necessário para transmitir pelo canal e o nível de fidelidade que se deseja exibir para o espectador \cite{daronco}.
+
+Apesar de a transmissão digital garantir que a interferência à ruídos seja mínima, a qualidade da imagem não depende somente de interferência, como foi visto. A compressão de vídeos é excelente na perspectiva do transmissor já que o custo do equipamento torna-se menor, porém na perspectiva do receptor/usuário a compressão pode comprometer muito a qualidade.
+
+Neste contexto de tentar equilibrar qualidade e compressão, surge a necessidade de se criarem métodos capazes de avaliar a qualidade dos vídeos transmitidos tanto da parte dos emissores, para saber até que ponto a compressão não é percebida pelo usuário, ou pelo menos que ela não o incomode a ponto de deixar de assistir a transmissão; quanto da parte do usuário, que colabora para ter um serviço melhor.
+
+Diversas metodologias definidas em normas internacionais foram criadas para avaliar a qualidade da informação multimídia (tanto áudio quanto vídeo), divididas em dois paradigmas: avaliação objetiva e avaliação subjetiva, descritas a seguir.
+
 \subsection{Métricas Objetivas}
+
+A avaliação objetiva tenta, através de algoritmos, fazer uma previsão aproximada da qualidade observada pelos observadores \cite{albini}. Os métodos mais simples e mais difundidos são definidos estatisticamente como o MSE (Mean Squared Error - Erro Médio Quadrático) e o PSNR (Peak Signal to Noise Ratio - Razão Sinal-Ruído de Pico) \cite{emmersonsilva} entre os dados originais e os dados recebidos (no caso de vídeos, o cálculo é aplicado pixel a pixel).
+
+Outra métrica objetiva, o SSIM (Structural SIMilarity Index - Indice de Similaridade Estrutural), foi elaborado na tentativa de se aproximar a avaliação às percepções do SVH, pois leva em consideração a luminância, estrutura e o contraste (SILVA). Uma métrica derivada do SSIM é o MSSIM (Mean Structural SIMilarity Index - Indice de Similaridade Estrutural Média), sendo uma média dos valores SSIM calculados a partir do vídeo avaliado (WANG et al, 2004).
+
+\subsubsection{MSE}
+
+O MSE é a média das diferenças ao quadrado entre os valores de nivel de cinza dos pixels. Considerando que o nível de cinza de cada pixel é dado em função de sua posição de acordo com a equação a seguir:
+
+Equação: G = f(t, x, y), onde:
+
+\begin{itemize}
+	\item G = nivel de cinza do pixel, dada sua posição;
+	\item t = frame onde o pixel está localizado;
+	\item x = posição relativa ao eixo vertical no frame;
+	\item y = posição relativa ao eixo horizontal no frame.
+\end{itemize}
+
+o MSE pode ser calculado conforme a seguinte equação:
+
+    Equação: MSE = \frac{1}{\left (T \cdot X \cdot Y \right )} \sum_{t}^{T} \sum_{x}^{X} \sum_{y}^{Y} \left ( P_{1} - P_{2} \right )^{2}
+
+para vídeos com T \emph{frames} de tamanho X x Y (WINKLER, 2005).
+
+    Conforme a medida obtida, a seguinte análise é feita: quanto menor o valor do MSE, mais próxima a imagem avaliada está da imagem original \cite{albini}. A imagem da função MSE é o conjunto dos reais, maiores ou iguais a zero, ou seja, um valor zero indica que as imagens são idênticas.
+
+\subsubsection{PSNR}
+O PSNR é calculado com base num valor MSE e é dado em escala logarítmica. O PSNR mede a fidelidade entre imagens, ao contrário do MSE que mede diferenças entre imagens (WINKLER, 2005). Esta medida é encontrada conforme a equação a seguir:
+
+Equação: PSNR_{dB} = 10 \cdot log_{10} \frac{{\left(2^{n} -1 \right )}^{2}}{MSE}
+
+onde n é o número de bits que representa o nível de cinza de cada pixel.
+
+A popularidade na utilização desta métrica se deve ao fato de que o cálculo pode ser realizado rapidamente, sendo bastante utilizado para comparar vídeos comprimidos e descomprimidos (RICHARDSON, 2003; SILVA).
+
+Dentre as limitações desta métrica, está a necessidade de sincronização entre as imagens original e degradada, baixa correlação com as métricas subjetivas definidas na norma ITU-R (ITU-R BT-500.11, Methodology for the Subjective Assessment for the Television Pictures, 2002.; SILVA).
+
+Analisando os resultados, valores de PSNR altos indicam alta fidelidade entre as imagens comparadas, enquanto que valores baixos indicam baixa fidelidade.
+
+\subsubsection{SSIM}
+
+Esta métrica surgiu com o objetivo de melhor aproximar a avaliação objetiva à percepção humana, pois métricas como o MSE e o PSNR se mostraram ineficientes para tanto \cite{emmersonsilva}. Aplicado sobre valores de luminância, contraste e a estrutura de uma imagem (WANG e BOVIK, 2002), tem como equação:
+
+    Equação: SSIM(x, y) = \frac{(2\mu_{x}\mu_{y} + C_{1})(2\sigma_{xy} + C_{2})} {(\mu_{x}^{2} + \mu_{y}^{2}+C_{1})(\sigma_{x}^{2} + \sigma_{y}^{2}+C_{2})}
+
+onde:
+\begin{itemize}
+	\item μx é a média de x;
+    \item μy é a média de y;
+    \item σ2
+    \item x a variância de x;
+    \item σ2
+    \item y a variância de y;
+    \item 2σxy a covariância de xy;
+    \item C1 = (k1L)2, C2 = (k2L)2 duas variáveis para estabilizar a divisão;
+    \item L a faixa dinâmica dos valores dos pixels (normalmente é 2bits por pixel - 1);
+    \item k 1 = 0,01 e k 2 = 0,03. Estes valores são um tanto arbitrários, mas nos
+    experimentos realizados pelos autores, mostrou-se que o desempenho do
+    algoritmo do índice SSIM é bastante sensível a variações destes valores.
+\end{itemize}
+
+-> aplicada em conjunto de pixels?
+
+\subsubsection{MSSIM}
+
+-> contraste com ssim: \cite{wangbovik2004} é uma média para a imagem toda
+
+Equação: MSSIM(X, Y) = \frac{1}{M} \sum_{i=1}^{M} SSIM(x_{j}, y_{j})
+
+
+\subsection{Métricas Subjetivas}
+
+Por causa das limitações das métricas objetivas, muitos trabalhos foram realizados nos últimos anos para tentar desenvolver um teste objetivo mais sofisticado que se aproximasse dos resultados subjetivos (WATSON, McGOWAN e MULLIGA, 1999; WANG et al, 2004). Embora muitas métricas tenham sido propostas, nenhuma ofereceu um nível de qualidade em comparação aos testes subjetivos (VQEG, 2003).
+
+A avaliação subjetiva depende de observadores humanos que atribuem notas a partir de suas opiniões sobre a qualidade. Posteriormente, uma análise estatística dos dados coletados é realizada, resultando em uma nota chamada MOS (Mean Opinion Score) \cite{itup930} \cite{albini}. Estes tipos de avaliação possuem algumas recomendações estabelecidas por órgãos internacionais com a finalidade de padronizar os procedimentos e ambientes de avaliação, alguns exemplos destas normas podem ser observados na Tabela \ref{tab:recomendacoes}:
+
+\begin{table}
+	\centering
+	\caption{Tabela de recomendações da ITU}
+	\label{tab:recomendacoes}
+	\begin{tabular}{c|l}
+		\hline
+		\textbf{Nome da Norma} & Descrição \\
+		\hline
+		\textbf{ITU-R Rec. BT.500} & Metodologias para avaliação subjetiva da qualidade de vídeos \\
+			& em televisores \\
+		\textbf{ITU-T Rec. P.910} & Métodos para avaliação subjetiva de vídeos em aplicações \\
+			& multimídia \\
+		\textbf{ITU-T Rec. P.911} & Métodos para avaliação subjetiva de dados audiovisuais em \\
+			& aplicações multimídia \\
+		\textbf{ITU-T J.144} & Técnicas para avaliação objetiva de vídeo para televisão a cabo na \\
+			& na presença de uma referência \\
+		\textbf{ITU-R BS.1387} & Avaliação de sistema de áudio de alta qualidade. \\
+		\hline
+	\end{tabular}
+	\fonte{\cite{daronco}}
+\end{table}
+
+As metodologias de avaliação seguem diretrizes que dizem respeito aos critérios para escolha das sequências de imagens, à seleção de observadores, a duração das sessões de avaliação, ao tempo de exposição de cada sequência e intervalos de troca, às condições ambiente, etc.
+
+\subsubsection{Método DSIS - Double Stimulus Impairment Scale (Método EBU)}
+
+Comumente usado para avaliação de novos sistemas ou dos prejuízos decorrentes de transmissão. Neste método, ao avaliador é apresentada uma imagem de referência e posteriormente a mesma imagem degradada. As sessões, que devem durar até 30 minutos, podem seguir duas variantes: na primeira, o conjunto referência/degradada é apresentado e ao final o avaliador deve dar uma nota. Na segunda variante, o avaliador é submetido duas vezes ao conjunto referência/degradada e somente ao final lhe é permitido dar a nota. Em ambas a apresentação dos conjuntos referência/degradada é aleatória.
+
+A Figura \ref{fig:dsisvariantes} apresenta as fases de apresentação para cada variante. Em T1 e T3 o avaliador deve observar as imagens. O período T2 é de transição, deve ser apresentada uma tela cinza por 3 segundos. Por fim, o período T4 é o de avaliação, onde o avaliador efetivamente pode dar a nota. A Tabela \ref{tab:dsisfases} sintetiza as fases e os períodos recomendados.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./imgs/dsisvariantes.png}
+	\caption{.}
+	\label{fig:dsisvariantes}
+	\fonte{Fonte: ITU-R BT.500-11.}
+\end{figure}
+
+\begin{table}
+	\centering
+	\caption{Fases DSIS}
+	\label{tab:dsisfases}
+	\begin{tabular}{c|l}
+		\hline
+		\textbf{T1 = 10 s} & Imagem de referência \\
+		\textbf{T2 = 3 s} & Cinza intermediário, nível de vídeo 200mV \\
+		\textbf{T3 = 10 s} & Imagem degradada \\
+		\textbf{T4 = 5-11 s} & Cinza intermediário \\
+		\hline
+	\end{tabular}
+	\fonte{Fonte: ITU-R BT.500-11.}
+\end{table}
+
+A escala de avaliação a ser utilizada é dada conforme a Tabela \ref{tab:dsisescala}.
+
+\begin{table}
+	\centering
+	\caption{Escala de avaliação DSIS}
+	\label{tab:dsisescala}
+	\begin{tabular}{c|l}
+		\hline
+		\textbf{5} & Imperceptível \\
+		\textbf{4} & Perceptível, mas não irritante \\
+		\textbf{3} & Pouco incômoda \\
+		\textbf{2} & Irritante \\
+		\textbf{1} & Bastante Irritante \\
+		\hline
+	\end{tabular}
+	\fonte{Fonte: ITU-R BT.500-11.}
+\end{table}
+
+\subsubsection{Método DSCQS - Double Stimiulus Continuous Quality Scale}
+
+Este método também é aplicável para avaliar os efeitos dos meios de transmissão sobre a qualidade da imagem. Assim como no método DSIS, as imagens são apresentadas aos pares. Uma deve ser a imagem original e a outra deve ser a imagem processada pelo sistema em teste. A ordem de qual será apresentada por primeiro, bem como a ordem de apresentação de cada par, é aleatória. Outra diferença do método DSIS está na avaliação: o avaliador deve dar nota para ambas as imagens.
+
+O número de repetições dos vídeos depende da duração da sequência de teste. Cenas mais estáticas devem durar de 3 a 4 segundos, podendo ser repetidas 5 vezes (as duas últimas são avaliadas), já cenas mais dinâmicas, que possuam artefatos variantes no tempo, devem durar 10 segundos e ser repetidas duas vezes (a segunda é avaliada).
+
+As fases da apresentação DSCQS podem ser observadas na Figura \ref{fig:dscqsfases}. Elas são semelhantes as fases do método DSIS, a diferença está no momento em que a avaliação é permitida. 
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./imgs/dscqsfases.png}
+	\caption{.}
+	\label{fig:dscqsfases}
+	\fonte{Fonte: ITU-R BT.500-11.}
+\end{figure}
+
+\begin{table}
+	\centering
+	\caption{Fases DSCQS}
+	\label{tab:dsisfases}
+	\begin{tabular}{c|l}
+		\hline
+		\textbf{T1 = 10 s} & Vídeo de teste A \\
+		\textbf{T2 = 3 s} & Cinza intermediário, nível de vídeo 200mV \\
+		\textbf{T3 = 10 s} & Vídeo de teste B \\
+		\textbf{T4 = 5-11 s} & Cinza intermediário \\
+		\hline
+	\end{tabular}
+	\fonte{Fonte: ITU-R BT.500-11.}
+\end{table}
+
+Para realizar a avaliação, o avaliador deve marcar as notas em uma escala contínua conforme a apresentada na Figura \ref{fig:dscqsescala}.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./imgs/dscqsescala.png}
+	\caption{.}
+	\label{fig:dscqsescala}
+	\fonte{Fonte: ITU-R BT.500-11.}
+\end{figure}
+
+\subsubsection{Método SSCQE - Single Stimulus Continuous Quality Evaluation}
+
+Neste método, uma série de segmentos de programa são apresentados ao grupo de avaliadores com duração mínima de cinco minutos. Assim como no método DSCQS, a escala de avaliação é contínua. Os avaliadores modificam a nota conforme desejarem ao longo da apresentação das sequências. As notas, que são amostradas duas vezes por segundo, permitem o levantamento de histogramas (Fonte: REHME).
+
+Este método é mais adequado para avaliar a qualidade de vídeo em sequências longas e sem referência, o que é mais próximo da realidade.
+
+\subsubsection{Método SDSCE - Simultaneous Double Stimulus for Continuous Evaluation Method}
+
+Para este método, as sequências de referência e de teste são apresentadas de forma simultânea. O avaliador deve julgar a fidelidade do vídeo em teste utilizando a escala contínua, assim como nos métodos DSCQS e SSCQE. A Figura \ref{fig:sdsce} demonstra como deve ser realizada a apresentação.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./imgs/sdsce.png}
+	\caption{.}
+	\label{fig:sdsce}
+	\fonte{Fonte: ITU-R BT.500-11.}
+\end{figure}
+
+As sequências podem ser apresentadas lado a lado no mesmo monitor ou em monitores diferentes, desde que tenham as mesmas especificações e características.
+
+\section{Distribuições de Probabilidade}
 
 \section{Trabalhos Relacionados}
 
 \section{Resumo e Conclusão do Capítulo}
 
+
+Comparando-se as metodologias, ambas são importantes e ambas têm suas limitações. A avaliação objetiva é mais precisa considerando que ela avalie a diferença entre um vídeo original e o efetivamente observado. Porém, nem sempre o vídeo original possui uma qualidade que satisfaria o telespectador, sendo esta, portanto, uma de suas desvantagens.
+
+A avaliação subjetiva embora seja um processo mais difícil de ser realizado por depender de um grande grupo de pessoas e tenha um custo mais elevado \cite{albini}, segundo \cite{wangbovik2004} esta é o tipo de avaliação mais ‘correta’, pois o próprio telespectador realiza a avaliação.
