@@ -50,11 +50,11 @@ De posse destes conceitos iniciais, o significado de quantização torna-se mais
 
 Partindo-se da quantização, é necessário determinar a quantidade de bits por pixel (bpp ou profundidade de cor) que é equivalente ao número de níveis de intensidade de cada componente de cor do espaço de cores desejado. Por exemplo, utilizando-se 8 bits para cada componente do modelo RGB, o espaço de cores fica limitado a 256 valores para cada componente que, combinados, geram mais de 16 milhões de cores.
 
-No espaço de cores RGB mostrado na figura a seguir, é possível observar o efeito da quantização. Os eixos, que a princípio tinham como domínio os reais, foram discretizados para assumir apenas valores inteiros não-negativos. Cada componente pode assumir seis valores e a combinação delas gera um total de 6^3 = 216 cores. Desta forma, pode-se perceber que cada subespaço assumiu um único valor para representá-lo, ignorando as tonalidades de transição entre cada ponto do espaço.
+No espaço de cores RGB mostrado na figura a seguir, é possível observar o efeito da quantização. Os eixos, que a princípio tinham como domínio os reais, foram discretizados para assumir apenas valores inteiros não-negativos. Cada componente pode assumir seis valores e a combinação delas gera um total de 6\textsuperscript{3} = 216 cores. Desta forma, pode-se perceber que cada subespaço assumiu um único valor para representá-lo, ignorando as tonalidades de transição entre cada ponto do espaço.
 
 % FIGURA xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-A quantização e a quantidade de bits por pixel representam uma das vantagens da utilização de formatos digitais pois muita informação redundante aos olhos humanos (tons de cores muito próximos, por exemplo) pode ser removida. Neste aspecto, um ponto chave da fisiologia humana que favorece a compressão de imagens é o fato de a acuidade visual ser maior em relação à luminância do que à crominância [Fonte: http://books.google.com.br/books?id=_s2BlAeR66YC&pg=PA209&redir_esc=y#v=onepage&q&f=false].
+A quantização e a quantidade de bits por pixel representam uma das vantagens da utilização de formatos digitais pois muita informação redundante aos olhos humanos (tons de cores muito próximos, por exemplo) pode ser removida. Neste aspecto, um ponto chave da fisiologia humana que favorece a compressão de imagens é o fato de a acuidade visual ser maior em relação à luminância do que à crominância \cite{[Fonte: http://books.google.com.br/books?id=_s2BlAeR66YC&pg=PA209&redir_esc=y#v=onepage&q&f=false]}.
 
 Um conceito importante que aproveita esta característica da visão humana é a subamostragem. Este conceito define que a resolução da camada de crominância pode ser menor que a resolução da camada de luminância, ou seja, para um conjunto de pixels, cada um possuirá seu valor de luminância, porém o de crominância poderá ser repetido, desta forma economizando recursos (BRICE, 2000). A figura a seguir apresenta, em colunas, alguns esquemas de subamostragem:
 
@@ -89,7 +89,7 @@ O objetivo principal da codificação de vídeos é a compressão de dados que t
 
 A codificação ou compressão é o processo que reduz o número de bits de dados digitais a fim de se diminuir a necessidade por recursos, tais como espaço de armazenamento e banda de transmissão. A compressão possui duas categorias básicas: pode ser sem perdas, isto é, apenas informações estatisticamente redundantes são removidas conservando a informação original; e pode ser com perdas, em que informações menos relevantes são descartadas pela necessidade imposta.
 
-Um exemplo de como a compressão é importante atualmente pode ser verificado na transmissão de vídeos por streaming. Considerando-se apenas os valores de luminância (escala de cinza) de um vídeo com definição standard (SD - Standard Definition) de 640x480 pixels com 8 BPP, tem-se que cada quadro de imagem ocupa 8x640x480 = 2.45 Mbits de memória. Se o vídeo deve ser apresentado a uma taxa de 30 FPS (frames per second - quadros por segundo), a banda necessária para transmitir o vídeo deve ser de 30x2.45 Mbits/s = 73.50 Mbps. Adicionando-se informações de cor e de áudio, esta taxa chega facilmente aos 270 Mbps numa qualidade SD, e ultrapassa 1.4 Gbps numa qualidade HD (High Definition - alta definição), valores que teriam um custo impraticável para usuários domésticos e até mesmo para empresas. [Fonte: jg-je-ab-ieee-int-comp-jan09.pdf]. A codificação permite que até 98\% do sinal digital original seja removido sem que haja uma degradação inaceitável na qualidade da imagem [Fonte: MPEG2 mpeg2_bk_cab_tm_ae.pdf]
+Um exemplo de como a compressão é importante atualmente pode ser verificado na transmissão de vídeos por streaming. Considerando-se apenas os valores de luminância (escala de cinza) de um vídeo com definição standard (SD - Standard Definition) de 640x480 pixels com 8 BPP, tem-se que cada quadro de imagem ocupa 8x640x480 = 2.45 Mbits de memória. Se o vídeo deve ser apresentado a uma taxa de 30 FPS (frames per second - quadros por segundo), a banda necessária para transmitir o vídeo deve ser de 30x2.45 Mbits/s = 73.50 Mbps. Adicionando-se informações de cor e de áudio, esta taxa chega facilmente aos 270 Mbps numa qualidade SD, e ultrapassa 1.4 Gbps numa qualidade HD (High Definition - alta definição), valores que teriam um custo impraticável para usuários domésticos e até mesmo para empresas \cite{ciscoieee}. A codificação permite que até 98\% do sinal digital original seja removido sem que haja uma degradação inaceitável na qualidade da imagem \cite{mpeg2ref}.
 
 Embora represente uma redução na utilização de recursos, a compressão encontra limites dependendo da aplicação. Da mesma maneira que dados digitais podem ser comprimidos, para serem utilizados novamente precisam passar por um processo inverso, de descompressão.
 
@@ -114,11 +114,11 @@ De acordo com REHME: “Para a compressão temporal, precisa-se de um ponto de p
 
 Em relação aos mecanismos de codificação de fonte, REHME afirma que “quanto mais sofisticados forem, normalmente melhor é a relação qualidade versus taxa de bits, porém apresentam maior custo em termos de capacidade de processamento e maior tempo requerido para executar a compressão. Para várias situações, o aumento do atraso entre a captura da imagem e sua apresentação não é tolerável”, como exemplificado anteriormente.
 
-Em 1987, a International Electrotechnical Commission (IEC - Comissão Eletrotécnica Internacional) juntamente com a International Organization for Standardization (ISO - Organização Internacional para Padronização) organizou um grupo de especialistas com o objetivo de padronizar a compressão de áudio e vídeo digitais, mais conhecido como Moving Picture Experts Group, ou MPEG. No primeiro encontro, realizado em 1988, após o sucesso da digitalização do sinal de áudio (de natureza analógica) e posterior compressão para o desenvolvimento do popular CD (com áudio de alta qualidade), percebeu-se que aplicar a ideia na transmissão de TV diminuiria a largura de banda necessária, possibilitando a emissão de programas interativos, serviços de internet e ainda mais programas [Fonte: MPEG2 mpeg2_bk_cab_tm_ae.pdf]
+Em 1987, a International Electrotechnical Commission (IEC - Comissão Eletrotécnica Internacional) juntamente com a International Organization for Standardization (ISO - Organização Internacional para Padronização) organizou um grupo de especialistas com o objetivo de padronizar a compressão de áudio e vídeo digitais, mais conhecido como Moving Picture Experts Group, ou MPEG. No primeiro encontro, realizado em 1988, após o sucesso da digitalização do sinal de áudio (de natureza analógica) e posterior compressão para o desenvolvimento do popular CD (com áudio de alta qualidade), percebeu-se que aplicar a ideia na transmissão de TV diminuiria a largura de banda necessária, possibilitando a emissão de programas interativos, serviços de internet e ainda mais programas \cite{mpeg2ref}.
 
 O MPEG desenvolveu uma série de protocolos para questões  que surgiram ao longo do desenvolvimento de novas tecnologias, novos equipamentos e novos padrões internacionais, a fim de padronizar emissões digitais. Os padrões desenvolvidos incluem MPEG-1, MPEG-2, MPEG-4 e, mais recentemente, MPEG-7.
 
-Atualmente, a indústria de transmissão de TV se baseia principalmente no padrão MPEG-2 para transmitir sinal de vídeo digital, áudio e dados pela rede. Este é o padrão para transmissão digital [Fonte: MPEG2 mpeg2_bk_cab_tm_ae.pdf], pois é o único que 
+Atualmente, a indústria de transmissão de TV se baseia principalmente no padrão MPEG-2 para transmitir sinal de vídeo digital, áudio e dados pela rede. Este é o padrão para transmissão digital \cite{mpeg2ref}, pois é o único que 
 
 \section{Artefatos}
 
@@ -153,7 +153,7 @@ Equação: G = f(t, x, y), onde:
 
 o MSE pode ser calculado conforme a seguinte equação:
 
-    Equação: MSE = \frac{1}{\left (T \cdot X \cdot Y \right )} \sum_{t}^{T} \sum_{x}^{X} \sum_{y}^{Y} \left ( P_{1} - P_{2} \right )^{2}
+    Equação: \[MSE = \frac{1}{\left (T \cdot X \cdot Y \right )} \sum_{t}^{T} \sum_{x}^{X} \sum_{y}^{Y} \left ( P_{1} - P_{2} \right )^{2}\]
 
 para vídeos com T \emph{frames} de tamanho X x Y (WINKLER, 2005).
 
@@ -162,7 +162,7 @@ para vídeos com T \emph{frames} de tamanho X x Y (WINKLER, 2005).
 \subsubsection{PSNR}
 O PSNR é calculado com base num valor MSE e é dado em escala logarítmica. O PSNR mede a fidelidade entre imagens, ao contrário do MSE que mede diferenças entre imagens (WINKLER, 2005). Esta medida é encontrada conforme a equação a seguir:
 
-Equação: PSNR_{dB} = 10 \cdot log_{10} \frac{{\left(2^{n} -1 \right )}^{2}}{MSE}
+Equação: \[PSNR_{dB} = 10 \cdot log_{10} \frac{{\left(2^{n} -1 \right )}^{2}}{MSE}\]
 
 onde n é o número de bits que representa o nível de cinza de cada pixel.
 
@@ -176,17 +176,17 @@ Analisando os resultados, valores de PSNR altos indicam alta fidelidade entre as
 
 Esta métrica surgiu com o objetivo de melhor aproximar a avaliação objetiva à percepção humana, pois métricas como o MSE e o PSNR se mostraram ineficientes para tanto \cite{emmersonsilva}. Aplicado sobre valores de luminância, contraste e a estrutura de uma imagem (WANG e BOVIK, 2002), tem como equação:
 
-    Equação: SSIM(x, y) = \frac{(2\mu_{x}\mu_{y} + C_{1})(2\sigma_{xy} + C_{2})} {(\mu_{x}^{2} + \mu_{y}^{2}+C_{1})(\sigma_{x}^{2} + \sigma_{y}^{2}+C_{2})}
+    Equação: \[SSIM(x, y) = \frac{(2\mu_{x}\mu_{y} + C_{1})(2\sigma_{xy} + C_{2})} {(\mu_{x}^{2} + \mu_{y}^{2}+C_{1})(\sigma_{x}^{2} + \sigma_{y}^{2}+C_{2})}\]
 
 onde:
 \begin{itemize}
-	\item μx é a média de x;
-    \item μy é a média de y;
-    \item σ2
+	\item \(\mu_{x}\) é a média de x;
+    \item \(\mu_{y}\) é  a média de y;
+    \item \(\sigma^{2}\)
     \item x a variância de x;
-    \item σ2
+    \item \(\sigma^{2}\)
     \item y a variância de y;
-    \item 2σxy a covariância de xy;
+    \item \(2\sigma_{xy}\) a covariância de xy;
     \item C1 = (k1L)2, C2 = (k2L)2 duas variáveis para estabilizar a divisão;
     \item L a faixa dinâmica dos valores dos pixels (normalmente é 2bits por pixel - 1);
     \item k 1 = 0,01 e k 2 = 0,03. Estes valores são um tanto arbitrários, mas nos
@@ -200,7 +200,7 @@ onde:
 
 -> contraste com ssim: \cite{wangbovik2004} é uma média para a imagem toda
 
-Equação: MSSIM(X, Y) = \frac{1}{M} \sum_{i=1}^{M} SSIM(x_{j}, y_{j})
+Equação: \[MSSIM(X, Y) = \frac{1}{M} \sum_{i=1}^{M} SSIM(x_{j}, y_{j})\]
 
 
 \subsection{Métricas Subjetivas}
