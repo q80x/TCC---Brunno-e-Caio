@@ -17,7 +17,31 @@ As simulações efetuadas pela ferramenta atuam sobre vídeos encapsulados no fo
 e consistem no descarte controlado de porções de informação. 
 A entidade de dados a ser descartada pode ser tanto um único TS quanto o equivalente a um pacote UDP da camada de transporte, o qual comporta usualmente sete unidades TS.
 O descarte é controlado precisamente por meio de um arquivo de configuração fornecido como paramêtro ao programa, podendo este ser gerado pela ferramenta Raffle descrita em \ref{}. %TODO referencia pra raffle.
-Este arquivo de configuração deve conter duas colunas com valores numéricos inteiros. Cada linha será processada sequencialmente, sendo que o primeiro número indica quantas entidades serão transportadas com sucesso e o segundo quantas serão descartadas. A Figura \ref{} ilustra a sequência.
+Este arquivo de configuração deve conter duas colunas com valores numéricos inteiros. 
+Cada linha será processada sequencialmente, sendo que o primeiro número indica quantas entidades serão transportadas com sucesso e o segundo quantas serão descartadas. 
+A Figura \ref{fig:netsim} ilustra a sequência.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./imgs/netsim.png}
+	\caption{Ilustração do arquivo de configuração de descartes da ferramenta Netsim.}
+	\label{fig:netsim}
+	\fonte{Autoria Própria.}
+\end{figure}
+
+Neste caso, \emph{A} e \emph{C} indicam o número de entidades que atingem seu destino com sucesso e \emph{B} e \emph{D} indicam quantas serão descartadas. 
+Sendo assim o streaming de vídeo da Figura \ref{fig:netsim}  teria seus primeiros \emph{A} pacotes intactos, seguidos de \emph{B} perdidos, mais \emph{C} pacotes intactos e ainda \emph{D} perdidos novamente.
+
+\begin{description}
+	\item[\texttt{--input}] \hfill \\
+		Define o caminho(absoluto ou relativo) e arquivo do vídeo a ser processado pela simulação.
+	\item[\texttt{--output}] \hfill \\
+		Define o caminho(absoluto ou relativo) e arquivo onde será armazenado o vídeo resultante.
+	\item[\texttt{--ts}] \hfill \\
+		(Opcional) Se presente, a entidade de descarte considerada é um TS, caso contrário a unidade é um pacote UDP.
+	\item[\texttt{--raffle}] \hfill \\
+		Indica o caminho(absoluto ou relativo) e arquivo a ser usado como configuração de descartes.
+\end{description}
 
 \subsection{Raffle}
 \subsection{Metric}
