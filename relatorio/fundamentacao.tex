@@ -138,7 +138,7 @@ A avaliação objetiva tenta, através de algoritmos, fazer uma previsão aproxi
 
 Outra métrica objetiva, o SSIM (Structural SIMilarity Index - Indice de Similaridade Estrutural), foi elaborado na tentativa de se aproximar a avaliação às percepções do SVH, pois leva em consideração a luminância, estrutura e o contraste (SILVA). Uma métrica derivada do SSIM é o MSSIM (Mean Structural SIMilarity Index - Indice de Similaridade Estrutural Média), sendo uma média dos valores SSIM calculados a partir do vídeo avaliado (WANG et al, 2004).
 
-\subsubsection{MSE}
+\subsubsection{MSE - Mean Squared Error}
 
 O MSE é a média das diferenças ao quadrado entre os valores de nivel de cinza dos pixels. Considerando que o nível de cinza de cada pixel é dado em função de sua posição de acordo com a equação a seguir:
 
@@ -159,7 +159,7 @@ para vídeos com T \emph{frames} de tamanho X x Y (WINKLER, 2005).
 
     Conforme a medida obtida, a seguinte análise é feita: quanto menor o valor do MSE, mais próxima a imagem avaliada está da imagem original \cite{albini}. A imagem da função MSE é o conjunto dos reais, maiores ou iguais a zero, ou seja, um valor zero indica que as imagens são idênticas.
 
-\subsubsection{PSNR}
+\subsubsection{PSNR - Peak Signal to Noise Ratio}
 O PSNR é calculado com base num valor MSE e é dado em escala logarítmica. O PSNR mede a fidelidade entre imagens, ao contrário do MSE que mede diferenças entre imagens (WINKLER, 2005). Esta medida é encontrada conforme a equação a seguir:
 
 Equação: \[PSNR_{dB} = 10 \cdot log_{10} \frac{{\left(2^{n} -1 \right )}^{2}}{MSE}\]
@@ -172,40 +172,41 @@ Dentre as limitações desta métrica, está a necessidade de sincronização en
 
 Analisando os resultados, valores de PSNR altos indicam alta fidelidade entre as imagens comparadas, enquanto que valores baixos indicam baixa fidelidade.
 
-\subsubsection{SSIM}
+\subsubsection{SSIM - Structural Similarity Index}
 
-Esta métrica surgiu com o objetivo de melhor aproximar a avaliação objetiva à percepção humana, pois métricas como o MSE e o PSNR se mostraram ineficientes para tanto \cite{emmersonsilva}. Aplicado sobre valores de luminância, contraste e a estrutura de uma imagem (WANG e BOVIK, 2002), tem como equação:
+Esta métrica surgiu com o objetivo de melhor aproximar a avaliação objetiva à percepção humana, pois métricas como o MSE e o PSNR se mostraram ineficientes para tanto \cite{emmersonsilva}. Aplicado sobre valores de luminância, contraste e a estrutura para várias janelas de mesmas dimensões em uma imagem (WANG e BOVIK, 2002), tem como equação:
 
     Equação: \[SSIM(x, y) = \frac{(2\mu_{x}\mu_{y} + C_{1})(2\sigma_{xy} + C_{2})} {(\mu_{x}^{2} + \mu_{y}^{2}+C_{1})(\sigma_{x}^{2} + \sigma_{y}^{2}+C_{2})}\]
 
 onde:
 \begin{itemize}
+	\item x e y são janelas sendo comparadas de dimensões NxN;
 	\item \(\mu_{x}\) é a média de x;
     \item \(\mu_{y}\) é  a média de y;
-    \item \(\sigma^{2}\)
-    \item x a variância de x;
-    \item \(\sigma^{2}\)
-    \item y a variância de y;
-    \item \(2\sigma_{xy}\) a covariância de xy;
-    \item C1 = (k1L)2, C2 = (k2L)2 duas variáveis para estabilizar a divisão;
-    \item L a faixa dinâmica dos valores dos pixels (normalmente é 2bits por pixel - 1);
-    \item k 1 = 0,01 e k 2 = 0,03. Estes valores são um tanto arbitrários, mas nos
-    experimentos realizados pelos autores, mostrou-se que o desempenho do
-    algoritmo do índice SSIM é bastante sensível a variações destes valores.
+    \item \(\sigma^{2}_{x}\) é a variância de x;
+    \item \(\sigma^{2}_{y}\) é a variância de y;
+    \item \(\sigma_{xy}\) é a covariância de x e y;
+    \item C1 = \((k_{1}L)^{2}\), C2 = \((k_{2}L)^{2}\) são duas variáveis para estabilizar a divisão;
+    \item L é a faixa dinâmica dos valores dos pixels (normalmente é \(2^{bits por pixel} - 1\));
+    \item \(k_{1}\) = 0.01 e \(k_{2}\) = 0.03. Estes são valores são indicados pelos autores do método \cite{wangbovik2004} em decorrência de experimentos realizados.
 \end{itemize}
 
--> aplicada em conjunto de pixels?
+\subsubsection{MSSIM - Mean Structural Similarity Index}
 
-\subsubsection{MSSIM}
-
--> contraste com ssim: \cite{wangbovik2004} é uma média para a imagem toda
+Em termos práticos, normalmente é desejado encontrar-se uma medida de qualidade geral de toda a imagem \cite{wangbovik2004}. Por esta razão, a média dos índices SSIM é calculada:
 
 Equação: \[MSSIM(X, Y) = \frac{1}{M} \sum_{i=1}^{M} SSIM(x_{j}, y_{j})\]
 
+onde:
+\begin{itemize}
+	\item X e Y são as imagens de referência e distorcida, respectivamente;
+	\item \(x_{j}\) e \(y_{j}\) são as janelas dentro das imagens;
+	\item M é o número total de janelas na imagem.
+\end{itemize}
 
 \subsection{Métricas Subjetivas}
 
-Por causa das limitações das métricas objetivas, muitos trabalhos foram realizados nos últimos anos para tentar desenvolver um teste objetivo mais sofisticado que se aproximasse dos resultados subjetivos (WATSON, McGOWAN e MULLIGA, 1999; WANG et al, 2004). Embora muitas métricas tenham sido propostas, nenhuma ofereceu um nível de qualidade em comparação aos testes subjetivos (VQEG, 2003).
+Por causa das limitações das métricas objetivas, muitos trabalhos foram realiz'os nos últimos anos para tentar desenvolver um teste objetivo mais sofisticado que se aproximasse dos resultados subjetivos (WATSON, McGOWAN e MULLIGA, 1999; WANG et al, 2004). Embora muitas métricas tenham sido propostas, nenhuma ofereceu um nível de qualidade em comparação aos testes subjetivos (VQEG, 2003).
 
 A avaliação subjetiva depende de observadores humanos que atribuem notas a partir de suas opiniões sobre a qualidade. Posteriormente, uma análise estatística dos dados coletados é realizada, resultando em uma nota chamada MOS (Mean Opinion Score) \cite{itup930} \cite{albini}. Estes tipos de avaliação possuem algumas recomendações estabelecidas por órgãos internacionais com a finalidade de padronizar os procedimentos e ambientes de avaliação, alguns exemplos destas normas podem ser observados na Tabela \ref{tab:recomendacoes}:
 
@@ -342,6 +343,137 @@ Para este método, as sequências de referência e de teste são apresentadas de
 As sequências podem ser apresentadas lado a lado no mesmo monitor ou em monitores diferentes, desde que tenham as mesmas especificações e características.
 
 \section{Distribuições de Probabilidade}
+
+Distribuição de probabilidade é um conceito fundamental em Estatística, utilizado em nível prático e teórico \cite{distteoria}.
+
+As distribuições de probabilidade são funções matemáticas que mapeiam para todo valor dentro de um intervalo definido (discreto ou contínuo), valores de probabilidade de ocorrência, considerando uma variável aleatória que pode assumir qualquer valor deste intervalo\cite{distteoria}. Em outras palavras, é a função que descreve a probabilidade de uma variável aleatória assumir determinados valores \cite{wikidistribuicoes}.
+ 
+Distribuições discretas são funções de probabilidade cuja variável pode assumir um número discreto de valores, não necessariamente finito. A definição matemática de uma função de probabilidade discreta, p(x), é uma função que satisfaz as seguintes propriedades:
+
+\begin{itemize}
+	\item A probabilidade de x assumir um valor específico é p(x);
+	\item p(x) é não negativa para todo x real;
+	\item a soma de p(x) para todos os valores possíveis de x é igual a 1.
+\end{itemize}
+
+Distribuições contínuas ou funções de probabilidade contínua são definidas para infinitos valores dentro de um intervalo. Por este fato, a probabilidade é medida para subintervalos, uma vez que a probabilidade de qualquer ponto é sempre zero\cite{distteoria}.
+
+A definição matemática de uma função de probabilidade contínua, f(x), é uma função que satisfaz as seguintes propriedades:
+
+\begin{itemize}
+	\item a probabilidade de x estar entre dois pontos a e b é: \(p[a \leqslant x \leqslant b] = \int_{a}^{b}f(x)dx\);
+	\item a probabilidade é sempre não-negativa para todo x real;
+	\item a integral da função de probabilidade é: \(\int_{-\infty}^{\infty}f(x)dx = 1\)
+\end{itemize}
+
+Normalmente, distribuições de probabilidade são definidas por suas funções densidade de probabilidade, que associam a cada valor de x, sua probabilidade de ocorrência, de acordo com a equação a seguir: 
+
+Equação: \(f(x) = Pr[X = x]\).
+
+Particularmente para distribuições contínuas, a densidade de probabilidade é definida como a integral entre dois pontos, já que para qualquer ponto a probabilidade deve ser zero, como já descrito:
+
+Equação: \(\int_{a}^{b}f(x)dx = Pr[a \leqslant X \leqslant b]\).
+
+Algumas distribuições de probabilidade bastante conhecidas, como por exemplo a distribuição normal e a uniforme, são detalhadas a seguir.
+
+\subsection{Distribuição Uniforme}
+
+Distribuição uniforme contínua, ou distribuição retangular, é aquela em que todos os intervalos de mesmo tamanho tem a mesma probabilidade de ocorrer \cite{wikidistuniforme1}. Mais precisamente, a probabilidade de se gerar qualquer ponto em um intervalo contindo no espaço amostral é proporcional ao tamanho do intervalo \cite{wikidistuniforme2}. Em uma distribuição uniforme discreta, para todos os elementos possíveis a probabilidade é a mesma.
+
+A equação da função densidade de probabilidade contínua dada a seguir, é exemplificada na Figura \ref{fig:uniformdist}.
+
+Equação: \[\left\{\begin{matrix}
+\frac{1}{(b-a)} & \mbox{para } a \leqslant x \leqslant b,\\ 
+0 & \mbox{para } x < a \mbox{ ou } x > b
+\end{matrix}\right.\]
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./imgs/uniformdist.png}
+	\caption{Função Densidade de Probabilidade de Distribuição Uniforme.}
+	\label{fig:uniformdist}
+	\fonte{\cite{wikidistuniform1}}
+\end{figure}
+
+Uma distribuição uniforme que seja definida dentro do intervalo (0, 1) é chamada de Distribuição Uniforme Padrão (U(0, 1)). A partir dela é possível gerar distribuições em diferentes intervalos (a, b) conforme a equação a seguir:
+
+Equação: \[a+[(b-a) \cdot U(0, 1)]\]
+
+Muitas linguagens de programação, assim como Java e C++, possuem funções nativas para gerar valores uniformemente distribuídos. Em Java, a classe Math possui a função random() que gera valores de acordo com uma distribuição uniforme padrão. Ainda, Java possui uma classe especializada no pacote util chamada Random, utilizada para gerar valores booleanos, de \emph{bytes}, de pontos flutuantes, etc. Esta classe também gera valores seguindo uma distribuição normal através do método nextGaussian(), que utiliza a transformada Box-Mueller, explicada na próxima seção \cite{javaapi}. 
+
+Na linguagem C++ a função rand() encontra-se na biblioteca padrão (cstdlib ou stdlib.h), assim como a função srand() que inicializa a semente do gerador. O gerador, ao contrário de Java, fornece valores inteiros no intervalo (0, RAND_MAX). A constante RAND_MAX, também da biblioteca padrão, tem valor 32767 \cite{cppreference}.
+
+\subsection{Distribuição Normal}
+
+Conhecida também como Função Gaussiana, esta distribuição de probabilidade tem domínio nos reais no intervalo \((-\infty, \infty)\). É definida de acordo com dois parâmetros: a média \((\mu)\), ou valor esperado, e a variância \((\sigma^{2})\), conforme a seguinte equação:
+
+Equação: \(f(x; \mu, \sigma^2) = \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{1}{2}(\frac{x - \mu}{\sigma})^2}\).
+
+onde:
+\begin{itemize}
+	\item \(f(x; \mu, \sigma^2)\) é a probabilidade de ocorrência do valor x;
+	\item \(\mu\) é o valor da média;
+	\item \(\sigma\) e \(\sigma^{2}\) são os valores desvio padrão e variância, respectivamente.
+\end{itemize}
+
+A Figura \ref{fig:normaldist} apresenta diferentes funções densidade de probabilidade normal para diferentes parâmetros de média e variância.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./imgs/normaldist.png}
+	\caption{Função Densidade de Probabilidade de Distribuição Normal.}
+	\label{fig:normaldist}
+	\fonte{Fonte: \cite{wikinormaldist}}
+\end{figure}
+
+Na Teoria das Probabilidades, o Teorema do Limite Central afirma que, dada certas condições, a média de um número suficientemente grande de variáveis aleatórias independentes, cada uma com média e variância finita, seguirá uma distribuição normal \cite{teoremalimitecentral}.
+
+Em teoria, uma variável aleatória seguindo uma distribuição normal pode assumir valores infinitos, o que é inconveniente computacionalmente. Desta forma, é bastante comum aplicar-se o truncamento desta distribuição, em que um limite inferior e/ou superior é utilizado para adequar os resultado a um intervalo desejado.
+
+Existem algumas formas de se construir computacionalmente um gerador aleatório que segue uma distribuição normal. Dois métodos bastante conhecidos são: transformada de Box-Mueller e algoritmo de Ziggurat.
+
+A transformada de Box-Mueller se baseia num gerador aleatório com distribuição uniforme pode ser expresso em duas formas: a básica e a polar. Na primeira, o gerador uniforme deve gerar valores no intervalo (0, 1], na segunda forma devem ser gerados valores no intervalo [-1, +1] como valores de entrada \cite{boxmueller}.
+
+Supondo que \(U_{1}\) e \(U{2}\) são variáveis aleatórias com distribuição uniforme no intervalo (0, 1] (ou seja, forma básica), as variáveis \(Z_{0}\) e \(Z_{1}\), dadas conforme as equações a seguir, seguirão uma distribuição normal com desvio padrão igual a 1.
+
+Equações:
+\[Z_{0} = R\cos{(\Theta)} = \sqrt{-2\ln{U_{1}}}\cos{(2\pi U_{2})}\]
+\[Z_{1} = R\sin{(\Theta)} = \sqrt{-2\ln{U_{1}}}\sin{(2\pi U_{2})}\]
+
+A forma polar da transformada pode ser calculada conforme as equações a seguir. Nesta forma, a vantagem reside no fato de que as funções trigonométricas não precisam ser calculadas diretamente \cite{wikiboxmueller}. Considerando que u e v são variáveis uniformemente distribuídas,  e \(s = u^{2} + v^{2}\), as variáveis \(z_{0}\) e \(z{1}\) seguirão uma distribuição normal:
+
+\[z_{0} = \sqrt{-2\ln{U_{1}}}\cos{(2\pi U_{2})} = \sqrt{-2\ln{s}}(\frac{u}{\sqrt{s}})\cos{(2\pi U_{2})}) = u\sqrt{\frac{-2\ln{s}}{s}}\]
+\[z_{1} = \sqrt{-2\ln{U_{1}}}\sin{(2\pi U_{2})} = \sqrt{-2\ln{s}}(\frac{v}{\sqrt{s}})\cos{(2\pi U_{2})}) = v\sqrt{\frac{-2\ln{s}}{s}}\]
+
+As condições de validade são: garantir que s seja maior que zero e menor que um. Caso alguma destas condições seja violada, deve-se gerar novos valores de u e v até que as condições sejam satisfeitas.
+
+O Algoritmo Ziggurat se baseia, assim como a transformada Box-Mueller em sua forma polar, no algoritmo de rejeição para gerar valores. Normalmente é utilizado quando a geração de uma grande quantidade de números é necessária \cite{ziggurat}. 
+
+\subsection{Distribuição Triangular}
+
+Esta distribuição, como o nome diz, tem formato triangular. Sua função densidade de probabilidade varia de acordo com três parâmetros: a, b e c, como pode ser observado nas equações a seguir e na Figura \ref{fig:triangulardist}.
+
+\[\left\{\begin{array}{l l}
+0 & \mbox{para } x < a \\ 
+\frac{2(x-a)}{(b-a)(c-a)} & \mbox{para } a \leqslant x \leqslant c, \\
+\frac{2(b-x)}{(b-a)(b-c)} & \mbox{para } c \leqslant x \leqslant b, \\
+0 & \mbox{para } b < x
+\end{array}\right.\]
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./imgs/triangulardist.png}
+	\caption{Função Densidade de Probabilidade de Distribuição Triangular.}
+	\label{fig:triangulardist}
+	\fonte{\cite{wikitriangulardist}}
+\end{figure}
+
+Computacionalmente é possível criar um gerador aleatório que segue esta distribuição a partir de um gerador aleatório que siga uma distribuição uniforme no intervalo (0, 1) através das equações a seguir:
+
+\[\left\{\begin{array}{l l}
+X = a +\sqrt{U(b-a)(c-a)} & \mbox{para } 0 < F(c)\\ 
+X = b - \sqrt{(1-U)(b-a)(b-c)} & \mbox{para } F(c) \leqslant U < 1
+\end{array}\right.\]
 
 \section{Trabalhos Relacionados}
 
