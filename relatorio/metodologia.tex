@@ -100,8 +100,45 @@ Já o conteúdo dos métodos que repassam as ações para o dispositivo sem-fio 
 \subsubsection{Ferramentas}
 \label{met:ferramentas}
 
+O módulo ferramentas constitui um novo componente na arquitetura do \emph{software}, visto que um dos objetivos deste trabalho é desenvolver melhores ferramentas de degradação considerou-se válida a separação deste módulo que originalmente se encontrava juntamente do Service.
+Esse módulo é resposável por todas as ferramentas que de alguma forma manipulam vídeos digitais ou auxilíam nesta manipulação. Dessa forma foram desenvolvidas 5 ferramentas distintas, em linguagem C++:
+
+\begin{description}
+	\item[Block] Cria o efeito de blocagem nos vídeos.
+	\item[Blur] Cria o efeito de embaçamento nos vídeos.
+	\item[Netsim] Efetua uma simulação de streaming de vídeo digital com perda informação.
+	\item[Raffle] Ferramenta auxíliar para distribuição temporal e espacial dos artefatos.
+	\item[Metric] Efetua avaliação dos vídeos por meio de métricas objetivas.
+\end{description}
+
+Estas ferramentas podem receber configurações independentes e flexíveis, diversificando as possibilidades de geração de degradações e artefatos e tornando possível a criação de resultados diferenciados para um mesmo vídeo usado como referência. Dentre essas configurações pode-se destacar a distribuição dos artefatos no tempo e no espaço e a intensidade de aplicação dos mesmos. Cada ferramenta citada será descrita com mais detalhes em \ref{}. %TODO referencia pro desenvolvimento:ferramentas
+
 \subsubsection{Interface Gráfica}
+
+O componente de interface existente no SASQV foi completamente refeito.
+Originalmente desenvolvido utilizando a tecnologia Adobe Flex, era necessária a utilização de uma biblioteca exclusivamente para comunicação entre os modulos de Interface e Service. A biblioteca utilizada (merapi) se encontrava em fase de desenvolvimento beta e carecia de funcionalidades, de forma que seria necessário buscar uma biblioteca alternativa para continuar o densevolvimento do projeto.
+Além disso, as ferramentas de desenvolvimento em tecnologia Flex não são gratuitas e perderam gradativamente o suporte à sistemas operacionais Linux.
+
+A combinação destes fatores motivou a decisão de desenvolver uma nova intercae Gráfica utilizando Java, proporcionando melhor integração, reduzindo o envolvimento de diversas tecnologias e bibliotecas e assim incrementando a portabilidade da ferramenta.
+
 \subsection{Linguagens}
+
+Por se tratar da aprimoração e continuação do projeto SASQV a primeira linguagem contemplada foi a presente no mesmo: Java. 
+Esta foi desenvolvida por uma equipe de programadore liderada por James Gosling, trabalhando para a empresa Sun MicroSystems \cite{wikijava}. Sendo lançada em 1995, era o principal componente da plataforma Java e demonstrava forte inspiração na linguagem C++, compartilhando parte de sua sintaxe e também diversas característica. 
+No entanto, Java é considerada uma linguagem de mais alto nível, além de ser compilada no formato \emph{bytecode}, o que favorece a portabilidade dos programas, podendo ser executados em diversas arquiteturas e sistemas operacionais, contanto que estes possuam uma implementação da Java Virtual Machine (\sigla{JVM}{Java Virtual Machine}). Uma das facilidades da linguagem é a sua extensa biblioteca padrão, que contém, entre outros, diversos componentes para construção de interfaces gráficas.
+
+A linguagem C++ também passou a ser considerada para o desenvolvimento do projeto, visto o desenvolvimento do módulo de Ferramentas como programas que possam ser usados independentemente. 
+A linguagem teve seu desenvolvimento iniciado por Bjarne Stroustrup em 1979, quando trabalhava na Bell Labs \cite{wikicplusplus}.
+C++ é uma nova implementação da linguagem C adicionada de novas funcionalidades, tais como suporte a classes, sobrecarga de operadores, herança múltipla e tratamento de exceções.
+Atualmente, C++ é uma das linguagens mais populares, sendo implementada em diversas plataformas de \emph{hardware} e sistemas operacionais, além de ser usado na implemantação dos mais diversos softwares para \emph{desktop}, \emph{drivers} de dispositivos de \emph{hardware} e sistemas embarcados.
+
+Um dos principais atrativos da linguagem para o desenvolvimento das ferramentas deste projeto é a existência de diversas funcionalidades de baixo nível. 
+Essas funcionalidades simplificam e facilitam o acesso e manipulação \emph{byte} a \emph{byte} de \emph{streams} de dados, algo que é usado extensivamente ao longo da implementação das ferramentas.
+Outro aspecto importante derivado destas funcionalidades é o impacto na performance do software. %TODO
+A simplicidade da linguagem também facilita o desenvolvimento de ferramentas \emph{stand-alone} com interface por linhas de comando, além de possuir diversas bibliotecas de \emph{parsing} para comandos e opções.
+
+Ambas as linguagens eram previamente conhecidas pelos integrantes do projeto, os quais também possuem um nível confortável de experiência no desenvolvimento de aplicações com estas linguagems e com diversas ferramentas associadas a elas, como IDE's, bibliotecas gráficas e conectividade com bancos de dados.
+
 \subsection{Bibliotecas}
 \subsection{Diagramas de Caso de Uso}
 \section{Considerações}
