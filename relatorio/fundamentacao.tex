@@ -122,6 +122,52 @@ Atualmente, a indústria de transmissão de TV se baseia principalmente no padr�
 
 \section{Artefatos}
 
+Imagens digitais são alvo de uma grande variedade de distorções durante sua aquisição, processamento, compressão, armazenamento, transmissão e reprodução \cite{wangbovik2004}. As características peculiares que são observadas nas imagens são chamadas de artefatos \cite{albini} e podem ser observadas tanto em transmissões digitais quanto em transmissões analógicas.
+
+As imagens digitalmente transmitidas, embora suscetíveis à um grande número de distorções, não sofrem as mesmas distorções que as convencionais, de transmissão analógica (salvo no caso de uma imagem analógica ser convertida para ser transmitida em meio digital). O ruído branco gaussiano e o ruído sal e pimenta são exemplos de distorções que ocorrem em meio analógico e podem ser observados na Figura~\ref{fig:artefatosanalogicos} a seguir:
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./imgs/artefatosanalogicos.png}
+	\caption{.}
+	\label{fig:artefatosanalogicos}
+	\fonte{\cite{panagiotopoulou}}
+\end{figure}
+
+Em se tratando de vídeos digitais, os artefatos de maior notoriedade são: \emph{blockiness}, \emph{blurriness}, \emph{ringing}, e \emph{noisiness} \cite{farias2007} e podem ser observados na Figura~\ref{fig:artefatosdigitais}, a seguir:
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./imgs/artefatosdigitais.png}
+	\caption{.}
+	\label{fig:artefatosdigitais}
+	\fonte{\cite{farias2007}}
+\end{figure}
+
+Poder adicionar artefatos de forma artificial e controlada à vídeos digitais é de grande importância no campo de avaliação de vídeos (tanto na avaliação objetiva quanto na avaliação subjetiva) uma vez que, a partir de algoritmos, é possível simular distorções reais. Estes algoritmos não são padronizados, mas existem algumas recomendações internacionais, como por exemplo a recomendação P.930 da ITU \cite{itup930} que descreve os princípios para reproduzir as distorções relativas à compressão de vídeo sem efetivamente precisar comprimí-lo.
+
+Nas seções que seguem, alguns dos artefatos mais comuns serão detalhados juntamente com as recomendações para a respectiva simulação.
+
+\subsection{Efeito de Blocagem - \emph{Blocking effect}}
+
+Este artefato é o mais estudado pela literatura \cite{emmersonsilva}. Ocorre em função de uma quantização grosseira no processo de compressão, em que resulta numa distorção ou perda de componentes de alta frequência \cite{itup930}. Normalmente ocorre em superfícies lisas em movimento \cite{itup930} \cite{farias2007}.
+
+Muitos codificadores utilizam a Transformada Discreta de Cossenos (DCT - Discrete Cosine Transform), como o MPEG-1 e o MPEG-2, em que uma imagem é codificada a partir de janelas de dimensões 8x8 pixels. 
+
+A recomendação P.930 indica que a simulação deste artefato deve, primeiramente, localizar regiões de movimento em uma imagem para posteriormente selecionar em quais possíveis janelas será aplicada uma média dos valores de luminância \cite{itup930}. Desta forma, o cálculo da DCT e todo o processo de compressão é evitado.
+
+\subsection{Efeito de Borramento - \emph{Blurring effect}}
+
+O artefato de borramento é, visualmente, a perda de nitidez das bordas e de detalhes espaciais em uma imagem, como em áreas com texturas ou ao redor das bordas de objeto de cena \cite{wurao2005}. É causado pelo algoritmo de compressão no momento em que escolhe codificar bits de resolução ou de movimento \cite{itup930}.
+
+A recomendação P.930 fornece os filtros a serem utilizados para a simulação deste artefato.
+
+\subsection{Efeito de Travamento - \emph{Jerkiness}}
+
+Este artefato é facilmente percebido em sistemas com baixa taxa de bits para vídeo, como em sistemas de teleconferência \cite{itup930} em que a imagem parece congelar em determinados instantes. Isso se deve à repetição de \emph{frames} com o objetivo de reduzir a quantidade de informação a ser transmitida ou processada \cite{itup930}.
+
+A recomendação P.930 fornece dois fatores para controlar as repetições numa simulção: o FRF (Frame Repetition Factor) e o EFR (Effective Frame Rate). Um FRF igual a 3 causa a repetição do terceiro \emph{frame} de uma sequência durante os próximos dois \emph{frames}. O EFR é calculado como 30/FRF, e para o exemplo dado tem valor de 10 FPS.
+
 \section{Métricas de Avaliação}
 
 A compressão tende a diminuir a fidelidade, ou seja, o problema da codificação é encontrar um equilíbrio entre o nível de compressão necessário para transmitir pelo canal e o nível de fidelidade que se deseja exibir para o espectador \cite{daronco}.
