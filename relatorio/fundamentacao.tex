@@ -11,11 +11,11 @@ introducao --- desenvolvimento --- considerações
 \section{Vídeo Digital}
 Imagem é um registro aproximado de um instante de tempo do mundo real, pois representa uma quantidade de informação limitada suficiente para que qualquer pessoa possa, posteriormente, reconhecer aquela representação assimilando-a à uma realidade. Primeiramente, imagens são registros porque contém em si a captura de cores num instante de tempo, que nada mais são que intensidades luminosas (ondas eletromagnéticas que o olho humano é capaz de perceber).
 
-Imagens são registros aproximados, ou limitados, pois dependem da tecnologia que as obtém e manipulam: as cores nem sempre são fiéis, a iluminação pode acabar atrapalhando a nitidez e a saturação, etc. Por fim, imagens são registros suficientes porque permitem sua associação a situações e formas reais por qualquer pessoa apesar de suas limitações. (sempre? ilusões ou diferentes posições podem dar impressões erradas)
+Imagens são registros aproximados, ou limitados, pois dependem da tecnologia que as obtém e manipulam: as cores nem sempre são fiéis, a iluminação pode acabar atrapalhando a nitidez e a saturação, etc. Por fim, imagens são registros suficientes porque permitem sua associação a situações e formas reais por qualquer pessoa apesar de suas limitações. (sempre? ilusões ou diferentes posições podem dar impressões erradas) %TODO
 
 A tecnologia na obtenção de imagens se expande a cada dia, seja aprimorando as técnicas já utilizadas, seja criando novas técnicas. Até algumas décadas atrás, a única forma de obtenção era a analógica: através de filmes sensíveis a luz que a ela deveriam ser expostos por um infinitésimo de segundo através de um obturador; fitas magnéticas, etc.
 
-Para a obtenção de sinais digitais, o sinal analógico (uma imagem é um sinal analógico) deve ser submetido às fases de amostragem e quantização, em que uma amostra é gerada em um instante de tempo \cite{REHME}.
+Para a obtenção de sinais digitais, o sinal analógico (uma imagem é um sinal analógico) deve ser submetido às fases de amostragem e quantização, em que uma amostra é gerada em um instante de tempo \cite{REHME}. %TODO citacao REHME
 
 Atualmente a forma digital de captura de imagens e vídeos, criada no fim da década de 1960, está bastante difundida por causa das vantagens que oferece, entre elas:
 
@@ -73,11 +73,11 @@ Em valores reais, considerando-se 24 bpp (8 para cada componente de crominância
 
 % TABELA xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-O vídeo digital com qualidade \emph{standard} (SDTV - Standard Definition Television) é definido pela norma SMPTE 259M (Society of Motion Picture and Television Engeneers). Possui dimensões de 720x480 pixels com esquema de subamostragem 4:2:2. O padrão de DVD (Digital Video Disk) utiliza o esquema 4:2:0 de subamostragem.
+O vídeo digital com qualidade \emph{standard} (\sigla{SDTV}{Standard Definition Television}) é definido pela norma \sigla{SMPTE}{Society of Motion Picture and Television Engeneers} 259M (Society of Motion Picture and Television Engeneers). Possui dimensões de 720x480 pixels com esquema de subamostragem 4:2:2. O padrão de \sigla{DVD}{Digital Video Disk} (Digital Video Disk) utiliza o esquema 4:2:0 de subamostragem.
 
 \subsection{Arquivo em formato bruto}
 
-É possível armazenar diretamente os valores das amostras num arquivo. Este tipo de arquivo, conhecido como arquivo raw, ou bruto, não passa por qualquer processamento, codificação ou encapsulamento. Existe uma infinidade de formatos de arquivo de vídeo bruto, cada um com uma organização particular que ordena os valores das componentes de cada pixel, entre eles os formatos: AYUV, UYVY, CYUV, YUY2, Y41P, Y411, YUVP, Y211, YV16, YV9, Y800 [Fonte: http://www.fourcc.org/yuv.php].
+É possível armazenar diretamente os valores das amostras num arquivo. Este tipo de arquivo, conhecido como arquivo raw, ou bruto, não passa por qualquer processamento, codificação ou encapsulamento. Existe uma infinidade de formatos de arquivo de vídeo bruto, cada um com uma organização particular que ordena os valores das componentes de cada pixel, entre eles os formatos: AYUV, UYVY, CYUV, YUY2, Y41P, Y411, YUVP, Y211, YV16, YV9, Y800 \cite{fourccyuv}. %TODO precisa dessa jeba enorme de siglas?
 
 A figura mostra a organização de um arquivo no formato IYUV (ou I420) de subamostragem 4:2:0 e o respectivo fluxo de bytes em memória. Primeiramente são armazenados os valores de luminância de cada pixel, os valores de crominância U (Cb) para cada conjunto de 4 pixels e os de crominância V (Cr) para o mesmo conjunto.
 
@@ -93,11 +93,12 @@ Um exemplo de como a compressão é importante atualmente pode ser verificado na
 
 Embora represente uma redução na utilização de recursos, a compressão encontra limites dependendo da aplicação. Da mesma maneira que dados digitais podem ser comprimidos, para serem utilizados novamente precisam passar por um processo inverso, de descompressão.
 
+% TODO mover isso
 (MOVER PARA BAIXO) Numa aplicação dependente de transmissão via rede, como por exemplo uma vídeo-conferência, a compressão permite que a visualização seja próxima do tempo real, ou seja, a imagem capturada pela câmera é codificada, enviada pela rede, decodificada pelo receptor e apresentada na tela em questão de milisegundos. (ficou estranho) Sem a compressão seria necessária uma alta taxa de transmissão, como visto no exemplo anterior, porém com uma compressão muito elevada a aplicação poderia apresentar um vídeo de forma fragmentada, uma vez que precisaria de muito tempo para concluir os processos de compressão/descompressão e apresentar a imagem recebida.
 
 Percebe-se desta forma que existe uma troca entre método e taxa de compressão, degradação da qualidade aceitável e recursos disponíveis, ambos dependentes da aplicação.
 
-A imagem apresenta o processo de obtenção, codificação (etapa A), transmissão, recepção e decodificação (etapa B) de um sinal de áudio e/ou vídeo sendo, por fim, apresentado. As etapas de conversão A/D (analógico-digital) e conversão D/A (digital-analógico) podem ser suprimidas caso a conversão A/D já seja realizada nos equipamentos de obtenção de dados e caso os monitores e dispositivos de armazenamento sejam digitais (REHME).
+A imagem apresenta o processo de obtenção, codificação (etapa A), transmissão, recepção e decodificação (etapa B) de um sinal de áudio e/ou vídeo sendo, por fim, apresentado. As etapas de conversão A/D (analógico-digital) e conversão D/A (digital-analógico) podem ser suprimidas caso a conversão A/D já seja realizada nos equipamentos de obtenção de dados e caso os monitores e dispositivos de armazenamento sejam digitais (REHME). %TODO citacao REHME
 
 % FIGURA xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 As etapas gerais da compressão são:
