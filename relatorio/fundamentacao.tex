@@ -54,7 +54,7 @@ No espaço de cores RGB mostrado na figura a seguir, é possível observar o efe
 
 % FIGURA xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-A quantização e a quantidade de bits por pixel representam uma das vantagens da utilização de formatos digitais pois muita informação redundante aos olhos humanos (tons de cores muito próximos, por exemplo) pode ser removida. Neste aspecto, um ponto chave da fisiologia humana que favorece a compressão de imagens é o fato de a acuidade visual ser maior em relação à luminância do que à crominância \cite{[Fonte: http://books.google.com.br/books?id=_s2BlAeR66YC&pg=PA209&redir_esc=y#v=onepage&q&f=false]}.
+A quantização e a quantidade de bits por pixel representam uma das vantagens da utilização de formatos digitais pois muita informação redundante aos olhos humanos (tons de cores muito próximos, por exemplo) pode ser removida. Neste aspecto, um ponto chave da fisiologia humana que favorece a compressão de imagens é o fato de a acuidade visual ser maior em relação à luminância do que à crominância \cite{vandenbranden}.
 
 Um conceito importante que aproveita esta característica da visão humana é a subamostragem. Este conceito define que a resolução da camada de crominância pode ser menor que a resolução da camada de luminância, ou seja, para um conjunto de pixels, cada um possuirá seu valor de luminância, porém o de crominância poderá ser repetido, desta forma economizando recursos (BRICE, 2000). A figura a seguir apresenta, em colunas, alguns esquemas de subamostragem:
 
@@ -424,7 +424,7 @@ Algumas distribuições de probabilidade bastante conhecidas, como por exemplo a
 
 \subsection{Distribuição Uniforme}
 
-Distribuição uniforme contínua, ou distribuição retangular, é aquela em que todos os intervalos de mesmo tamanho tem a mesma probabilidade de ocorrer \cite{wikidistuniforme1}. Mais precisamente, a probabilidade de se gerar qualquer ponto em um intervalo contindo no espaço amostral é proporcional ao tamanho do intervalo \cite{wikidistuniforme2}. Em uma distribuição uniforme discreta, para todos os elementos possíveis a probabilidade é a mesma.
+Distribuição uniforme contínua, ou distribuição retangular, é aquela em que todos os intervalos de mesmo tamanho tem a mesma probabilidade de ocorrer \cite{wikidistuniform1}. Mais precisamente, a probabilidade de se gerar qualquer ponto em um intervalo contindo no espaço amostral é proporcional ao tamanho do intervalo \cite{wikidistuniform2}. Em uma distribuição uniforme discreta, para todos os elementos possíveis a probabilidade é a mesma.
 
 A equação da função densidade de probabilidade contínua dada a seguir, é exemplificada na Figura \ref{fig:uniformdist}.
 
@@ -447,7 +447,7 @@ Equação: \[a+[(b-a) \cdot U(0, 1)]\]
 
 Muitas linguagens de programação, assim como Java e C++, possuem funções nativas para gerar valores uniformemente distribuídos. Em Java, a classe Math possui a função random() que gera valores de acordo com uma distribuição uniforme padrão. Ainda, Java possui uma classe especializada no pacote util chamada Random, utilizada para gerar valores booleanos, de \emph{bytes}, de pontos flutuantes, etc. Esta classe também gera valores seguindo uma distribuição normal através do método nextGaussian(), que utiliza a transformada Box-Mueller, explicada na próxima seção \cite{javaapi}. 
 
-Na linguagem C++ a função rand() encontra-se na biblioteca padrão (cstdlib ou stdlib.h), assim como a função srand() que inicializa a semente do gerador. O gerador, ao contrário de Java, fornece valores inteiros no intervalo (0, RAND_MAX). A constante RAND_MAX, também da biblioteca padrão, tem valor 32767 \cite{cppreference}.
+Na linguagem C++ a função rand() encontra-se na biblioteca padrão (cstdlib ou stdlib.h), assim como a função srand() que inicializa a semente do gerador. O gerador, ao contrário de Java, fornece valores inteiros no intervalo (0, RAND\_MAX). A constante RAND\_MAX, também da biblioteca padrão, tem valor 32767 \cite{cppreference}.
 
 \subsection{Distribuição Normal}
 
