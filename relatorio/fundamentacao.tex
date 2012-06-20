@@ -518,7 +518,7 @@ Esta distribuição, como o nome diz, tem formato triangular. Sua função densi
 Computacionalmente é possível criar um gerador aleatório que segue esta distribuição a partir de um gerador aleatório que siga uma distribuição uniforme no intervalo (0, 1) através das equações a seguir:
 
 \[\left\{\begin{array}{l l}
-X = a +\sqrt{U(b-a)(c-a)} & \mbox{para } 0 < F(c)\\ 
+X = a +\sqrt{U(b-a)(c-a)} & \mbox{para } 0 < U < F(c)\\ 
 X = b - \sqrt{(1-U)(b-a)(b-c)} & \mbox{para } F(c) \leqslant U < 1
 \end{array}\right.\]
 
