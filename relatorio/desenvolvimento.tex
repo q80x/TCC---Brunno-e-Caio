@@ -28,10 +28,12 @@ Aliado a esta ferramenta, foi utilizado um serviço web de hospedagem de projeto
 Na versão gratuita, que foi a utilizada, há uma exigência: que o código seja aberto \cite{githubabout}. Na versão paga, existem planos que permitem a criação de repositórios privados com times de desenvolvimento. Para ambas as versões o número de colaboradores é ilimitado, assim como o número de repositórios públicos.
 
 \section{Ferramentas Desenvolvidas}
+\label{des:ferramentas}
 
 As ferramentas foram planejadas para uma utilização modular, ou seja, para serem utilizadas através da \emph{interface} do SASQV assim como através da linha de comando, de forma independente. Um dos requisitos destas ferramentas é a de que sejam aplicadas sobre vídeos no formato YUV com subamostragem 4:2:0 \emph{progressive}.
 
 \subsection{Raffle}
+\label{des:raffle}
 
 A ferramenta raffle tem como objetivo gerar elementos aleatórios multi-dimensionais no domínio dos naturais, armazenado-os em arquivo.
 
@@ -69,7 +71,7 @@ O comando para utilizar a ferramenta e seus parâmetros são descritos a seguir:
 \begin{table}[!h]
 	\begin{tabular}{llll}
 	./raffle & & \\ 
-	& \texttt{--output} & \texttt{-o}  & arquivo\_de\_saída \\
+	& \texttt{--output} & \texttt{-o} & arquivo\_de\_saída \\
 	& \texttt{--durationdist} & \texttt{-u}  & tipo de distribuição da duração \\
 	& \texttt{--durationparams} & \texttt{-r}  & parâmetros da distribuição da duração \\
 	& \texttt{--elements} & \texttt{-e}  & elementos a serem gerados \\
@@ -147,9 +149,10 @@ Esta ferramenta é responsável por aplicar o efeito de blocagem sobre o vídeo 
 	./block & & \\ 
 	& \texttt{--input} & \texttt{-i}  & arquivo\_de\_entrada \\
 	& \texttt{--output} & \texttt{-o}  & arquivo\_de\_saída \\
-	& \texttt{--size} & \texttt{-s}  & dimensões do vídeo de entrada no formato WxH (largura x altura em pixels) \\
+	& \texttt{--size} & \texttt{-s}  & dimensões do vídeo de entrada no formato WxH \\ 
+	& & & (largura por altura em pixels) \\
 	& \texttt{--window} & \texttt{-w}  & tamanho da janela da \sigla{DCT}{Discrete Cosine Transform} \\
-	& \texttt{--levelsdct} & \texttt{-l}  & níveis DCT à serem eliminados, separados por ponto-e-vírgula \\
+	& \texttt{--levelsdct} & \texttt{-l}  & níveis DCT à serem eliminados, separados por vírgulas \\
 	& \texttt{--rafflelist} & \texttt{-r}  & arquivo\_raffle \\
 	& \texttt{--help} & \texttt{-h}  & menu de ajuda \\
 	\end{tabular}
@@ -186,7 +189,8 @@ A ferramenta blur aplica o artefato de borramento utilizando para tanto um filtr
 	./blur & & \\ 
 	& \texttt{--input} & \texttt{-i}  & arquivo\_de\_entrada \\
 	& \texttt{--output} & \texttt{-o}  & arquivo\_de\_saída \\
-	& \texttt{--size} & \texttt{-s}  & dimensões do vídeo de entrada no formato WxH (largura por altura em pixels) \\
+	& \texttt{--size} & \texttt{-s}  & dimensões do vídeo de entrada no formato WxH \\ 
+	& & & (largura por altura em pixels) \\
 	& \texttt{--blur} & \texttt{-b}  & tipo do filtro a ser aplicado \\
 	& \texttt{--window} & \texttt{-w}  & tamanho do filtro \\
 	& \texttt{--help} & \texttt{-h}  & menu de ajuda \\
@@ -226,19 +230,23 @@ A Figura \ref{fig:netsim} ilustra a sequência.
 Neste caso, \emph{A} e \emph{C} indicam o número de entidades que atingem seu destino com sucesso e \emph{B} e \emph{D} indicam quantas serão descartadas. 
 Sendo assim o streaming de vídeo da Figura \ref{fig:netsim}  teria seus primeiros \emph{A} pacotes intactos, seguidos de \emph{B} perdidos, mais \emph{C} pacotes intactos e ainda \emph{D} perdidos novamente.
 
-\begin{description}
-	\item[\texttt{--input}] \hfill \\
-		Define o caminho (absoluto ou relativo) e arquivo do vídeo a ser processado pela simulação.
-	\item[\texttt{--output}] \hfill \\
-		Define o caminho(absoluto ou relativo) e arquivo onde será armazenado o vídeo resultante.
-	\item[\texttt{--ts}] \hfill \\
-		(Opcional) Se presente, a entidade de descarte considerada é um TS, caso contrário a unidade é um pacote UDP.
-	\item[\texttt{--raffle}] \hfill \\
-		Indica o caminho (absoluto ou relativo) e arquivo a ser usado como configuração de descartes.
-\end{description}
+\begin{table}[!h]
+	\begin{tabular}{llll}
+	./netsim & & \\
+	& \texttt{--input} & \texttt{-i} & Define o caminho (absoluto ou relativo) e arquivo do vídeo \\ 
+	& & & a ser processado pela simulação. \\
+	& \texttt{--output} & \texttt{-o} & Define o caminho(absoluto ou relativo) e arquivo onde será \\ 
+	& & & armazenado o vídeo resultante. \\
+	& \texttt{--ts} & \texttt{-t} & (Opcional) Se presente, a entidade de descarte considerada \\
+	& & & é um TS, caso contrário a unidade é um pacote UDP. \\
+	& \texttt{--raffle} & \texttt{-r} & Indica o caminho (absoluto ou relativo) e arquivo a ser usado \\ 
+	& & & como configuração de descartes. \\
+	\end{tabular}
+\end{table}
 
 
 \subsection{Metric}
+\label{des:metric}
 
 A ferramenta Metric se trata da implementação de três métricas objetivas, as mesma encontradas na implementação do SASQV:
 
@@ -252,23 +260,73 @@ Implementada em C++, também na forma de uma ferramenta \emph{stand-alone}, seu 
 Os vídeos a serem comparados devem possuir as mesmas dimensões e número de frames para serem passíveis de comparação. 
 A ferramenta Metric pode receber os seguintes parametros:
 
-\begin{description}
-	\item[\texttt{--input}] \hfill \\
-		Define o caminho(absoluto ou relativo) e arquivo onde um dos vídeos a serem comparados se encontra.
-	\item[\texttt{--reference}] \hfill \\
-		Define o caminho(absoluto ou relativo) e arquivo onde o segundo vídeo a ser comparado se encontra.
-	\item[\texttt{--size}] \hfill \\
-		Define as dimensões (em pixels) dos vídeos a serem comparados. Deve ser fornecida no formato 'largura'x'altura'.
-	\item[\texttt{--metric}] \hfill \\
-		Define qual métrica será utilizada na comparação entre vídeos, sendo uma string entre MSE, PSNR ou MSSIM.
-	\item[\texttt{--window}] \hfill \\
-		Define qual o tamanho da janela (em pixels) a ser usado se a métrica adotada for MSSIM.
-\end{description}
+\begin{table}[!h]
+	\begin{tabular}{llll}
+	& \texttt{--input} & \texttt{-i} & Define o caminho(absoluto ou relativo) e arquivo onde um dos \\ 
+	& & & vídeos a serem comparados se encontra. \\
+	& \texttt{--reference} & \texttt{-r} & Define o caminho(absoluto ou relativo) e arquivo onde o segundo \\
+	& & & vídeo a ser comparado se encontra. \\
+	& \texttt{--size} & \texttt{-s} & Define as dimensões (em pixels) dos vídeos a serem comparados. \\ 
+	& & & Deve ser fornecida no formato 'largura'x'altura'. \\
+	& \texttt{--metric} & \texttt{-m} & Define qual métrica será utilizada na comparação entre vídeos, \\
+	& & & sendo uma string entre MSE, PSNR ou MSSIM. \\
+	& \texttt{--window} & \texttt{-w} & Define qual o tamanho da janela (em pixels) a ser usado se \\ 
+	& & & a métrica adotada for MSSIM. \\
+	\end{tabular}
+\end{table}
 
 \section{Interface Gráfica}
+
+A presente seção irá descrever com maiores detalhes as funcionalidades da interface gráfica desenvolvida para o SASQV2, separados conforme a finalidade de cada janela presente na mesma.
+
 \subsection{Sessão}
+
+A janela de Sessão consiste de um passo inicial de configuração --- onde se sucedem três telas conforme são fornecidos dados para a aplicação --- e um segundo passo onde é disparada uma sessão de avaliação subjetiva baseada na configuração fornecida préviamente.
+
+A primeira tela se trata de configurações básicas da sessão, tal como um nome e descrição para facilitar a identificação como também a métrica a que será utilizada e o número de espectadores.
+Na sequência é apresentada uma tela onde pode-se buscar e selecionar vídeos para serem exibidos na sessão de avaliação e for fim a tela para selecionar quais dispositivos remotos serão utilizados na avaliação. Ao final da configuração, pode-se dar início ao processo de avaliação subjetiva onde os vídeos selecionados serão então exibidos conforme a métrica selecionada.
+Na Figura \ref{} pode-se observar o ambiente de exibição dos vídeos durante a avaliação.
+
+%TODO colocar figura e corrigir referencia na linha acima
+
 \subsection{Ferramentas}
+
+Esta é a janela de maior complexidade no SASQV2, dado que nela se encontram os controles e opções que permitem usar todas as ferramentas descritas em \ref{des:ferramentas}. 
+Por meio das abas presentes na parte superior da janela é possível acessar três telas diferentes: Gerador de Artefatos, Avaliador Objetivo e Gerador de Aleatoriedade. As funções específicas de cada uma delas são descritas a seguir:
+
+\subsubsection{Gerador de Artefatos}
+
+\subsubsection{Avaliador Objetivo}
+
+Nesta tela existem quatro componentes distintos que permitem configurar e utilizar a ferramenta \emph{metric} citada em \ref{des:metric}:
+
+\begin{itemize}
+	\item Uma lista de busca dos vídeos passíveis de avaliação.
+	\item Uma lista de busca dos vídeos que podem ser tomados como referência.
+	\item Um seletor de métricas objetivas dispiníveis.
+	\item Uma fila de tarefas de avaliação a serem executadas.
+\end{itemize}
+
+Para efetuar uma avaliação objetiva é preciso selecionar dois vídeos a serem comparados, um como referência e outro como amostra, além da métrica desejada e clicar no botão \emph{Adicionar}.
+Com isso, os vídeos e a métrica atualmente selecionados serão adicionados à lista de tarefas. 
+Ao se clicar no botão \emph{Iniciar} todas as tarefas da lista serão processadas e uma janela de diálogo mostrará o valor resultante de cada avaliação, os quais também podem ser observados na janela de resultados descrita em \ref{des:resultados}.
+
+\subsubsection{Gerador de Aleatoriedade}
+
+Aqui é possível configurar e utilizar a ferramenta \emph{raffle} de \ref{des:raffle} por meio dos seguintes campos apresentados:
+
+\begin{itemize}
+	\item Nome do arquivo a ser gerado.
+	\item Número de elementos a serem gerados.
+	\item Quantidade de colunas no arquivo de saída.
+	\item Tabela de configuraçaõ de distribuições estatísticas.
+\end{itemize}
+
+
+
 \subsection{Resultados}
+\label{des:resultados}
+
 \subsection{Configurações}
 \subsection{Ajuda}
 
