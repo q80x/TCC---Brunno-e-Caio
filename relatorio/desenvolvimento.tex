@@ -11,7 +11,7 @@ O desenvolvimento deste projeto foi totalmente realizado em ambiente Linux, em d
 
 A primeira etapa de desenvolvimento planejada foi a de construir um modelo para a nova interface gráfica. Tendo em vista a linguagem Java como requisito, optou-se pelo \sigla{IDE}{Integrated Development Environment} NetBeans (versão 7.1.1) que possui uma ferramenta nativa específica para a construção de interfaces gráficas para usuário, a \sigla{GUI}{Graphical User Interface} Builder (Graphical User Interface). Esta ferramenta permite a construção de formulários no estilo drag-and-drop de containers existentes no Java, como por exemplo JFrame, JPanel, JButton, etc.
 
-Inicialmente, o \sigla{IDE} Eclipse também foi utilizado com a finalidade de se realizar modificações nos projetos originais model e service. Posteriormente, para unificar o projeto em apenas um ambiente de desenvolvimento, os projetos originais foram importados no NetBeans.
+Inicialmente, o IDE Eclipse também foi utilizado com a finalidade de se realizar modificações nos projetos originais model e service. Posteriormente, para unificar o projeto em apenas um ambiente de desenvolvimento, os projetos originais foram importados no NetBeans.
 
 \subsection{Outras ferramentas}
 
@@ -29,9 +29,7 @@ Na versão gratuita, que foi a utilizada, há uma exigência: que o código seja
 
 \section{Ferramentas Desenvolvidas}
 
-As ferramentas, desenvolvidas em linguagem C++, foram planejadas para uma utilização modular, ou seja, para serem utilizadas através da interface do SASQV assim como também de forma isolada, através da linha de comando. Um dos requisitos destas ferramentas é a de que sejam aplicadas sobre vídeos no formato YUV P420.
-
-    A ferramenta raffle, descrita a seguir, serve de %TODO
+As ferramentas foram planejadas para uma utilização modular, ou seja, para serem utilizadas através da \emph{interface} do SASQV assim como através da linha de comando, de forma independente. Um dos requisitos destas ferramentas é a de que sejam aplicadas sobre vídeos no formato YUV com subamostragem 4:2:0 \emph{progressive}.
 
 \subsection{Raffle}
 
@@ -40,44 +38,47 @@ A ferramenta raffle tem como objetivo gerar elementos aleatórios multi-dimensio
 No arquivo gerado, cada coluna representa uma dimensão que deve seguir alguma distribuição de probabilidade, informada via parâmetros. Dentre as distribuições possíveis e seus respectivos parâmetros tem-se: 
 
 \begin{itemize}
-	\item Distribuição constante:
-	\begin{itemize}
-		\item a dimensão correspondente terá valor constante c para todos os elementos gerados.
-		\item Parâmetro: c.
-	\end{itemize}
-	\item Distribuição uniforme:
-	\begin{itemize}
-		\item a dimensão correspondente terá valores uniformemente gerados num intervalo [a, b).
-		\item Parâmetros: a, b.
-	\end{itemize}
-	\item Distribuição normal:
-	\begin{itemize}
-		\item a dimensão correspondente terá valores gerados conforme uma distribuição normal, de média m e desvio padrão d.
-		\item Parâmetros: m, d.
-	\end{itemize}
-	\item Distribuição triangular:
-	\begin{itemize}
-		\item a dimensão correspondente terá valores gerados conforme uma distribuição triangular no intervalo [a, b) com pico em c.
-		\item Parâmetros: a, b, c.
-	\end{itemize}
+	\item Distribuição constante: a dimensão correspondente terá valor constante c para todos os elementos gerados.
+	\item Distribuição uniforme: a dimensão correspondente terá valores uniformemente gerados num intervalo [a, b).
+	\item Distribuição normal: a dimensão correspondente terá valores gerados conforme uma distribuição normal, de média m e desvio padrão d.
+	\item Distribuição triangular: a dimensão correspondente terá valores gerados conforme uma distribuição triangular no intervalo [a, b) com pico em c.
 \end{itemize}
+
+A Tabela \ref{tab:distparam} sintetiza os parâmetros que devem ser informados conforme o tipo de distribuição desejada.
+
+\begin{table}[!h]
+	\centering
+	\caption{Distribuições e respectivos parâmetros para a execução da ferramenta raffle.}
+	\label{tab:distparam}
+	\begin{tabular}{l|l|l|l|l}
+		\hline
+		Distribuição & \multicolumn{4}{c}{Parâmetros} \\
+		\hline
+		Constante  & -d ou -u & constant   & -p ou -r & a \\
+		Uniforme   & -d ou -u & uniform	   & -p ou -r & a,b \\
+		Normal     & -d ou -u & normal	   & -p ou -r & m,d \\
+		Triangular & -d ou -u & triangular & -p ou -r & a,b,c \\
+		\hline
+	\end{tabular}
+\end{table}
 
 Adicionalmente aos parâmetros de cada distribuição, a primeira coluna possui uma característica temporal que pode ser ativada, permitindo a repetição de determinado elemento ao longo de um intervalo constante ou aleatório. Para este sorteio é possível utilizar qualquer distribuição descrita acima.
 
 O comando para utilizar a ferramenta e seus parâmetros são descritos a seguir:
 
 \begin{table}[!h]
-	\begin{tabular}{lll}
+	\begin{tabular}{llll}
 	./raffle & & \\ 
-	& -o  & arquivo\_de\_saída \\
-	& -u  & tipo de distribuição da duração \\
-	& -r  & parâmetros da distribuição da duração \\
-	& -e  & elementos a serem gerados \\
-	& -d  & tipo de distribuição da primeira dimensão \\
-	& -p  & parâmetros da distribuição da primeira dimensão \\
+	& \texttt{--output} & \texttt{-o}  & arquivo\_de\_saída \\
+	& \texttt{--durationdist} & \texttt{-u}  & tipo de distribuição da duração \\
+	& \texttt{--durationparams} & \texttt{-r}  & parâmetros da distribuição da duração \\
+	& \texttt{--elements} & \texttt{-e}  & elementos a serem gerados \\
+	& \texttt{--dist} & \texttt{-d}  & tipo de distribuição da primeira dimensão \\
+	& \texttt{--params} & \texttt{-p}  & parâmetros da distribuição da primeira dimensão \\
 	& ... & \\
-	& -d  & tipo de distribuição da n-ésima dimensão \\
-	& -p  & parâmetros da distribuição da n-ésima dimensão \\
+	& \texttt{--dist} & \texttt{-d}  & tipo de distribuição da n-ésima dimensão \\
+	& \texttt{--params} & \texttt{-p}  & parâmetros da distribuição da n-ésima dimensão \\
+	& \texttt{--help} & \texttt{-h}  & menu de ajuda \\
 	\end{tabular}
 \end{table}
 
@@ -88,27 +89,7 @@ Observações:
     \item[-] Cada conjunto (-d -p) representa uma dimensão, ou uma coluna, a ser gerada.
 \end{itemize}
 
-As distribuições devem ser informadas conforme a tabela abaixo:
-
-\begin{table}[!h]
-	\centering
-	\caption{Distribuições e respectivos parâmetros para a execução da ferramenta raffle.}
-	\label{tab:distparam}
-	\begin{tabular}{l|l|l|l|l}
-		\hline
-		Distribuição & & & & \\
-		\hline
-		Constante  & -d ou -u & constant   & -p ou -r & a \\
-		Uniforme   & -d ou -u & uniform	   & -p ou -r & a,b \\
-		Normal     & -d ou -u & normal	   & -p ou -r & m,d \\
-		Triangular & -d ou -u & triangular & -p ou -r & a,b,c \\
-		\hline
-	\end{tabular}
-\end{table}
-
 Exemplos de utilização através da linha de comando são descritos abaixo. A diferença para a \emph{interface} gráfica reside apenas no fornecimento dos dados, uma vez que a \emph{interface} deve executar o mesmo comando para gerar o arquivo.
-
-Exemplo 1:
 
 No comando a seguir, será gerado um arquivo com nome raffleout.rff contendo 30 elementos. Para este exemplo, será utilizado um valor de duração constante e igual a 1, no próximo exemplo este conceito de duração será melhor detalhado. A primeira dimensão deve seguir uma distribuição uniforme dentro do intervalo [1, 5), a segunda dimensão deve ter valor constante 3 para todos os elementos gerados e a terceira e última dimensão deve seguir uma distribuição triangular no intervalo [3, 20) com pico no ponto 10.
 
@@ -131,15 +112,11 @@ O resultado de uma execução deste comando pode ser observado na Tabela \ref{ta
 	\end{tabular}
 \end{table}
 
-Exemplo 2:
-
 No comando abaixo, será gerado um arquivo de nome raffleout2.rff com 50 elementos de duas dimensões: a primeira seguirá uma distribuição uniforme dentro do intervalo [1,5) e a segunda seguirá uma distribuição normal com média 2 e desvio padrão 1:
 
 ./raffle -o raffleout2.rff -u constant -r 3 -e 50 -d uniform -p 1,5 -d normal -p 2,1
 
-A duração, neste exemplo, tem duração constante 3, ou seja, para todo elemento gerado, ele deverá ter duração de 3 elementos no total. O efeito da duração pode ser observado na figura, onde o primeiro elemento (4 1) tem duração 3 tendo a primeira dimensão como referência temporal: (4 1), (5 1) e (6 1). A geração de elementos prossegue até que o número de elementos gerados atinja o desejado, informado no parâmetro -e. Por esta razão, o último sorteio teve duração 2 e não 3 como havia sido determinado.
-
-Outro resultado importante a ser observado é que a duração ultrapassa os limites da distribuição inicialmente definida, por este motivo existem elementos cuja primeira dimensão possui valores 5 e 6.
+A duração, neste exemplo, tem duração constante 3, ou seja, para todo elemento gerado, ele deverá ter duração de 3 elementos no total. O efeito da duração pode ser observado na figura, onde o primeiro elemento (4 1) tem duração 3 tendo a primeira dimensão como referência temporal: (4 1), (5 1) e (6 1). A geração de elementos prossegue até que o número de elementos gerados atinja o desejado, informado no parâmetro -e. Um resultado importante, que pode ser observado na Tabela \ref{tab:raffleresult2}, é que a duração não ultrapassa os limites definidos para a primeira coluna fazendo com que nem todos os artefatos tenham a duração estabelecida.
 
 \begin{table}[!h]
 	\centering
@@ -163,31 +140,68 @@ A ferramenta raffle foi inicialmente utilizada de forma interna nas ferramentas 
 
 \subsection{Block}
 
+Esta ferramenta é responsável por aplicar o efeito de blocagem sobre o vídeo desejado. Os parâmetros que devem ser fornecidos são descritos a seguir:
+
 \begin{table}[!h]
-	\begin{tabular}{lll}
+	\begin{tabular}{llll}
 	./block & & \\ 
-	& -i  & arquivo\_de\_entrada \\
-	& -o  & arquivo\_de\_saída \\
-	& -s  & dimensões do vídeo de entrada no formato WxH (largura por altura em pixels) \\
-	& -w  & tamanho da janela da \sigla{DCT} \\
-	& -l  & níveis DCT à serem eliminados, separados por ponto-e-vírgula \\
-	& -r  & arquivo_raffle \\
+	& \texttt{--input} & \texttt{-i}  & arquivo\_de\_entrada \\
+	& \texttt{--output} & \texttt{-o}  & arquivo\_de\_saída \\
+	& \texttt{--size} & \texttt{-s}  & dimensões do vídeo de entrada no formato WxH (largura x altura em pixels) \\
+	& \texttt{--window} & \texttt{-w}  & tamanho da janela da \sigla{DCT}{Discrete Cosine Transform} \\
+	& \texttt{--levelsdct} & \texttt{-l}  & níveis DCT à serem eliminados, separados por ponto-e-vírgula \\
+	& \texttt{--rafflelist} & \texttt{-r}  & arquivo\_raffle \\
+	& \texttt{--help} & \texttt{-h}  & menu de ajuda \\
 	\end{tabular}
 \end{table}
 
-\subsection{Blur}
+A partir do vídeo desejado, deve-se escolher o nome do vídeo resultante e informar as dimensões do vídeo original, o tamanho da janela a ser utilizada na DCT, os subníveis de energia que deverão ser eliminados (zerados) e o nome do arquivo raffle a ser utilizado.
+
+O arquivo raffle de entrada deve sempre conter três colunas. A primeira diz respeito ao \emph{frame} em que será aplicado o artefato. A segunda e a terceira coluna devem ter como limite o resultado da divisão da largura e altura do vídeo pelo tamanho da janela desejada, respectivamente, pois seus valores indicam qual grupo de pixels será afetado e nao o pixel inicial de aplicação da DCT.
+
+Os subníveis de energia (diagonais da matriz resultante da DCT) que serão cancelados dependem diretamente do tamanho da janela a ser aplicada. Seja uma janela de dimensões AxA, existem N = 2A-1 níveis de energia. O maior nível, 2A-1, representa o nível de energia \sigla{DC}{Differential Coding} (\emph{Differential Coding}) (a média dos valores do bloco). Nos demais níveis, conforme o nível diminui, a energia diminui porém a frequência aumenta. São conhecidos como coeficientes \sigla{AC}{Arithmetic Coding} (\emph{Arithmetic Coding}). A Figura \ref{fig:niveisdct} apresenta a organização dos níveis de energia numa janela de dimensões 8x8 pixels.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.5\textwidth]{./imgs/niveisdct.png}
+	\caption{Diagonais de energia do bloco DCT.}
+	\label{fig:niveisdct}
+	\fonte{\cite{}}
+\end{figure}
+
+O arquivo gerado deve ter as mesmas características do original: tamanho em bytes, largura e altura.
+
+Como exemplo de utilização temos que na execução do comando a seguir, o arquivo saida.yuv de dimensões 352x288 será gerado. O vídeo original será submetido aos valores contidos no arquivo raffle\_352x288.rff e cada janela de dimensões 8x8 terá os níveis DCT (ou diagonais) 1,2,4,6,7,15 zerados.
+
+./block -i entrada.yuv -o saida.yuv -s 352x288 -w 8 -l 1,2,4,6,7,15 -r raffle\_352x288.rff
+
+A única restrição se deve aos valores do arquivo raffle, como já mencionado. Este deve conter três colunas, em que a primeira, segunda e terceira colunas devem ter como limites superiores, respectivamente, o número de \emph{frames} do vídeo original e as dimensões largura e altura divididas pelo tamanho da janela (352/8 = 44 e 288/8 = 36).
+
+\subsection{blur}
+
+A ferramenta blur aplica o artefato de borramento utilizando para tanto um filtro da média ou um filtro da mediana, de dimensão configurável. O arquivo de saída é gerado aplicando-se o artefato configurado em todos os frames do vídeo original. Os parâmetros de configuração e respectivas descrições podem ser observados adiante:
 
 \begin{table}[!h]
-	\begin{tabular}{lll}
+	\begin{tabular}{llll}
 	./blur & & \\ 
-	& -i  & arquivo\_de\_entrada \\
-	& -o  & arquivo\_de\_saída \\
-	& -s  & dimensões do vídeo de entrada no formato WxH (largura por altura em pixels) \\
-	& -w  & tamanho da janela da \sigla{DCT} \\
-	& -l  & níveis DCT à serem eliminados, separados por ponto-e-vírgula \\
-	& -r  & arquivo_raffle \\
+	& \texttt{--input} & \texttt{-i}  & arquivo\_de\_entrada \\
+	& \texttt{--output} & \texttt{-o}  & arquivo\_de\_saída \\
+	& \texttt{--size} & \texttt{-s}  & dimensões do vídeo de entrada no formato WxH (largura por altura em pixels) \\
+	& \texttt{--blur} & \texttt{-b}  & tipo do filtro a ser aplicado \\
+	& \texttt{--window} & \texttt{-w}  & tamanho do filtro \\
+	& \texttt{--help} & \texttt{-h}  & menu de ajuda \\
 	\end{tabular}
 \end{table}
+
+Numa possível execução da ferramenta como indicada abaixo, o filtro da média de dimensões 5x5 pixels será aplicado no vídeo original, gerando o vídeo degradado saida.yuv de dimensões iguais às do original (\sigla{Full-HD}{Resolução Full-HD de 1080 linhas contendo 1980 pixels cada.}).
+
+./blur -i entrada.yuv -o saida.yuv -s 1920x1080 -b average -w 5
+
+Observações:
+\begin{itemize}
+    \item[-] para utilizar o filtro da média, deve-se fornecer o parâmetro -b \emph{average}, para o filtro da mediana deve-se fornecer o parâmetro -b \emph{median};
+    \item[-] a menor dimensão para qualquer tipo de filtro é 3;
+\end{itemize}
 
 \subsection{NetSim}
 
@@ -214,13 +228,13 @@ Sendo assim o streaming de vídeo da Figura \ref{fig:netsim}  teria seus primeir
 
 \begin{description}
 	\item[\texttt{--input}] \hfill \\
-		Define o caminho(absoluto ou relativo) e arquivo do vídeo a ser processado pela simulação.
+		Define o caminho (absoluto ou relativo) e arquivo do vídeo a ser processado pela simulação.
 	\item[\texttt{--output}] \hfill \\
 		Define o caminho(absoluto ou relativo) e arquivo onde será armazenado o vídeo resultante.
 	\item[\texttt{--ts}] \hfill \\
 		(Opcional) Se presente, a entidade de descarte considerada é um TS, caso contrário a unidade é um pacote UDP.
 	\item[\texttt{--raffle}] \hfill \\
-		Indica o caminho(absoluto ou relativo) e arquivo a ser usado como configuração de descartes.
+		Indica o caminho (absoluto ou relativo) e arquivo a ser usado como configuração de descartes.
 \end{description}
 
 
