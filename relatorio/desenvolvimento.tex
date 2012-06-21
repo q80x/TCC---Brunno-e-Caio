@@ -15,8 +15,12 @@ Inicialmente, o IDE Eclipse também foi utilizado com a finalidade de se realiza
 
 \subsection{Outras ferramentas}
 
- g++ / vim / make
+Os códigos em C++ foram desenvolvidos através do editor de textos Vim, um editor de textos gratuito e de código aberto amplamente configurável para permitir edições eficientes de texto \cite{vimabout}. Este editor é uma versão aperfeiçoada do editor Vi, presente na maioria dos sistemas \sigla{UNIX}{Sistema Operacional}.
 
+Para criar executáveis dos códigos C++ gerados, foi utilizado o compilador g++. Este compilador faz parte da coleção de compiladores \sigla{GCC}{GNU Compiler Collection} \cite{gccabout} produzida e mantida pelo \sigla{GNU Project}{Projeto de desenvolvimento de software livre} \cite{gnuabout}.
+
+A fim de automatizar o processo de geração de executáveis, a ferramenta \emph{make} foi configurada de acordo. Esta ferramenta, também mantida pelo GNU Project, permite que vários códigos-fonte sejam processados ao mesmo tempo através de um arquivo de configuração chamado \emph{makefile}, que pode executar um compilador para gerar arquivos-objeto, ou executar um \emph{linker} para gerar executáveis \cite{makeabout}.
+ 
 \subsection{Controle de Versões}
 
 Em função de a equipe contar com dois integrantes desenvolvedores, existe a necessidade de se utilizar uma ferramenta para o controle de versões do projeto. Primeiramente, para realizar testes de algumas funcionalidades foi preciso modificar radicalmente o código o que, em certos casos, não gerou resultados satisfatórios, sendo necessário retornar à um ponto estável e funcional. Além deste motivo, o sistema de controle de versões escolhido, o Git, possui ferramentas de resolução de conflitos eficientes que auxiliam o desenvolvimento simultâneo.
@@ -180,7 +184,7 @@ Como exemplo de utilização temos que na execução do comando a seguir, o arqu
 
 A única restrição se deve aos valores do arquivo raffle, como já mencionado. Este deve conter três colunas, em que a primeira, segunda e terceira colunas devem ter como limites superiores, respectivamente, o número de \emph{frames} do vídeo original e as dimensões largura e altura divididas pelo tamanho da janela (352/8 = 44 e 288/8 = 36).
 
-\subsection{blur}
+\subsection{Blur}
 
 A ferramenta blur aplica o artefato de borramento utilizando para tanto um filtro da média ou um filtro da mediana, de dimensão configurável. O arquivo de saída é gerado aplicando-se o artefato configurado em todos os frames do vídeo original. Os parâmetros de configuração e respectivas descrições podem ser observados adiante:
 
@@ -211,11 +215,14 @@ Observações:
 
 A ferramenta Netsim foi desenvolvida buscando simular degradações ocasionadas pelo processo de decodificação de um streaming de vídeo onde houve perda de informação nas camadas de transporte, rede ou enlace. O Netsim desconsidera, portanto, os artefados decorrentes do processo de codificação e encapsulamento do vídeo.
 
-As simulações efetuadas pela ferramenta atuam sobre vídeos encapsulados no formato MPEG Transport Stream, conforme definido em \cite{} %TODO referencia para ITU-T Rec. H.222.0
-e consistem no descarte controlado de porções de informação. 
+As simulações efetuadas pela ferramenta atuam sobre vídeos encapsulados no formato MPEG Transport Stream, conforme definido em \cite{ituh222} e consistem no descarte controlado de porções de informação.
+
 A entidade de dados a ser descartada pode ser tanto um único TS quanto o equivalente a um pacote UDP da camada de transporte, o qual comporta usualmente sete unidades TS.
-O descarte é controlado precisamente por meio de um arquivo de configuração fornecido como paramêtro ao programa, podendo este ser gerado pela ferramenta Raffle descrita em \ref{}. %TODO referencia pra raffle.
+
+O descarte é controlado precisamente por meio de um arquivo de configuração fornecido como paramêtro ao programa, podendo este ser gerado pela ferramenta Raffle descrita em \ref{des:raffle}.
+
 Este arquivo de configuração deve conter duas colunas com valores numéricos inteiros. 
+
 Cada linha será processada sequencialmente, sendo que o primeiro número indica quantas entidades serão transportadas com sucesso e o segundo quantas serão descartadas. 
 A Figura \ref{fig:netsim} ilustra a sequência.
 
@@ -296,7 +303,7 @@ Por meio das abas presentes na parte superior da janela é possível acessar tr�
 
 \subsubsection{Gerador de Artefatos}
 
-A tela do gerador de artefatos permite controlar de forma gráfica a execução e parametrização das ferramentas \emph{block}, \emph{blur} e \emph{netsim}. Nela podemos observar três regiões distintas:
+A tela do gerador de artefatos permite controlar de forma gráfica a execução e parametrização das ferramentas \emph{block}, \emph{blur} e \emph{netsim}. Nela pode-se observar três regiões distintas:
 
 \begin{itemize}
 	\item Uma lista de busca dos vídeos passíveis de degradação.
