@@ -25,10 +25,13 @@ Nos três recortes seguintes o efeito de blocagem passa a tomar conta da imagem 
 	\fonte{Autoria Própria.}
 \end{figure}
 
+Para a avaliação da ferramenta \emph{blur} foram feitas duas sequências de testes, a primeira delas utilizando o filtro de médias e a segunda utilizando o filtro da mediana.
+Em cada um dos testes foram utilizadas máscaras matriciais de tamanhos 3x3, 5x5 e 7x7. Nas Figuras \ref{fig:bluraverage} e \ref{fig:blurmedian} são apresentados recortes de 160 por 160 \emph{pixels} a partir da posição 64x160 retirados do frame número 60 de cada vídeo.
+
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.9\textwidth]{./imgs/bluraverage.png}
-	\caption{.}
+	\caption{Sequência de borramentos aplicando filtro da média com matrizes (00) 3x3, (01) 5x5, (02) 7x7.}
 	\label{fig:bluraverage}
 	\fonte{Autoria Própria.}
 \end{figure}
@@ -36,23 +39,47 @@ Nos três recortes seguintes o efeito de blocagem passa a tomar conta da imagem 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.9\textwidth]{./imgs/blurmedian.png}
-	\caption{.}
+	\caption{Sequência de borramentos aplicando filtro da mediana com matrizes (00) 3x3, (01) 5x5, (02) 7x7.}
 	\label{fig:blurmedian}
 	\fonte{Autoria Própria.}
 \end{figure}
 
+Na validação visual da ferramenta \emph{raffle} foi gerado um arquivo de sorteio contendo 5 mil elementos.
+A distribuição no tempo foi configurada como triangular no intervalo de 0 a 10 com pico no frame 5, sendo que a duração de cada artefato foi distribuída uniformemente no intervalo de 1 a 3 frames.
+Já a distribuição no espaço foi uniforme em toda a largura e altura do frame. 
+A figura \ref{fig:busraffle} mostra a sequencia de recortes retirados dos 11 frames contendo blocos gerados a partir do arquivo raffle obtido com a configuração acima, onde para facilitar a visualização foi elimanada a componente DC da DCT para cada bloco sorteado.
+
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.7\textwidth]{./imgs/busraffle.png}
-	\caption{.}
+	\includegraphics[width=0.8\textwidth]{./imgs/busraffle.png}
+	\caption{Sequência de frames degradados a partir de um arquivo gerado pela ferramenta \emph{raffle}.}
 	\label{fig:busraffle}
 	\fonte{Autoria Própria.}
 \end{figure}
 
+Para o processo de validação da ferramenta \emph{netsim} foi necessário obter um vídeo encapsulado em um TS, para isso foi utilizada a ferramenta ffmpeg para converter o vídeo bus para a codificação MPEG-2 encapsulado em um TS com o seguinte comando:
+
+{
+	\centering
+	\texttt{ffmpeg -i \emph{arquivo\_de\_entrada} -s cif -sameq -f mpegts -vcodec mpeg2video \emph{arquivo\_de\_saída}}
+}
+
+O TS resultante foi então processado pela ferramenta, configurada para fazer os seguintes descartes:
+
+\begin{center}
+	\texttt{10 100
+	1000 10
+	100 10
+	1 10
+	100 50}
+\end{center}
+
+A figura \ref{fig:netsim} contém amostras retiradas dos frames 1, 9 e 40, onde podem ser verificados artefatos como \emph{jerkiness}, \emph{blocking} e \emph{bleeding}.
+
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[height=0.9\textheight]{./imgs/netsimresult.png}
-	\caption{.}
+	\caption{Amostra de artefados obtidos com a ferramenta \emph{netsim}}
 	\label{fig:netsim}
 	\fonte{Autoria Própria.}
 \end{figure}
@@ -64,7 +91,7 @@ Esta última foi desenvolvida pelo grupo do laboratório \emph{Graphics and Medi
 %TODO base de videos das metricas
 Foram utilizados 5 vídeos diferentes, e os respoectivos vídeos degradados,  obtidos em \cite{}. Os resultados das comparações se encontram nas tabelas \ref{res:mse}, \ref{res:psnr} e \ref{res:mssim}.
 
-\begin{table}
+\begin{table}[!htb]
 	\centering
 	\caption{Comparação dos resultados de PSNR.}
 	\label{res:psnr}
@@ -81,7 +108,7 @@ Foram utilizados 5 vídeos diferentes, e os respoectivos vídeos degradados,  ob
 	\fonte{Autoria pŕopria}
 \end{table}
 
-\begin{table}
+\begin{table}[!htb]
 	\centering
 	\caption{Comparação dos resultados de MSE.}
 	\label{res:mse}
@@ -98,7 +125,7 @@ Foram utilizados 5 vídeos diferentes, e os respoectivos vídeos degradados,  ob
 	\fonte{Autoria própria}
 \end{table}
 
-\begin{table}
+\begin{table}[!htb]
 	\centering
 	\caption{Comparação dos resultados de MSSIM.}
 	\label{res:mssim}
