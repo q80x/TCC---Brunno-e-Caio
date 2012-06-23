@@ -8,7 +8,7 @@ Neste capítulo serão apresentados os requisitos de tal sistema, assim como as 
 \section{Análise de Requisitos}
 
 A análise de requisitos é parte fundamental de qualquer projeto, buscando atender da melhor forma as necessidades dos futuros usuários.
-Esta sessão descreve os requisitos levantados após o estudo e planejamento da ferramenta.
+Esta sessão descreve os requisitos levantados durante o estudo e planejamento da ferramenta.
 
 \subsection{Requisitos Funcionais}
 
@@ -16,9 +16,10 @@ Requisitos funcionais são aqueles determinados pelas funcionalidades exigidas d
 Foram levantados os seguintes requisitos funcionais:
 
 \begin{itemize}
-	\item O \emph{software} deverá possuir ferramentas de degradação de vídeos digitais.
+	\item O \emph{software} deverá possuir ferramentas de degradação de vídeos digitais de blocagem e borramento.
 	\item O \emph{software} deverá possuir uma ferramenta de simulação de transmissão \emph{streaming}.
 	\item O \emph{software} deverá ser capaz de criar e gerenciar sessões de avaliação subjetiva.
+	\item O \emph{software} deverá possuir uma ferramenta que realize avaliação objetiva sobre os vídeos da base de dados, conforme as métricas PSNR, MSE e MSSIM.
 	\item O \emph{software} deverá ser capaz de exibir os vídeos existentes na base de dados.
 	\item O \emph{software} deverá exibir os resultados das avaliações objetivas e subjetivas de forma gráfica.
 \end{itemize}
@@ -37,6 +38,7 @@ Abaixo se encontram os requisitos não funcionais levantados:
 	\item A ferramenta de exibição deverá ser executada em um sistema capaz de prover um \emph{display} com resolução igual ou maior que a dos vídeos a serem exibidos.
 	% TODO verificar a versão da JRE necessária para rodar a interface
 	\item A interface gráfica do sistema necessita que haja um \emph{Java Runtime Environment} (\sigla{JRE}{Java Runtime Environment}) instalado no sistema operacional.
+	\item O \emph{player} de vídeo MPlayer, livre e de código aberto, é necessário para mostrar os vídeos durante as sessões.
 \end{itemize}
 
 \section{Especificações do Software}
@@ -45,8 +47,10 @@ Esta seção tem o propósito de descrever a arquitetura proposta para o SASQV2,
 
 \subsection{Arquitetura do Sistema}
 
-Por se tratar da continuação do desenvolvimento do projeto SASQV, este trabalho reutiliza e adapta grande parte dos componentes existentes no trabalho original. 
-A Figura \ref{fig:arquitetura} mostra uma comparação entre as visões gerais de ambos os projetos. A diferença mais notável entre estas arquiteturas é a separação dos componentes de serviço e o de ferramentas, além de também recriar o componente de interface gráfica para melhor atender às necessidades do sistema. 
+Por se tratar da continuação do desenvolvimento do projeto SASQV, este trabalho reutiliza e adapta grande parte dos componentes existentes no trabalho original.
+
+A Figura \ref{fig:arquitetura} mostra uma comparação entre as visões gerais de ambos os projetos. A diferença mais notável entre estas arquiteturas é a separação dos componentes de serviço e o de ferramentas, além de também recriar o componente de interface gráfica para melhor atender às necessidades do sistema.
+
 Mais detalhes sobre cada componente da arquitetura são descritos em seções específicas a seguir.
 
 \begin{figure}[!htb]
@@ -59,10 +63,13 @@ Mais detalhes sobre cada componente da arquitetura são descritos em seções es
 
 \subsubsection{Banco de Dados}
 
-O componente banco de dados foi completamente reaproveitado, seguindo as mesma especificações do SASQV. 
+O componente banco de dados foi completamente reaproveitado, seguindo as mesma especificações do SASQV.
+
 O Sistema Gerenciador de Banco de Dados (\sigla{SGBD}{Sistema Gerenciador de Banco de Dados}) escolhido foi o MySQL, atualmente o SGDB \emph{open source} mais utilizado no mundo \cite{mysqlmarket}.
-O MySQL foi lançado e desenvolvido em 1995 pela empresa Sueca MySQL AB, atualmente incorporada pela Oracle Corporation, na forma de um SGDB que fornece um servidor multi-usuários para bancos de dados relacionais \cite{wikipediamysql}. 
-Juntamente do MySQL também é utilizado o MySQL Workbench, uma ferramenta distribuida pela Oracle que concilia um cliente MySQL, uma ferramenta de \emph{Database Moddeling} e um administrador de servidor MySQL. 
+O MySQL foi lançado e desenvolvido em 1995 pela empresa Sueca MySQL AB, atualmente incorporada pela Oracle Corporation, na forma de um SGDB que fornece um servidor multi-usuários para bancos de dados relacionais \cite{wikipediamysql}.
+
+Juntamente do MySQL também é utilizado o MySQL Workbench, uma ferramenta distribuída pela Oracle que concilia um cliente MySQL, uma ferramenta de \emph{Database Moddeling} e um administrador de servidor MySQL.
+
 A versão \emph{open source} de ambas as ferramentas é distribuída sob a licensa GNU General Public License (\sigla{GPL}{General Public License}).
 
 O modelo Entidade-Relacionamento (\sigla{ER}{Entidade-Relacionamento}) é o mesmo utilizado pelo SASQV, como mostrado na Figura \ref{fig:diagramaER}.
@@ -77,8 +84,10 @@ O modelo Entidade-Relacionamento (\sigla{ER}{Entidade-Relacionamento}) é o mesm
 
 \subsubsection{Model}
 
-O componente Model presente no SASQV2 também foi reaproveitado inteiramente do SASQV, cabendo apenas algumas adições. Este componente consiste na implementação de um mapeamento objeto-relacional (\sigla{MOR}{Mapeamento Objeto Relacional}) por meio da biblioteca Hibernate. 
+O componente Model presente no SASQV2 também foi inteiramente reaproveitado do SASQV, cabendo apenas algumas adições. Este componente consiste na implementação de um mapeamento objeto-relacional (\sigla{MOR}{Mapeamento Objeto Relacional}) por meio da biblioteca Hibernate.
+
 O Hibernate teve seu desenvolvimento iniciado em 2001 por Gavin King, com o objetivo de melhorar as ferramentas de persistência existentes na plataforma Java \cite{hibernateHistory}, e é atualmente distribuído sob a licensa GNU Lesser General Public License (\sigla{LGPL}{Lesser General Public License}) \cite{hibernateAbout}.
+
 A biblioteca provê um mapeamento flexível entre objetos Java e tipos SQL, eliminando a custosa necessidade de processamento manual e repetitivo de listas de resultados obtidas via SQL e JDBC.
 Estima-se que até cerca de 30\% do código de uma aplicação possa ser poupado utilizando MOR, além de incrementar a portabilidade do sistema suportando diversas implementações de Bancos de Dados SQL em troca de um pequeno \emph{overhead} de performance.
 
@@ -93,14 +102,16 @@ O componente presente no SASQV se trata de uma fachada de serviço responsável 
 	\item Repassar uma ação para o elemento model e esperar por resposta.
 \end{enumerate}
 
-Na arquitetura do SASQV2 a interpretação de mensagens foi descartada, uma vez que foi prosposta a implementação de uma nova interface em linguagem Java, e deu lugar a métodos de finalidades distintas dentro de cada ação enumerada acima. % TODO verificar se o acima pode virar abaixo?!!?
-Com isso execução de tarefas de degradação ou avaliação por métrica objetiva, antes executadas localmente, passaram a ser delegadas para um novo componente chamado Ferramentas, descrito em \ref{met:ferramentas}.
+Na arquitetura do SASQV2 a interpretação de mensagens foi descartada, uma vez que foi prosposta a implementação de uma nova interface em linguagem Java, que deu lugar a métodos de finalidades distintas dentro de cada ação enumerada acima. % TODO verificar se o acima pode virar abaixo?!!?
+Com isso a execução de tarefas de degradação ou avaliação por métrica objetiva, antes executadas localmente, passaram a ser delegadas para um novo componente chamado Ferramentas, descrito em \ref{met:ferramentas}.
+
 Já o conteúdo dos métodos que repassam as ações para o dispositivo sem-fio e para o model permanecem muito semelhantes aos encontrados na interpretação de mensagens originalmente feito no SASQV, sofrendo apenas pequenas modificações para acomodar a nova estrutura.
 
 \subsubsection{Ferramentas}
 \label{met:ferramentas}
 
 O módulo ferramentas constitui um novo componente na arquitetura do \emph{software}, visto que um dos objetivos deste trabalho é desenvolver melhores ferramentas de degradação considerou-se válida a separação deste módulo que originalmente se encontrava juntamente do Service.
+
 Esse módulo é resposável por todas as ferramentas que de alguma forma manipulam vídeos digitais ou auxilíam nesta manipulação. Dessa forma foram desenvolvidas 5 ferramentas distintas, em linguagem C++:
 
 \begin{description}
@@ -115,25 +126,33 @@ Estas ferramentas podem receber configurações independentes e flexíveis, dive
 
 \subsubsection{Interface Gráfica}
 
-O componente de interface existente no SASQV foi completamente refeito.
-Originalmente desenvolvido utilizando a tecnologia Adobe Flex, era necessária a utilização de uma biblioteca exclusivamente para comunicação entre os modulos de Interface e Service. A biblioteca utilizada (merapi) se encontrava em fase de desenvolvimento beta e carecia de funcionalidades, de forma que seria necessário buscar uma biblioteca alternativa para continuar o densevolvimento do projeto.
+
+Originalmente desenvolvida utilizando a tecnologia Adobe Flex, era necessária a utilização de uma biblioteca exclusivamente para comunicação entre os módulos de Interface e Service. A biblioteca utilizada (merapi) se encontrava em fase de desenvolvimento beta e carecia de funcionalidades, de forma que seria necessário buscar uma biblioteca alternativa para continuar o densevolvimento do projeto.
+
 Além disso, as ferramentas de desenvolvimento em tecnologia Flex não são gratuitas e perderam gradativamente o suporte à sistemas operacionais Linux.
 
-A combinação destes fatores motivou a decisão de desenvolver uma nova intercae Gráfica utilizando Java, proporcionando melhor integração, reduzindo o envolvimento de diversas tecnologias e bibliotecas e assim incrementando a portabilidade da ferramenta.
+A combinação destes fatores motivou a decisão de desenvolver uma nova intercae Gráfica utilizando Java, proporcionando melhor integração, reduzindo o envolvimento de diversas tecnologias e bibliotecas e assim aumentando a portabilidade da ferramenta.
 
 \subsection{Linguagens}
 
-Por se tratar da aprimoração e continuação do projeto SASQV a primeira linguagem contemplada foi a presente no mesmo: Java. 
-Esta foi desenvolvida por uma equipe de programadore liderada por James Gosling, trabalhando para a empresa Sun MicroSystems \cite{wikijava}. Sendo lançada em 1995, era o principal componente da plataforma Java e demonstrava forte inspiração na linguagem C++, compartilhando parte de sua sintaxe e também diversas característica. 
+Por se tratar da aprimoração e continuação do projeto SASQV a primeira linguagem contemplada foi a presente no mesmo: Java.
+
+Esta foi desenvolvida por uma equipe de programadores liderada por James Gosling, trabalhando para a empresa Sun MicroSystems \cite{wikijava}. Sendo lançada em 1995, era o principal componente da plataforma Java e demonstrava forte inspiração na linguagem C++, compartilhando parte de sua sintaxe e também diversas característica.
+
 No entanto, Java é considerada uma linguagem de mais alto nível, além de ser compilada no formato \emph{bytecode}, o que favorece a portabilidade dos programas, podendo ser executados em diversas arquiteturas e sistemas operacionais, contanto que estes possuam uma implementação da Java Virtual Machine (\sigla{JVM}{Java Virtual Machine}). Uma das facilidades da linguagem é a sua extensa biblioteca padrão, que contém, entre outros, diversos componentes para construção de interfaces gráficas.
 
-A linguagem C++ também passou a ser considerada para o desenvolvimento do projeto, visto o desenvolvimento do módulo de Ferramentas como programas que possam ser usados independentemente. 
-A linguagem teve seu desenvolvimento iniciado por Bjarne Stroustrup em 1979, quando trabalhava na Bell Labs \cite{wikicplusplus}.
-C++ é uma nova implementação da linguagem C adicionada de novas funcionalidades, tais como suporte a classes, sobrecarga de operadores, herança múltipla e tratamento de exceções.
-Atualmente, C++ é uma das linguagens mais populares, sendo implementada em diversas plataformas de \emph{hardware} e sistemas operacionais, além de ser usado na implemantação dos mais diversos softwares para \emph{desktop}, \emph{drivers} de dispositivos de \emph{hardware} e sistemas embarcados.
+A linguagem C++ também passou a ser considerada para o desenvolvimento do projeto, visto o desenvolvimento do módulo de Ferramentas como programas que possam ser usados independentemente.
 
-Um dos principais atrativos da linguagem para o desenvolvimento das ferramentas deste projeto é a existência de diversas funcionalidades de baixo nível. 
+A linguagem teve seu desenvolvimento iniciado por Bjarne Stroustrup em 1979, quando trabalhava na Bell Labs \cite{wikicplusplus}.
+
+C++ é uma nova implementação da linguagem C adicionada de novas funcionalidades, tais como suporte a classes, sobrecarga de operadores, herança múltipla e tratamento de exceções.
+
+Atualmente, C++ é uma das linguagens mais populares, sendo implementada em diversas plataformas de \emph{hardware} e sistemas operacionais, além de ser usada na implemantação dos mais diversos \emph{softwares} para \emph{desktop}, \emph{drivers} de dispositivos de \emph{hardware} e sistemas embarcados.
+
+Um dos principais atrativos da linguagem para o desenvolvimento das ferramentas deste projeto é a existência de diversas funcionalidades de baixo nível.
+
 Essas funcionalidades simplificam e facilitam o acesso e manipulação \emph{byte} a \emph{byte} de \emph{streams} de dados, algo que é usado extensivamente ao longo da implementação das ferramentas.
+
 Outro aspecto importante derivado destas funcionalidades é o impacto na performance do software. %TODO
 A simplicidade da linguagem também facilita o desenvolvimento de ferramentas \emph{stand-alone} com interface por linhas de comando, além de possuir diversas bibliotecas de \emph{parsing} para comandos e opções.
 
