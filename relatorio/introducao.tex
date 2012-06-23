@@ -1,19 +1,75 @@
 %---------- Primeiro Capitulo: Introdução ----------
 
 \chapter{Introdução}
-3---5 pags
+%3---5 pags
 
-descrição geral do problema
+%descrição geral do problema
 
-justificativa
+%justificativa
 
-objetivos: geral e especificos (+- 5 especificos)
+%objetivos: geral e especificos (+- 5 especificos)
 
-apresentação do documento: estrutura, capitulos (metodologia implicita)
+%apresentação do documento: estrutura, capitulos (metodologia implicita)
+
+Há algumas décadas o formato digital de vídeo tornou-se viável comercialmente, mais precisamente em 1986 com o formato D-1 da Sony, que armazenava imagens não-comprimidas em definição padrão (SD - Standard Definition). Por ser muito caro, o D-1 foi utilizado apenas por grandes emissoras de televisão. Posteriormente, este formato foi substituído por outros que utilizavam a compressão de vídeo, tornando o equipamento mais barato e acessível \cite{wikidigitalvideo}.
+
+Na década de 1990 surgiram algumas padronizações, como o MPEG-1 e o MPEG-2, que estabeleceram padrões de codificação com perdas tanto para vídeo quanto para áudio, baseando-se na capacidade de armazenamento e na banda de transmissão disponíveis \cite{mpeg2ref}.
+
+Percebe-se que o vídeo digital se encontra cada vez mais presente no dia a dia das pessoas ao redor do mundo, seja como educação, entretenimento ou informação.
+
+Além de acessível, também é necessário que o vídeo chegue a essas pessoas com um nível de qualidade que as possibilitem contemplar e interpretar as imagens de forma natural, sem produzir degradação ou desconforto perceptível ao Sistema Visual Humano (\sigla{SVH}{Sistema Visual Humano}), ou seja, sem que existam perdas ou distorções exageradas em seu conteúdo.
+
+No entanto, processos como aquisição, compressão, armazenamento e transmissão, os quais viabilizam e popularizam a difusão de vídeo, são muitas vezes responsáveis por também introduzir artefatos que degradam a qualidade final da imagem \cite{daronco, wangbovik2004}.
+
+No intuito de melhor avaliar o efeito que tais artefatos podem produzir no SVH foram desenvolvidas métricas objetivas e subjetivas de avaliação de qualidade de vídeo. O projeto SASQV, desenvolvido por \cite{sasqv}, busca implementar ambas as formas de avaliação em um mesmo conjunto de \emph{software} e \emph{hardware} onde é possível gerar artefatos artificiais, coletar avaliações subjetivas e aplicar métricas objetivas sobre uma base de vídeos, bem como utilizar ferramentas para análise e comparação dos dados obtidos.
+
+O presente trabalho propõe adaptações ao SASQV, buscando aperfeiçoar a ferramenta de geração de artefatos no sentido de torná-los mais similares àqueles encontrados nas trasmissões, fornecendo maior grau de liberdade para a manipulação dos mesmos, além de agregar novos tipos, como por exemplo a simulação de um \emph{streaming} de vídeo. Dada a natureza do projeto SASQV, o qual se utiliza de \emph{software} e bibliotecas distribuídos sob licenças de \emph{software} livre, este projeto também se propõe a construir uma nova \emph{interface} gráfica, não baseada em tecnologias proprietárias, que permita a degradação de vídeos, controle de sessões de avaliação objetiva ou subjetiva e visualização de resultados através de gráficos.
+
 \section{Motivações}
+
+Este trabalho é motivado pela ampla difusão do vídeo digital, implantado principalmente na forma de TV digital e de \emph{streaming} via internet, sendo o segundo objeto de grande interesse no mercado. De acordo com \cite{sandvinereport}, no continente norte-americano cerca de 37\% do tráfego de internet fixa é dedicado ao \emph{streaming} de vídeo durante o horário onde tradicionalmente ocorre o pico de audiência televisiva, atingindo 41\% no caso da internet móvel dentro do mesmo horário.
+
+As estatísticas levantadas por \cite{statsyoutube}, uma das maiores bases de vídeos digitais \emph{online} hoje em dia, indicam que em seu site:
+\begin{itemize}
+    \item São recebidos mais de 800 milhões de usuário únicos por mês;
+    \item São assistidas mais de 3 bilhões de horas de vídeo a cada mês;
+    \item São armazenadas 72 horas de vídeo a cada minuto;
+    \item São assistidos 500 anos de vídeo através da rede social \emph{Facebook} todos os dias.
+\end{itemize}
+
+Dada a ampla utilização do formato digital quase que em todos os meios de comunicação e entretenimento, avaliar a qualidade de vídeo é uma necessidade para qualquer sistema. O conhecimento da relação entre atributos envolvidos na transmissão e opinião dos telespectadores pode permitir aos operadores do sistema saberem qual o impacto de cada atributo na qualidade do vídeo disponibilizado.
+
+A causa das degradações em transmissões digitais se deve ao processo de compressão com perda que é realizada a fim de se reduzir a quantidade de informação a ser enviada. Dependendo da taxa de compressão e dos codificadores envolvidos, esse processo pode gerar alguns artefatos como blocagem e borramento, diminuindo a qualidade original. Já o efeito de travamento se deve à perda de informações devido ao baixo nível de sinal ou perda de pacotes \cite{albini}.
+
+Além possibilitar o estabelecimento da relação \emph{atributos} X \emph{opinião geral}, a utilização de vídeos degradados artificialmente diminui o custo e a dificuldade em se obter vídeos sincronizados para avaliação, uma vez que não são necessários equipamentos de transmissão, recepção e codificação, nem uma rede de computadores para a simulação de \emph{streaming}.
 
 \section{Objetivos}
 \subsection{Objetivo Geral}
+
+\begin{itemize}
+    \item Aprimorar a degradação de vídeos, reprodução, manipulação de sessões, interação e portabilidade da ferramenta SASQV.
+\end{itemize}
+
 \subsection{Objetivos Específicos}
 
+\begin{itemize}
+    \item Aprimorar os algoritmos de geração de artefatos de vídeo digital (blocagem e borramento), permitindo ao usuário manipular os parâmetros de cada artefato;
+    \item Adaptar a ferramenta original para manipular vídeo bruto no formato .yuv;
+    \item Adicionar à ferramenta um simulador de transmissões de vídeo via rede, simulando o \emph{streaming} e seus possíveis artefatos;
+    \item Desenvolver uma nova interface gráfica em linguagem Java de funcionalidade similar à do SASQV;
+    \item Aprimorar a portabilidade da ferramenta para sistemas operacionais diversos.
+\end{itemize}
+
 \section{Estrutura do Relatório}
+
+Os conceitos presentes na literatura correlata e que servem de base para analisar e justificar as decisões de projeto estão descritos no Capítulo 2. Neste capítulo há uma breve introdução ao sistema visual humano, uma descrição aprofundada de vídeos digitais e seus artefatos, apresentação de métricas de avaliação de vídeo e um levantamento de trabalhos relacionados, bem como uma análise comparativa destes.
+
+O Capítulo 3 apresenta o planejamento do desenvolvimento do software. Inicialmente é apresentado o levantamento de seus requisitos e em seguida são apresentadas as especificações, as decisões de projeto e arquitetura bem como suas justificativas.
+
+Neste capítulo as modificações necessárias ao software original também são levantadas. Por fim, um planejamento de trabalho contendo as atividades a serem desenvolvidas pela equipe é apresentado.
+
+No Capítulo 4 está descrito o desenvolvimento do projeto: as ferramentas que permitiram seu desenvolvimento e o controle de suas versões. Em seguida são apresentadas e detalhadas as ferramentas desenvolvidas, a interface gráfica bem como os diagramas de sequência e de classes que descrevem metodicamente a estrutura e funcionamento do software.
+
+A partir do término do desenvolvimento do software proposto, a validação das ferramentas desenvolvidas é realizada comparativamente a ferramentas semelhantes já conhecidas na área. Os resultados são apresentados no Capítulo 5. O principal resultado do projeto é apresentado em seguida: o impacto dos parâmetros inicialmente escolhidos pelo usuário sobre o resultado das métricas objetivas escolhidas.
+
+Para encerrar, são apresentadas as conclusões do projeto e as sugestões para trabalhos futuros que pretendam continuar o aprimoramento da ferramenta.
