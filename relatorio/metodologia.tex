@@ -122,7 +122,7 @@ Esse módulo é resposável por todas as ferramentas que de alguma forma manipul
 	\item[Metric] Efetua avaliação dos vídeos por meio de métricas objetivas.
 \end{description}
 
-Estas ferramentas podem receber configurações independentes e flexíveis, diversificando as possibilidades de geração de degradações e artefatos e tornando possível a criação de resultados diferenciados para um mesmo vídeo usado como referência. Dentre essas configurações pode-se destacar a distribuição dos artefatos no tempo e no espaço e a intensidade de aplicação dos mesmos. Cada ferramenta citada será descrita com mais detalhes em \ref{}. %TODO referencia pro desenvolvimento:ferramentas
+Estas ferramentas podem receber configurações independentes e flexíveis, diversificando as possibilidades de geração de degradações e artefatos e tornando possível a criação de resultados diferenciados para um mesmo vídeo usado como referência. Dentre essas configurações pode-se destacar a distribuição dos artefatos no tempo e no espaço e a intensidade de aplicação dos mesmos. Cada ferramenta citada será descrita com mais detalhes em \ref{des:ferramentas}. 
 
 \subsubsection{Interface Gráfica}
 
@@ -142,18 +142,14 @@ Esta foi desenvolvida por uma equipe de programadores liderada por James Gosling
 No entanto, Java é considerada uma linguagem de mais alto nível, além de ser compilada no formato \emph{bytecode}, o que favorece a portabilidade dos programas, podendo ser executados em diversas arquiteturas e sistemas operacionais, contanto que estes possuam uma implementação da Java Virtual Machine (\sigla{JVM}{Java Virtual Machine}). Uma das facilidades da linguagem é a sua extensa biblioteca padrão, que contém, entre outros, diversos componentes para construção de interfaces gráficas.
 
 A linguagem C++ também passou a ser considerada para o desenvolvimento do projeto, visto o desenvolvimento do módulo de Ferramentas como programas que possam ser usados independentemente.
-
 A linguagem teve seu desenvolvimento iniciado por Bjarne Stroustrup em 1979, quando trabalhava na Bell Labs \cite{wikicplusplus}.
-
 C++ é uma nova implementação da linguagem C adicionada de novas funcionalidades, tais como suporte a classes, sobrecarga de operadores, herança múltipla e tratamento de exceções.
-
 Atualmente, C++ é uma das linguagens mais populares, sendo implementada em diversas plataformas de \emph{hardware} e sistemas operacionais, além de ser usada na implemantação dos mais diversos \emph{softwares} para \emph{desktop}, \emph{drivers} de dispositivos de \emph{hardware} e sistemas embarcados.
 
 Um dos principais atrativos da linguagem para o desenvolvimento das ferramentas deste projeto é a existência de diversas funcionalidades de baixo nível.
-
 Essas funcionalidades simplificam e facilitam o acesso e manipulação \emph{byte} a \emph{byte} de \emph{streams} de dados, algo que é usado extensivamente ao longo da implementação das ferramentas.
-
-Outro aspecto importante derivado destas funcionalidades é o impacto na performance do software. %TODO
+Outro aspecto importante derivado destas funcionalidades é o impacto na performance do software. 
+Segundo \cite{benchmarks}, para o \emph{benchmark reverse-complement} --- onde são efetuadas diversas operações de leitura e escrita em arquivos, além de um leve processamento --- a melhor implementação em Java foi 1.9 vezes mais lenta que a melhor implementação em C++.
 A simplicidade da linguagem também facilita o desenvolvimento de ferramentas \emph{stand-alone} com interface por linhas de comando, além de possuir diversas bibliotecas de \emph{parsing} para comandos e opções.
 
 Ambas as linguagens eram previamente conhecidas pelos integrantes do projeto, os quais também possuem um nível confortável de experiência no desenvolvimento de aplicações com estas linguagems e com diversas ferramentas associadas a elas, como IDE's, bibliotecas gráficas e conectividade com bancos de dados.
@@ -161,3 +157,10 @@ Ambas as linguagens eram previamente conhecidas pelos integrantes do projeto, os
 \subsection{Bibliotecas}
 \subsection{Diagramas de Caso de Uso}
 \section{Considerações}
+
+Para este projeto de \emph{software} procurou-se aproveitar ao máximo os componentes existentes no SASQV, de forma a maximizar o esforço nos aspectos a serem melhorados e não consumir tempo de projeto retrabalando o que já foi feito. 
+
+A adesão ao desenho de \emph{software} apresentado se justifica pela independência entre os componentes, facilitando o desenvolvimento e teste de cada um e também o reaproveitamento em trabalhos futuros.
+A opção por criar ferramentas independentes para o processo de degradação se mostra eficiente e versátil, visto que deste modo estão prontas para serem reutilizadas e combinadas à outras ferramentas, além de facilitarem a automatização do processo de degradação para o usuário avançado.
+
+Sendo assim, a estrutura planejada foi muito semelhante à do projeto original, com diversos componentes sofrendo adaptações e também a adição de um novo componente dedicado.
