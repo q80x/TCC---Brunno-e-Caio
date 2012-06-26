@@ -40,9 +40,33 @@ Antes de explicar sobre o processo de quantização que determinará o conteúdo
 
 Um modelo de cores é um modelo matemático que associa números a cores, ou seja, é uma função matemática de tuplas, de normalmente três ou quatro variáveis, que representam cores no espaço correspondente.
 
-Várias são as formas de construir um modelo de cores e dentre alguns deles estão: RGB (componentes red-green-blue) figura \ref{}, YUV (componentes luminância-crominância-crominância) figura e CMYK (componentes cyan-magenta-yellow-black) figura \ref{}. %TODO arrumar referencias qdo colocar as figuras.
+Várias são as formas de construir um modelo de cores e dentre alguns deles estão: RGB (componentes red-green-blue) figura \ref{fig:rgbspace}, YUV (componentes luminância-crominância-crominância) figura \ref{fig:yuvspace}e CMYK (componentes cyan-magenta-yellow-black) figura \ref{fig:cmykspace}.
 
-% FIGURASSSSSSSSSSS xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+\begin{figure}[ht]
+    \begin{minipage}[b]{0.3\linewidth}
+        \centering
+        \includegraphics[width=\textwidth]{./imgs/rgbspace.png}
+        \caption{RGB}
+        \label{fig:rgbspace}
+        \fonte{\cite{acasystems}}
+    \end{minipage}
+    \hspace{0.5cm}
+    \begin{minipage}[b]{0.3\linewidth}
+        \centering
+        \includegraphics[width=\textwidth]{./imgs/yuvspace.png}
+        \caption{YUV, para Y = 0.5}
+        \label{fig:yuvspace}
+        \fonte{\cite{wikiyuvspace}}
+    \end{minipage}
+    \hspace{0.5cm}
+    \begin{minipage}[b]{0.3\linewidth}
+        \centering
+        \includegraphics[width=\textwidth]{./imgs/cmykspace.png}
+        \caption{CMYK}
+        \label{fig:cmykspace}
+        \fonte{\cite{acasystems}}
+    \end{minipage}
+\end{figure}
 
 O modelo de cores RGB possui três componentes e a partir da combinação delas é possível criar uma infinidade de cores. Da mesma forma, o modelo de cores CMYK combina as componentes ciano, magenta, amarelo e preto para formar cores. Já no modelo YUV existe uma componente de luminância, ou brilho, e duas componentes de cor efetivamente (na realidade, essas componentes são respectivamente a diferença entre valores padrões de azul e vermelho e a luminância).
 
@@ -50,16 +74,27 @@ De posse destes conceitos iniciais, o significado de quantização torna-se mais
 
 Partindo-se da quantização, é necessário determinar a quantidade de bits por pixel (bpp ou profundidade de cor) que é equivalente ao número de níveis de intensidade de cada componente de cor do espaço de cores desejado. Por exemplo, utilizando-se 8 bits para cada componente do modelo RGB, o espaço de cores fica limitado a 256 valores para cada componente que, combinados, geram mais de 16 milhões de cores.
 
-No espaço de cores RGB mostrado na figura \ref{}, é possível observar o efeito da quantização. %TODO referencia da figura
-Os eixos, que a princípio tinham como domínio os reais, foram discretizados para assumir apenas valores inteiros não-negativos. Cada componente pode assumir seis valores e a combinação delas gera um total de 6\textsuperscript{3} = 216 cores. Desta forma, pode-se perceber que cada subespaço assumiu um único valor para representá-lo, ignorando as tonalidades de transição entre cada ponto do espaço.
+No espaço de cores RGB mostrado na figura \ref{fig:rgbdiscrete}, é possível observar o efeito da quantização. Os eixos, que a princípio tinham como domínio os reais, foram discretizados para assumir apenas valores inteiros não-negativos. Cada componente pode assumir seis valores e a combinação delas gera um total de 6\textsuperscript{3} = 216 cores. Desta forma, pode-se perceber que cada subespaço assumiu um único valor para representá-lo, ignorando as tonalidades de transição entre cada ponto do espaço.
 
-% FIGURA xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.5\textwidth]{./imgs/rgbdiscrete.png}
+	\caption{Espaço RGB discretizado.}
+	\label{fig:rgbdiscrete}
+	\fonte{\cite{wikicolormodel}}
+\end{figure}
 
 A quantização e a quantidade de bits por pixel representam uma das vantagens da utilização de formatos digitais pois muita informação redundante aos olhos humanos (tons de cores muito próximos, por exemplo) pode ser removida. Neste aspecto, um ponto chave da fisiologia humana que favorece a compressão de imagens é o fato de a acuidade visual ser maior em relação à luminância do que à crominância \cite{vandenbranden}.
 
-Um conceito importante que aproveita esta característica da visão humana é a subamostragem. Este conceito define que a resolução da camada de crominância pode ser menor que a resolução da camada de luminância, ou seja, para um conjunto de pixels, cada um possuirá seu valor de luminância, porém o de crominância poderá ser repetido, desta forma economizando recursos (BRICE, 2000). A figura \ref{} apresenta, em colunas, alguns esquemas de subamostragem: %TODO referencia da figura
+Um conceito importante que aproveita esta característica da visão humana é a subamostragem. Este conceito define que a resolução da camada de crominância pode ser menor que a resolução da camada de luminância, ou seja, para um conjunto de pixels, cada um possuirá seu valor de luminância, porém o de crominância poderá ser repetido, desta forma economizando recursos (BRICE, 2000). A figura \ref{fig:subsampling} apresenta, em colunas, alguns esquemas de subamostragem:
 
-% FIGURA xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./imgs/subsamplingschemes.png}
+	\caption{Esquemas de subamostragem.}
+	\label{fig:subsampling}
+	\fonte{\cite{wikisubsampling}}
+\end{figure}
 
 Onde:
 \begin{itemize}
@@ -70,9 +105,26 @@ Onde:
 
 O fator alpha (coeficiente de opacidade) pode ser considerado na notação, mas normalmente é omitido por ter valor igual a J. A notação dos esquemas é obtida considerando-se J:a:b. Desta forma, no esquema 4:1:1 é obtida uma amostra de crominância para cada linha; no esquema 4:2:0 são obtidas duas amostras na primeira linha que serão repetidas na segunda; no esquema 4:2:2 uma amostra de crominância é feita para cada conjunto de dois pixels (na horizontal) e, por fim, no esquema 4:4:4 não há subamostragem, uma vez que a crominância é amostrada para cada pixel, não ocorrendo compressão por não haver possibilidade de repetição.
 
-Em valores reais, considerando-se 24 bpp (8 para cada componente de crominância e 8 para a componente de luminância), uma imagem sem subamostragem (esquema 4:4:4) de dimensões 4x2, como a da figura, equivaleria à 24x4x2 = 192 bits. A tabela \ref{}  sintetiza o valor em bits desta mesma imagem para cada esquema de subamostragem:
+Em valores reais, considerando-se 24 bpp (8 para cada componente de crominância e 8 para a componente de luminância), uma imagem sem subamostragem (esquema 4:4:4) de dimensões 4x2, como a da figura, equivaleria à 24x4x2 = 192 bits. A tabela \ref{tab:subsampling}  sintetiza o valor em bits desta mesma imagem para cada esquema de subamostragem:
 
-% TABELA xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+\begin{table}[!h]
+	\centering
+	\caption{Tamanho em bits da mesma imagem (4x2) para cada esquema de subamostragem.}
+	\label{tab:subsampling}
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		Esquema & Total de bits de luminância & Total de bits de Crominância & Total de bits \\
+	    \hline
+		4:4:4 & 8x4x2 = 64 & (8+8)x4x2 = 128 & 192 \\
+	    \hline
+		4:1:1 & 8x4x2 = 64 & (8+8)x2 = 32 & 96 \\
+	    \hline
+		4:2:0 & 8x4x2 = 64 & (8+8)x2 = 32 & 96 \\
+	    \hline
+		4:2:2 & 8x4x2 = 64 & (8+8)x2x2 = 64 & 128 \\
+		\hline
+	\end{tabular}
+\end{table}
 
 O vídeo digital com qualidade \emph{standard} (\sigla{SDTV}{Standard Definition Television}) é definido pela norma \sigla{SMPTE}{Society of Motion Picture and Television Engeneers} 259M (Society of Motion Picture and Television Engeneers). Possui dimensões de 720x480 pixels com esquema de subamostragem 4:2:2. O padrão de \sigla{DVD}{Digital Video Disk} (Digital Video Disk) utiliza o esquema 4:2:0 de subamostragem.
 
@@ -80,9 +132,15 @@ O vídeo digital com qualidade \emph{standard} (\sigla{SDTV}{Standard Definition
 
 É possível armazenar diretamente os valores das amostras num arquivo. Este tipo de arquivo, conhecido como arquivo raw, ou bruto, não passa por qualquer processamento, codificação ou encapsulamento. Existe uma infinidade de formatos de arquivo de vídeo bruto, cada um com uma organização particular que ordena os valores das componentes de cada pixel, entre eles os formatos: AYUV, UYVY, CYUV, YUY2, Y41P, Y411, YUVP, Y211, YV16, YV9, Y800 \cite{fourccyuv}. %TODO precisa dessa jeba enorme de siglas?
 
-A figura \ref{} mostra a organização de um arquivo no formato IYUV (ou I420) de subamostragem 4:2:0 e o respectivo fluxo de bytes em memória. Primeiramente são armazenados os valores de luminância de cada pixel, os valores de crominância U (Cb) para cada conjunto de 4 pixels e os de crominância V (Cr) para o mesmo conjunto.
+A figura \ref{fig:yuvorganization} mostra a organização de um arquivo no formato IYUV (ou I420) de subamostragem 4:2:0 e o respectivo fluxo de bytes em memória. Primeiramente são armazenados os valores de luminância de cada pixel, os valores de crominância U (Cb) para cada conjunto de 4 pixels e os de crominância V (Cr) para o mesmo conjunto.
 
-% FIGURA xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./imgs/yuvorganization.png}
+	\caption{Organização de um arquivo no formato YUV.}
+	\label{fig:yuvorganization}
+	\fonte{\cite{wikiyuvspace}}
+\end{figure}
 
 \section{Codificação}
 
@@ -99,9 +157,16 @@ Embora represente uma redução na utilização de recursos, a compressão encon
 
 Percebe-se desta forma que existe uma troca entre método e taxa de compressão, degradação da qualidade aceitável e recursos disponíveis, ambos dependentes da aplicação.
 
-A imagem apresenta o processo de obtenção, codificação (etapa A), transmissão, recepção e decodificação (etapa B) de um sinal de áudio e/ou vídeo sendo, por fim, apresentado. As etapas de conversão A/D (analógico-digital) e conversão D/A (digital-analógico) podem ser suprimidas caso a conversão A/D já seja realizada nos equipamentos de obtenção de dados e caso os monitores e dispositivos de armazenamento sejam digitais (\cite{rehme}).
+A Figura \ref{fig:codingprocess} apresenta o processo de obtenção, codificação (etapa A), transmissão, recepção e decodificação (etapa B) de um sinal de áudio e/ou vídeo sendo, por fim, apresentado. As etapas de conversão A/D (analógico-digital) e conversão D/A (digital-analógico) podem ser suprimidas caso a conversão A/D já seja realizada nos equipamentos de obtenção de dados e caso os monitores e dispositivos de armazenamento sejam digitais (\cite{rehme}).
 
-% FIGURA xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./imgs/codingprocess.png}
+	\caption{Etapas de codificação e decodificação.}
+	\label{fig:codingprocess}
+	\fonte{\cite{rehme}}
+\end{figure}
+
 As etapas gerais da compressão são:
 
 \begin{itemize}
@@ -172,7 +237,7 @@ A Figura \ref{fig:ts} apresenta o encapsulamento típico de um pacote IP. Cada p
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.9\textwidth]{./imgs/ts.png}
-	\caption{Estrutura de um GOP.}
+	\caption{Estrutura de pacote IP.}
 	\label{fig:ts}
 	\fonte{\cite{ciscoieee}}
 \end{figure}
@@ -208,8 +273,6 @@ Nas seções que seguem, alguns dos artefatos mais comuns serão detalhados junt
 \subsection{Efeito de Blocagem - \emph{Blocking effect}}
 
 Este artefato é o mais estudado pela literatura \cite{emmersonsilva}. Ocorre em função de uma quantização grosseira no processo de compressão, em que resulta numa distorção ou perda de componentes de alta frequência \cite{itup930}. Normalmente ocorre em superfícies lisas em movimento \cite{itup930} \cite{farias2007}.
-
-%Muitos codificadores utilizam a Transformada Discreta de Cossenos (DCT - Discrete Cosine Transform), como o MPEG-1 e o MPEG-2, em que uma imagem é codificada a partir de janelas de dimensões 8x8 pixels. 
 
 A recomendação P.930 indica que a simulação deste artefato deve, primeiramente, localizar regiões de movimento em uma imagem para posteriormente selecionar em quais possíveis janelas será aplicada uma média dos valores de luminância \cite{itup930}. Desta forma, o cálculo da DCT e todo o processo de compressão é evitado.
 
