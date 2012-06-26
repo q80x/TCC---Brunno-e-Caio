@@ -120,20 +120,20 @@ Em 1987, a International Electrotechnical Commission (IEC - Comissão Eletrotéc
 
 O MPEG desenvolveu uma série de protocolos para as questões que surgiram ao longo do desenvolvimento de novas tecnologias, novos equipamentos e novos padrões internacionais, a fim de padronizar emissões digitais. Os padrões desenvolvidos incluem MPEG-1, MPEG-2, MPEG-4 e, mais recentemente, MPEG-7.
 
-Atualmente, a indústria de transmissão de TV se baseia principalmente no padrão MPEG-2 para transmitir sinal de vídeo digital, áudio e dados pela rede. Este é o padrão para transmissão digital \cite{mpeg2ref}, pois é o único que prevê suporte a transmissão de dados via rede \cite{mpeg2ref}.
+Atualmente, a indústria de transmissão de TV se baseia principalmente no padrão MPEG-2 para transmitir sinal de vídeo digital, áudio e dados pela rede. Este é o padrão para transmissão digital, pois é o único que prevê suporte a transmissão de dados via rede \cite{mpeg2ref}.
 
-Os dois principais tipos de compressão do MPEG são as codificações espacial e temporal. O primeiro tipo elimina redundâncias entre pixels adjacentes num mesmo \emph{frame}, aproveitando-se, também, da inabilidade do olho detectar certas degradações. O segundo tipo minimiza redundâncias entre emph{frames} \cite{mpeg2ref}.
+Os dois principais tipos de compressão do MPEG são as codificações espacial e temporal. O primeiro tipo elimina redundâncias entre pixels adjacentes num mesmo \emph{frame}, aproveitando-se, também, da inabilidade do olho detectar certas degradações. O segundo tipo minimiza redundâncias entre \emph{frames} \cite{mpeg2ref}.
 
 O processo de codificação espacial envolve as seguintes etapas, segundo \cite{mpeg2ref}:
 \begin{itemize}
-    \item Transformada Discreta de Cossenos - \sigla{DCT}{Discrete Cosine Transform}: cada \emph{frame} é dividido em matrizes de dimensões 8x8 \emph{pixels} que por sua vez são transformadas em valores baseados em frequência, chamados coeficientes. Por causa da redundância espacial, muitos coeficientes resultam no valor zero, que podem ser eliminados da série de coeficientes. O resultado é uma compressão com perdas imperceptíveis ao olho humano, em que o mesmo \emph{frame} é representado por menos \emph{bits}.
+    \item Transformada Discreta de Cossenos - \sigla{DCT}{Discrete Cosine Transform}: cada \emph{frame} é dividido em matrizes de dimensões 8x8 \emph{pixels} em que as intensidades luminosas serão transformadas em valores baseados em frequência, chamados coeficientes. Por causa da redundância espacial, muitos coeficientes resultam no valor zero, que podem ser eliminados da série de coeficientes. O resultado é uma compressão com perdas imperceptíveis ao olho humano, em que o mesmo \emph{frame} é representado por menos \emph{bits}.
     \item Quantização (\emph{Quantization}): os coeficientes da DCT são reorganizados em ordem de importância visual.
     \item Ponderação (\emph{Weighting}): degradação, ou ruído, são estrategicamente adicionados em regiões mais detalhadas ou complexas, onde é pouco provável que o observador note. 
     \item Varredura (\emph{Scanning}): nesta etapa os coeficientes mais significantes são enviados primeiro, seguidos dos menos importantes e, por fim, uma indicação de que os restantes são iguais a zero.
     \item Codificação de Entropia (\emph{Entropy Conding}): os coeficientes são reajustados de acordo com sua frequência de ocorrência. Os que mais se repetem são expressos com menor número de \emph{bits}, o que diminui consideravelmente a banda necessária para transmití-los.
 \end{itemize}
 
-A codificação temporal aproveita-se da similaridade entre \emph{frames} sequenciais, codificando apenas a diferença entre eles. Isso é possível devido a dois tipos de codificação temporal: previsão entre \emph{frames} e previsão de movimento (\emph{inter-frame prediction} e \emph{motion prediction}).
+Já codificação temporal aproveita-se da similaridade entre \emph{frames} sequenciais, codificando apenas a diferença entre eles. Isso é possível devido a dois tipos de codificação temporal: previsão entre \emph{frames} e previsão de movimento (\emph{inter-frame prediction} e \emph{motion prediction}).
 
 A previsão entre \emph{frames} codifica um \emph{frame} completo apenas periodicamente. O resultado, chamado de \emph{intra-coded frame} ou I-\emph{frame}, é utilizado como referência para \emph{frames} anteriores e posteriores.
 
@@ -149,7 +149,7 @@ A previsão entre \emph{frames} codifica um \emph{frame} completo apenas periodi
 	\fonte{\cite{wikiipbframes}}
 \end{figure}
 
-P-\emph{frames} alcançam uma compressão maior que I-\emph{frames}, tipicamente de 20\% a 70\% do tamanho do I-\emph{frame} associado. B-\emph{frames}, por sua vez, podem permitem uma compressão ainda maior, tipicamente de 5\% a 40\% do tamanho do I-\emph{frame} associado \cite{ciscoieee}.
+P-\emph{frames} alcançam uma compressão maior que I-\emph{frames}, tipicamente de 20\% a 70\% do tamanho do respectivo I-\emph{frame} de referência. B-\emph{frames}, por sua vez, podem permitem uma compressão ainda maior, tipicamente de 5\% a 40\% do tamanho do respectivo I-\emph{frame} de referência \cite{ciscoieee}.
 
 Apesar de reduzir a quantidade de informação a ser transmitida, quanto menos I-\emph{frames} são utilizados, maior é a vulnerabilidade da transmissão. Qualquer erro que ocorrer num I-\emph{frame} será propagado até que um novo seja enviado corretamente  cite{mpeg2ref}. Por este motivo o conceito de \sigla{GOP}{Group Of Pictures} (\emph{Group Of Pictures}) é utilizado \cite{mpeg2ref}. Cada conjunto é iniciado por um I-\emph{frame}, contendo também P-\emph{frames} e B-\emph{frames}.
 
