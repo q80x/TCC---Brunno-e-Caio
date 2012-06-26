@@ -290,11 +290,12 @@ A presente seção irá descrever com maiores detalhes as funcionalidades da int
 
 A janela de Sessão consiste de um passo inicial de configuração --- onde se sucedem três telas conforme são fornecidos dados para a aplicação --- e um segundo passo onde é disparada uma sessão de avaliação subjetiva baseada na configuração fornecida préviamente.
 
-A primeira tela se trata de configurações básicas da sessão, tal como um nome e descrição para facilitar a identificação como também a métrica a que será utilizada e o número de espectadores.
+A primeira tela se trata de configurações básicas da sessão, tal como um nome e descrição para facilitar a identificação como também a métrica a que será utilizada e o número de espectadores. Devido à limitações encontradas no \emph{hardware}, somente as métricas DSIS e SDSCE foram implementadas.
 Na sequência é apresentada uma tela onde pode-se buscar e selecionar vídeos para serem exibidos na sessão de avaliação e for fim a tela para selecionar quais dispositivos remotos serão utilizados na avaliação. Ao final da configuração, pode-se dar início ao processo de avaliação subjetiva onde os vídeos selecionados serão então exibidos conforme a métrica selecionada.
-Na Figura \ref{} pode-se observar o ambiente de exibição dos vídeos durante a avaliação.
+Na Figura \ref{} pode-se observar o ambiente de exibição dos vídeos durante a avaliação segundo a métrica SDSCE.
+Para a execução desta métrica são executados dois players distintos de forma sincronizada, garantindo que ambos exibam o mesmo frame.
 
-%TODO colocar figura e corrigir referencia na linha acima
+%TODO colocar figura com videos SDSCEe corrigir referencia na linha acima
 
 \subsection{Ferramentas}
 
