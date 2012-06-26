@@ -304,7 +304,7 @@ A avaliação objetiva tenta, através de algoritmos, fazer uma previsão aproxi
 
 Outra métrica objetiva, o SSIM (Structural SIMilarity Index - Indice de Similaridade Estrutural), foi elaborado na tentativa de se aproximar a avaliação às percepções do SVH, pois leva em consideração a luminância, estrutura e o contraste (SILVA). Uma métrica derivada do SSIM é o MSSIM (Mean Structural SIMilarity Index - Indice de Similaridade Estrutural Média), sendo uma média dos valores SSIM calculados a partir do vídeo avaliado (WANG et al, 2004).
 
-\subsubsection{MSE - Mean Squared Error}
+\subsubsection[MSE]{MSE - Mean Squared Error}
 
 O MSE é a média das diferenças ao quadrado entre os valores de nivel de cinza dos pixels. Considerando que o nível de cinza de cada pixel é dado em função de sua posição de acordo com a equação a seguir:
 
@@ -325,7 +325,7 @@ para vídeos com T \emph{frames} de tamanho X x Y (WINKLER, 2005).
 
     Conforme a medida obtida, a seguinte análise é feita: quanto menor o valor do MSE, mais próxima a imagem avaliada está da imagem original \cite{albini}. A imagem da função MSE é o conjunto dos reais, maiores ou iguais a zero, ou seja, um valor zero indica que as imagens são idênticas.
 
-\subsubsection{PSNR - Peak Signal to Noise Ratio}
+\subsubsection[PSNR]{PSNR - Peak Signal to Noise Ratio}
 O PSNR é calculado com base num valor MSE e é dado em escala logarítmica. O PSNR mede a fidelidade entre imagens, ao contrário do MSE que mede diferenças entre imagens (WINKLER, 2005). Esta medida é encontrada conforme a equação a seguir:
 
 Equação: \[PSNR_{dB} = 10 \cdot log_{10} \frac{{\left(2^{n} -1 \right )}^{2}}{MSE}\]
@@ -338,7 +338,7 @@ Dentre as limitações desta métrica, está a necessidade de sincronização en
 
 Analisando os resultados, valores de PSNR altos indicam alta fidelidade entre as imagens comparadas, enquanto que valores baixos indicam baixa fidelidade.
 
-\subsubsection{SSIM - Structural Similarity Index}
+\subsubsection[SSIM]{SSIM - Structural Similarity Index}
 
 Esta métrica surgiu com o objetivo de melhor aproximar a avaliação objetiva à percepção humana, pois métricas como o MSE e o PSNR se mostraram ineficientes para tanto \cite{emmersonsilva}. Aplicado sobre valores de luminância, contraste e a estrutura para várias janelas de mesmas dimensões em uma imagem (WANG e BOVIK, 2002), tem como equação:
 
@@ -357,7 +357,7 @@ onde:
     \item \(k_{1}\) = 0.01 e \(k_{2}\) = 0.03. Estes são valores são indicados pelos autores do método \cite{wangbovik2004} em decorrência de experimentos realizados.
 \end{itemize}
 
-\subsubsection{MSSIM - Mean Structural Similarity Index}
+\subsubsection[MSSIM]{MSSIM - Mean Structural Similarity Index}
 
 Em termos práticos, normalmente é desejado encontrar-se uma medida de qualidade geral de toda a imagem \cite{wangbovik2004}. Por esta razão, a média dos índices SSIM é calculada:
 
@@ -400,7 +400,7 @@ A avaliação subjetiva depende de observadores humanos que atribuem notas a par
 
 As metodologias de avaliação seguem diretrizes que dizem respeito aos critérios para escolha das sequências de imagens, à seleção de observadores, a duração das sessões de avaliação, ao tempo de exposição de cada sequência e intervalos de troca, às condições ambiente, etc.
 
-\subsubsection{Método DSIS - Double Stimulus Impairment Scale (Método EBU)}
+\subsubsection[Método DSIS]{Método DSIS - Double Stimulus Impairment Scale (Método EBU)}
 
 Comumente usado para avaliação de novos sistemas ou dos prejuízos decorrentes de transmissão. Neste método, ao avaliador é apresentada uma imagem de referência e posteriormente a mesma imagem degradada. As sessões, que devem durar até 30 minutos, podem seguir duas variantes: na primeira, o conjunto referência/degradada é apresentado e ao final o avaliador deve dar uma nota. Na segunda variante, o avaliador é submetido duas vezes ao conjunto referência/degradada e somente ao final lhe é permitido dar a nota. Em ambas a apresentação dos conjuntos referência/degradada é aleatória.
 
@@ -447,7 +447,7 @@ A escala de avaliação a ser utilizada é dada conforme a Tabela \ref{tab:dsise
 	\fonte{\cite{itubt500}}
 \end{table}
 
-\subsubsection{Método DSCQS - Double Stimiulus Continuous Quality Scale}
+\subsubsection[Método DSCQS]{Método DSCQS - Double Stimiulus Continuous Quality Scale}
 
 Este método também é aplicável para avaliar os efeitos dos meios de transmissão sobre a qualidade da imagem. Assim como no método DSIS, as imagens são apresentadas aos pares. Uma deve ser a imagem original e a outra deve ser a imagem processada pelo sistema em teste. A ordem de qual será apresentada por primeiro, bem como a ordem de apresentação de cada par, é aleatória. Outra diferença do método DSIS está na avaliação: o avaliador deve dar nota para ambas as imagens.
 
@@ -488,13 +488,13 @@ Para realizar a avaliação, o avaliador deve marcar as notas em uma escala cont
 	\fonte{\cite{itubt500}}
 \end{figure}
 
-\subsubsection{Método SSCQE - Single Stimulus Continuous Quality Evaluation}
+\subsubsection[Método SSCQE]{Método SSCQE - Single Stimulus Continuous Quality Evaluation}
 
 Neste método, uma série de segmentos de programa são apresentados ao grupo de avaliadores com duração mínima de cinco minutos. Assim como no método DSCQS, a escala de avaliação é contínua. Os avaliadores modificam a nota conforme desejarem ao longo da apresentação das sequências. As notas, que são amostradas duas vezes por segundo, permitem o levantamento de histogramas \cite{rehme}.
 
 Este método é mais adequado para avaliar a qualidade de vídeo em sequências longas e sem referência, o que é mais próximo da realidade.
 
-\subsubsection{Método SDSCE - Simultaneous Double Stimulus for Continuous Evaluation Method}
+\subsubsection[Método SDSCE]{Método SDSCE - Simultaneous Double Stimulus for Continuous Evaluation Method}
 
 Para este método, as sequências de referência e de teste são apresentadas de forma simultânea. O avaliador deve julgar a fidelidade do vídeo em teste utilizando a escala contínua, assim como nos métodos DSCQS e SSCQE. A Figura \ref{fig:sdsce} demonstra como deve ser realizada a apresentação.
 
