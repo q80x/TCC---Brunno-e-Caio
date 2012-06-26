@@ -36,7 +36,6 @@ Abaixo se encontram os requisitos não funcionais levantados:
 	\item A ferramenta de simulação deverá operar sobre vídeos no formato \sigla{H.262}{Padrão de compressão de vídeo digital também conhecido MPEG-2 Part 2} encapsulados em um Transport Stream (\sigla{TS}{Transport Stream}).
 	\item O sistema deve fornecer documentação detalhada de auxílio ao uso das ferramentas.
 	\item A ferramenta de exibição deverá ser executada em um sistema capaz de prover um \emph{display} com resolução igual ou maior que a dos vídeos a serem exibidos.
-	% TODO verificar a versão da JRE necessária para rodar a interface
 	\item A interface gráfica do sistema necessita que haja um \emph{Java Runtime Environment} (\sigla{JRE}{Java Runtime Environment}) instalado no sistema operacional.
 	\item O \emph{player} de vídeo MPlayer, livre e de código aberto, é necessário para mostrar os vídeos durante as sessões.
 \end{itemize}
@@ -101,7 +100,7 @@ O componente presente no SASQV se trata de uma fachada de serviço responsável 
 	\item Repassar uma ação para o elemento model e esperar por resposta.
 \end{enumerate}
 
-Na arquitetura do SASQV2 a interpretação de mensagens foi descartada, uma vez que foi prosposta a implementação de uma nova interface em linguagem Java, que deu lugar a métodos de finalidades distintas dentro de cada ação enumerada acima. % TODO verificar se o acima pode virar abaixo?!!?
+Na arquitetura do SASQV2 a interpretação de mensagens foi descartada, uma vez que foi prosposta a implementação de uma nova interface em linguagem Java, que deu lugar a métodos de finalidades distintas dentro de cada ação enumerada acima. 
 Com isso a execução de tarefas de degradação ou avaliação por métrica objetiva, antes executadas localmente, passaram a ser delegadas para um novo componente chamado Ferramentas, descrito em \ref{met:ferramentas}.
 
 Já o conteúdo dos métodos que repassam as ações para o dispositivo sem-fio e para o model permanecem muito semelhantes aos encontrados na interpretação de mensagens originalmente feito no SASQV, sofrendo apenas pequenas modificações para acomodar a nova estrutura.
@@ -153,8 +152,8 @@ A simplicidade da linguagem também facilita o desenvolvimento de ferramentas \e
 
 Ambas as linguagens eram previamente conhecidas pelos integrantes do projeto, os quais também possuem um nível confortável de experiência no desenvolvimento de aplicações com estas linguagems e com diversas ferramentas associadas a elas, como IDE's, bibliotecas gráficas e conectividade com bancos de dados.
 
-\subsection{Bibliotecas}
 \subsection{Diagramas de Caso de Uso}
+%TODO Fazer diagramas de caso de uso.
 \section{Considerações}
 
 Para este projeto de \emph{software} procurou-se aproveitar ao máximo os componentes existentes no SASQV, de forma a maximizar o esforço nos aspectos a serem melhorados e não consumir tempo de projeto retrabalando o que já foi feito. 
