@@ -1,12 +1,12 @@
 %---------- Segundo Capítulo: Fundamentação --------------
 
 \chapter{Fundamentação Teórica}
-10 --- 15 pags
+%10 --- 15 pags
 
-teorico - cientifico (mtas referencias aqui)
+%teorico - cientifico (mtas referencias aqui)
 
-introducao --- desenvolvimento --- considerações
-\section{Sistema Visual Humano}
+%introducao --- desenvolvimento --- considerações
+%\section{Sistema Visual Humano}
 
 \section{Vídeo Digital}
 Imagem é um registro aproximado de um instante de tempo do mundo real, pois representa uma quantidade de informação limitada suficiente para que qualquer pessoa possa, posteriormente, reconhecer aquela representação assimilando-a à uma realidade. Primeiramente, imagens são registros porque contém em si a captura de cores num instante de tempo, que nada mais são que intensidades luminosas (ondas eletromagnéticas que o olho humano é capaz de perceber).
@@ -117,9 +117,64 @@ Em relação aos mecanismos de codificação de fonte, \cite{rehme} afirma que �
 
 Em 1987, a International Electrotechnical Commission (IEC - Comissão Eletrotécnica Internacional) juntamente com a International Organization for Standardization (ISO - Organização Internacional para Padronização) organizou um grupo de especialistas com o objetivo de padronizar a compressão de áudio e vídeo digitais, mais conhecido como Moving Picture Experts Group, ou MPEG. No primeiro encontro, realizado em 1988, após o sucesso da digitalização do sinal de áudio (de natureza analógica) e posterior compressão para o desenvolvimento do popular CD (com áudio de alta qualidade), percebeu-se que aplicar a ideia na transmissão de TV diminuiria a largura de banda necessária, possibilitando a emissão de programas interativos, serviços de internet e ainda mais programas \cite{mpeg2ref}.
 
-O MPEG desenvolveu uma série de protocolos para questões  que surgiram ao longo do desenvolvimento de novas tecnologias, novos equipamentos e novos padrões internacionais, a fim de padronizar emissões digitais. Os padrões desenvolvidos incluem MPEG-1, MPEG-2, MPEG-4 e, mais recentemente, MPEG-7.
+O MPEG desenvolveu uma série de protocolos para as questões que surgiram ao longo do desenvolvimento de novas tecnologias, novos equipamentos e novos padrões internacionais, a fim de padronizar emissões digitais. Os padrões desenvolvidos incluem MPEG-1, MPEG-2, MPEG-4 e, mais recentemente, MPEG-7.
 
-Atualmente, a indústria de transmissão de TV se baseia principalmente no padrão MPEG-2 para transmitir sinal de vídeo digital, áudio e dados pela rede. Este é o padrão para transmissão digital \cite{mpeg2ref}, pois é o único que 
+Atualmente, a indústria de transmissão de TV se baseia principalmente no padrão MPEG-2 para transmitir sinal de vídeo digital, áudio e dados pela rede. Este é o padrão para transmissão digital \cite{mpeg2ref}, pois é o único que prevê suporte a transmissão de dados via rede \cite{mpeg2ref}.
+
+Os dois principais tipos de compressão do MPEG são as codificações espacial e temporal. O primeiro tipo elimina redundâncias entre pixels adjacentes num mesmo \emph{frame}, aproveitando-se, também, da inabilidade do olho detectar certas degradações. O segundo tipo minimiza redundâncias entre emph{frames} \cite{mpeg2ref}.
+
+O processo de codificação espacial envolve as seguintes etapas, segundo \cite{mpeg2ref}:
+\begin{itemize}
+    \item Transformada Discreta de Cossenos - \sigla{DCT}{Discrete Cosine Transform}: cada \emph{frame} é dividido em matrizes de dimensões 8x8 \emph{pixels} que por sua vez são transformadas em valores baseados em frequência, chamados coeficientes. Por causa da redundância espacial, muitos coeficientes resultam no valor zero, que podem ser eliminados da série de coeficientes. O resultado é uma compressão com perdas imperceptíveis ao olho humano, em que o mesmo \emph{frame} é representado por menos \emph{bits}.
+    \item Quantização (\emph{Quantization}): os coeficientes da DCT são reorganizados em ordem de importância visual.
+    \item Ponderação (\emph{Weighting}): degradação, ou ruído, são estrategicamente adicionados em regiões mais detalhadas ou complexas, onde é pouco provável que o observador note. 
+    \item Varredura (\emph{Scanning}): nesta etapa os coeficientes mais significantes são enviados primeiro, seguidos dos menos importantes e, por fim, uma indicação de que os restantes são iguais a zero.
+    \item Codificação de Entropia (\emph{Entropy Conding}): os coeficientes são reajustados de acordo com sua frequência de ocorrência. Os que mais se repetem são expressos com menor número de \emph{bits}, o que diminui consideravelmente a banda necessária para transmití-los.
+\end{itemize}
+
+A codificação temporal aproveita-se da similaridade entre \emph{frames} sequenciais, codificando apenas a diferença entre eles. Isso é possível devido a dois tipos de codificação temporal: previsão entre \emph{frames} e previsão de movimento (\emph{inter-frame prediction} e \emph{motion prediction}).
+
+A previsão entre \emph{frames} codifica um \emph{frame} completo apenas periodicamente. O resultado, chamado de \emph{intra-coded frame} ou I-\emph{frame}, é utilizado como referência para \emph{frames} anteriores e posteriores.
+
+\emph{Predicted Frames}, ou P-\emph{frames}, têm por referência um I-\emph{frame} ou um P-\emph{frame} anterior, ou seja, ao invés de transmitir todos os coeficientes DCT, o codificador transmite apenas aqueles coeficientes que sejam diferentes do I-\emph{frame} ou um P-\emph{frame} anterior. No outro lado, o decodificador reconstrói um P-\emph{frame} apenas aplicando as diferenças sobre o I-\emph{frame} ou P-\emph{frame} de referência \cite{mpeg2ref}.
+
+\emph{Bidirectionally Predicted Frames}, ou B-\emph{frames}, podem utilizar tanto I-\emph{frames} ou P-\emph{frames} precedentes quanto subsequentes, como pode ser observado na Figura \ref{fig:ipbframes}. O I-\emph{frame} inicial é completamente codificado, já o P-\emph{frame} subsequente possui apenas a parte que sofreu modificação em relação ao I-\emph{frame} anterior. O B-\emph{frame} presente na figura, armazena as diferenças em relação ao P-\emph{frame} anterior e ao I-\emph{frame} seguinte.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./imgs/ipbframes.png}
+	\caption{Estrutura de predição de \emph{frames} no MPEG.}
+	\label{fig:ipbframes}
+	\fonte{\cite{wikiipbframes}}
+\end{figure}
+
+P-\emph{frames} alcançam uma compressão maior que I-\emph{frames}, tipicamente de 20\% a 70\% do tamanho do I-\emph{frame} associado. B-\emph{frames}, por sua vez, podem permitem uma compressão ainda maior, tipicamente de 5\% a 40\% do tamanho do I-\emph{frame} associado \cite{ciscoieee}.
+
+Apesar de reduzir a quantidade de informação a ser transmitida, quanto menos I-\emph{frames} são utilizados, maior é a vulnerabilidade da transmissão. Qualquer erro que ocorrer num I-\emph{frame} será propagado até que um novo seja enviado corretamente  cite{mpeg2ref}. Por este motivo o conceito de \sigla{GOP}{Group Of Pictures} (\emph{Group Of Pictures}) é utilizado \cite{mpeg2ref}. Cada conjunto é iniciado por um I-\emph{frame}, contendo também P-\emph{frames} e B-\emph{frames}.
+
+O tamanho usual para um GOP é entre 12 e 15 \emph{frames} \cite{ciscoieee, mpeg2ref}. Um exemplo de GOP pode ser observado na Figura \ref{fig:gop}.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./imgs/gop.png}
+	\caption{Estrutura de um GOP.}
+	\label{fig:gop}
+	\fonte{\cite{ciscoieee}}
+\end{figure}
+
+A previsão de movimento, por sua vez, envia um vetor de movimento (\emph{motion vector}) para o decodificador. Este vetor resulta da identificação de movimento de objetos que se repetem, desta forma, o decodificador apenas move o objeto para a nova posição.
+
+Para que seja possível transportar vídeos codificados com MPEG por uma rede \sigla{IP}{Internet Protocol}, a informação dos \emph{frames} deve ser encapsulada em pacotes MPEG-\sigla{TS}{Transport Stream}, que serão transportados por pacotes IP posteriormente \cite{ciscoieee}. Pacotes IP contém sete pacotes MPEG-TS de 188 \emph{bytes}. 
+
+A Figura \ref{fig:ts} apresenta o encapsulamento típico de um pacote IP. Cada pacote pode conter informação de dois \emph{frames} consecutivos, ou seja, a perda de um pacote pode trazer a perda de informação referente aos dois \emph{frames}. Vale observar que além de informações de imagem, os pacotes IP também transportam informações de áudio codificado em MPEG e informações de serviço \cite{ciscoieee}.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./imgs/ts.png}
+	\caption{Estrutura de um GOP.}
+	\label{fig:ts}
+	\fonte{\cite{ciscoieee}}
+\end{figure}
 
 \section{Artefatos}
 
@@ -153,7 +208,7 @@ Nas seções que seguem, alguns dos artefatos mais comuns serão detalhados junt
 
 Este artefato é o mais estudado pela literatura \cite{emmersonsilva}. Ocorre em função de uma quantização grosseira no processo de compressão, em que resulta numa distorção ou perda de componentes de alta frequência \cite{itup930}. Normalmente ocorre em superfícies lisas em movimento \cite{itup930} \cite{farias2007}.
 
-Muitos codificadores utilizam a Transformada Discreta de Cossenos (DCT - Discrete Cosine Transform), como o MPEG-1 e o MPEG-2, em que uma imagem é codificada a partir de janelas de dimensões 8x8 pixels. 
+%Muitos codificadores utilizam a Transformada Discreta de Cossenos (DCT - Discrete Cosine Transform), como o MPEG-1 e o MPEG-2, em que uma imagem é codificada a partir de janelas de dimensões 8x8 pixels. 
 
 A recomendação P.930 indica que a simulação deste artefato deve, primeiramente, localizar regiões de movimento em uma imagem para posteriormente selecionar em quais possíveis janelas será aplicada uma média dos valores de luminância \cite{itup930}. Desta forma, o cálculo da DCT e todo o processo de compressão é evitado.
 
@@ -524,7 +579,10 @@ X = b - \sqrt{(1-U)(b-a)(b-c)} & \mbox{para } F(c) \leqslant U < 1
 
 \section{Trabalhos Relacionados}
 
+
+
 \section{Resumo e Conclusão do Capítulo}
+
 
 
 Comparando-se as metodologias, ambas são importantes e ambas têm suas limitações. A avaliação objetiva é mais precisa considerando que ela avalie a diferença entre um vídeo original e o efetivamente observado. Porém, nem sempre o vídeo original possui uma qualidade que satisfaria o telespectador, sendo esta, portanto, uma de suas desvantagens.
