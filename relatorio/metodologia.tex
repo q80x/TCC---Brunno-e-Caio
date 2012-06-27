@@ -124,7 +124,6 @@ Estas ferramentas podem receber configurações independentes e flexíveis, dive
 
 \subsubsection{Interface Gráfica}
 
-
 Originalmente desenvolvida utilizando a tecnologia Adobe Flex, era necessária a utilização de uma biblioteca exclusivamente para comunicação entre os módulos de Interface e Service. A biblioteca utilizada (merapi) se encontrava em fase de desenvolvimento beta e carecia de funcionalidades, de forma que seria necessário buscar uma biblioteca alternativa para continuar o densevolvimento do projeto.
 
 Além disso, as ferramentas de desenvolvimento em tecnologia Flex não são gratuitas e perderam gradativamente o suporte à sistemas operacionais Linux.
@@ -153,7 +152,55 @@ A simplicidade da linguagem também facilita o desenvolvimento de ferramentas \e
 Ambas as linguagens eram previamente conhecidas pelos integrantes do projeto, os quais também possuem um nível confortável de experiência no desenvolvimento de aplicações com estas linguagems e com diversas ferramentas associadas a elas, como IDE's, bibliotecas gráficas e conectividade com bancos de dados.
 
 \subsection{Diagramas de Caso de Uso}
-%TODO Fazer diagramas de caso de uso.
+
+Uma das primeiras fases em um projeto de \emph{software} é a construção de diagramas de Casos de Uso. Estes diagramas auxiliam no processo de levantamento de requisitos e de entidades que deverão interagir com o sistema. Também auxiliam na definição e visualização dos serviços a serem desempenhados pelo sistema.
+
+Os casos de uso elaborados foram divididos em diferentes diagramas, dando enfoque as funcionalidades mais importantes a serem desempenhadas pelo \emph{software}: degradar vídeos, realizar avaliação objetiva e realizar avaliação subjetiva através da criação de uma sessão de vídeos.
+
+O diagrama apresentado na Figura \ref{fig:ucdgeral} mostra o caso de uso geral. Para que o usuário possa interagir com o sistema é necessário realizar \emph{login} no sistema utilizando usuário e senha válidos. Esta validação é realizada pelo \sigla{SGBD}{Sistema Gerenciador de Banco de Dados} (Sistema Gerenciador de Banco de Dados), representado no diagrama pelo ator de mesmo nome.
+
+O sistema SASQV original previa a existência de dois tipos de ator: administrador e avaliador. O primeiro possuía permissões para acessar o sistema e realizar todas as operações, menos realizar avaliações de vídeo. O segundo, ao contrário do primeiro, só poderia realizar avaliações. Em prol da simplicidade, optou-se por permitir que avaliadores também pudessem realizar as mesmas ações que o administrador, sendo necessário apenas um destes atores.
+
+Concluído o \emph{login}, o usuário pode realizar atividades como criar uma sessão para avaliação subjetiva; degradar vídeos; adicionar ou remover vídeos da base de dados; adicionar, remover ou editar cadastro de usuários; consultar resultados através de gráficos; consultar tópicos de ajuda; realizar avaliações objetivas utilizando as ferramentas desejadas e, por fim, modificar configurações gerais do sistema.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./diagramas/casodeuso2.png}
+	\caption{Geral.}
+	\label{fig:ucdgeral}
+	\fonte{Autoria Própria}
+\end{figure}
+
+Uma das funcionalidades mais importantes do sistema proposto é a realização de sessões para avaliação subjetiva. Para criar uma sessão, primeiramente é necessário definir a identificação e as configurações (número de usuários, métrica de avaliação, etc). O próximo passo é a escolha dos vídeos da base de dados que serão apresentados. Por fim, são selecionados os equipamentos que serão utilizados. Todos os passos interagem com o SGBD, seja realizando consultas, seja atualizando-o.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./diagramas/sessao.png}
+	\caption{Sessão.}
+	\label{fig:ucdsessao}
+	\fonte{Autoria Própria}
+\end{figure}
+
+O próximo diagrama, na Figura \ref{fig:ucddegradacao}, apresenta duas funcionalidades do sistema: degradar vídeos e realizar avaliação objetiva. A degradação de vídeos depende da seleção dos vídeos desejados e da seleção da degradação a ser aplicada, conforme os parâmetros informados. Para realizar uma avaliação objetiva, basta selecionar os vídeos e métricas desejadas.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./diagramas/degradacao.png}
+	\caption{Degradação.}
+	\label{fig:ucddegradacao}
+	\fonte{Autoria Própria}
+\end{figure}
+
+(deletar?)A interação do usuários com as ferramentas disponíveis está representada no diagrama da Figura \ref{fig:ucdferramentas}. O usuário pode criar arquivos \emph{raffle} e utilizá-los na aplicação de borramento e blocagem e na simulação de \emph{streaming}. Estas três ferramentas dependem de um arquivo \emph{raffle} como parâmetro de entrada. A outra ação de interação ...
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./diagramas/ferramentas.png}
+	\caption{Ferramentas.}
+	\label{fig:ucdferramentas}
+	\fonte{Autoria Própria}
+\end{figure}
+
 \section{Considerações}
 
 Para este projeto de \emph{software} procurou-se aproveitar ao máximo os componentes existentes no SASQV, de forma a maximizar o esforço nos aspectos a serem melhorados e não consumir tempo de projeto retrabalando o que já foi feito. 
