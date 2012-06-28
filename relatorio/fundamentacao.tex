@@ -150,13 +150,6 @@ A codificação ou compressão é o processo que reduz o número de bits de dado
 
 Um exemplo de como a compressão é importante atualmente pode ser verificado na transmissão de vídeos por streaming. Considerando-se apenas os valores de luminância (escala de cinza) de um vídeo com definição standard (SD - Standard Definition) de 640x480 pixels com 8 BPP, tem-se que cada quadro de imagem ocupa 8x640x480 = 2.45 Mbits de memória. Se o vídeo deve ser apresentado a uma taxa de 30 FPS (frames per second - quadros por segundo), a banda necessária para transmitir o vídeo deve ser de 30x2.45 Mbits/s = 73.50 Mbps. Adicionando-se informações de cor e de áudio, esta taxa chega facilmente aos 270 Mbps numa qualidade SD, e ultrapassa 1.4 Gbps numa qualidade HD (High Definition - alta definição), valores que teriam um custo impraticável para usuários domésticos e até mesmo para empresas \cite{ciscoieee}. A codificação permite que até 98\% do sinal digital original seja removido sem que haja uma degradação inaceitável na qualidade da imagem \cite{mpeg2ref}.
 
-Embora represente uma redução na utilização de recursos, a compressão encontra limites dependendo da aplicação. Da mesma maneira que dados digitais podem ser comprimidos, para serem utilizados novamente precisam passar por um processo inverso, de descompressão.
-
-% TODO mover isso
-(MOVER PARA BAIXO) Numa aplicação dependente de transmissão via rede, como por exemplo uma vídeo-conferência, a compressão permite que a visualização seja próxima do tempo real, ou seja, a imagem capturada pela câmera é codificada, enviada pela rede, decodificada pelo receptor e apresentada na tela em questão de milisegundos. (ficou estranho) Sem a compressão seria necessária uma alta taxa de transmissão, como visto no exemplo anterior, porém com uma compressão muito elevada a aplicação poderia apresentar um vídeo de forma fragmentada, uma vez que precisaria de muito tempo para concluir os processos de compressão/descompressão e apresentar a imagem recebida.
-
-Percebe-se desta forma que existe uma troca entre método e taxa de compressão, degradação da qualidade aceitável e recursos disponíveis, ambos dependentes da aplicação.
-
 A Figura \ref{fig:codingprocess} apresenta o processo de obtenção, codificação (etapa A), transmissão, recepção e decodificação (etapa B) de um sinal de áudio e/ou vídeo sendo, por fim, apresentado. As etapas de conversão A/D (analógico-digital) e conversão D/A (digital-analógico) podem ser suprimidas caso a conversão A/D já seja realizada nos equipamentos de obtenção de dados e caso os monitores e dispositivos de armazenamento sejam digitais (\cite{rehme}).
 
 \begin{figure}[!htb]
@@ -175,11 +168,13 @@ As etapas gerais da compressão são:
 	\item realizar transformações nos domínios espacial e de frequência.
 \end{itemize}
 
-A compressão espacial opera num mesmo frame e tem por objetivo remover possíveis redundâncias para diminuir a quantidade de dados que o representam. Já a compressão temporal opera numa sequência de frames, buscando encontrar semelhanças entre eles, uma vez que em frames sucessivos ocorrem poucas modificações, na maior parte do tempo. Desta forma, a parte do frame que não sofreu alterações é repetida do anterior e apenas a parte modificada é efetivamente utilizada para descrever o frame a ser apresentado.
+A compressão espacial opera num mesmo \emph{frame} e tem por objetivo remover possíveis redundâncias para diminuir a quantidade de dados que o representam. Já a compressão temporal opera numa sequência de \emph{frames}, buscando encontrar semelhanças entre eles, uma vez que em \emph{frames} sucessivos ocorrem poucas modificações, na maior parte do tempo. Desta forma, a parte do \emph{frame} que não sofreu alterações é repetida do anterior e apenas a parte modificada é efetivamente utilizada para descrever o \emph{frame} a ser apresentado.
 
 De acordo com \cite{rehme}: “Para a compressão temporal, precisa-se de um ponto de partida ou quadro-chave. Depois dele, apenas as diferenças são descritas”.
 
-Em relação aos mecanismos de codificação de fonte, \cite{rehme} afirma que “quanto mais sofisticados forem, normalmente melhor é a relação qualidade versus taxa de bits, porém apresentam maior custo em termos de capacidade de processamento e maior tempo requerido para executar a compressão. Para várias situações, o aumento do atraso entre a captura da imagem e sua apresentação não é tolerável”, como exemplificado anteriormente.
+Em relação aos mecanismos de codificação de fonte, \cite{rehme} afirma que “quanto mais sofisticados forem, normalmente melhor é a relação qualidade versus taxa de bits, porém apresentam maior custo em termos de capacidade de processamento e maior tempo requerido para executar a compressão. Para várias situações, o aumento do atraso entre a captura da imagem e sua apresentação não é tolerável”.
+
+Percebe-se desta forma que existe um equilíbrio entre método e taxa de compressão, degradação da qualidade aceitável e recursos disponíveis, ambos dependentes da aplicação.
 
 Em 1987, a International Electrotechnical Commission (IEC - Comissão Eletrotécnica Internacional) juntamente com a International Organization for Standardization (ISO - Organização Internacional para Padronização) organizou um grupo de especialistas com o objetivo de padronizar a compressão de áudio e vídeo digitais, mais conhecido como Moving Picture Experts Group, ou MPEG. No primeiro encontro, realizado em 1988, após o sucesso da digitalização do sinal de áudio (de natureza analógica) e posterior compressão para o desenvolvimento do popular CD (com áudio de alta qualidade), percebeu-se que aplicar a ideia na transmissão de TV diminuiria a largura de banda necessária, possibilitando a emissão de programas interativos, serviços de internet e ainda mais programas \cite{mpeg2ref}.
 
