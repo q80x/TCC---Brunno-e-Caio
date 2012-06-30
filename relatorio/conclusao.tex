@@ -1,18 +1,51 @@
 %---------- Sexto Capitulo: Conclusão ----------
 
 \chapter{Conclusão e Trabalhos Futuros}
-3 --- 5 pags
+%3 --- 5 pags
 
-discutir conclusao dos objetivos
+%discutir conclusao dos objetivos
 
-objetivos ocultos: aprendizado/disciplinas
+%objetivos ocultos: aprendizado/disciplinas
 
-propostas futuras -> aliviar a barra do que faltou e/ou nao deu certo
+%propostas futuras -> aliviar a barra do que faltou e/ou nao deu certo
 
 \section{Conclusões}
-\subsection{Avaliação dos Objetivos}
-\subsection{Relação com Engenharia de Computação}
+
+O SASQV2 permite a utilização de vídeos em seu formato bruto, ao contrário do sistema original. Arquivos neste formato são bastante utilizados em bases de dados para testes e validações na literatura pois não sofreram nenhum tipo de perda de informação desde sua captura.
+
+Os  principais resultados do projeto das ferramentas são modularização e flexibilidade. É possível utilizar qualquer ferramenta independentemente da \emph{interface} para se obterem vídeos degradados. Ainda, o desacoplamento da ferramenta \emph{raffle}, que gera arquivos de degradação, das demais, abriu algumas possibilidades importantes. É possível utilizar como \emph{input} nas demais ferramentas arquivos gerados em outros \emph{softwares}, desde que possuam o mesmo formato \emph{raffle}. A decisão de projeto em favor da utilização de arquivos de degradação permitiu que a mesma degradação pudesse ser reproduzida ou aplicada em outros vídeos. Isso significa que, apesar da aleatoriedade agregada, a reprodução de degradações é possível sem a necessidade de se armazenar o arquivo de vídeo resultante, armazenando-se apenas um arquivo de texto. 
+
+Outra diferença em relação ao sistema original reside na \emph{interface} de Ajuda, que não existia originalmente. Desde o início do projeto foi dada a devida importância a este componente do \emph{software}, uma vez que a utilização de todo o sistema e de suas ferramentas depende do completo entendimento dos detalhes de utilização. Esta \emph{interface} foi desenvolvida na linguagem \sigla{HTML}{HyperText Modeling Language} e pode ser acessada através do SASQV2 assim como de qualquer \emph{browser}.
+
+O aprimoramento inicialmente proposto para a degradação de vídeos foi alcançado através da parametrização de cada artefato, que permite o completo controle da aplicação de degradações tanto espacial quanto temporalmente. O sistema original aplicava apenas as degradações de borramento e blocagem de forma generalizada, ou seja, todo o vídeo era degradado da mesma forma. Além de aprimorar estas ferramentas, o SASQV2 conta com um simulador de artefatos gerados em \emph{streaming}. As decisões de projeto do simulador permitiram facilitar a usabilidade da ferramenta pois foi eliminada a necessidade de uma rede completa e \emph{interfaces} físicas devidamente configuradas para simular perdas, como visto em trabalhos dessa natureza.
+
+Em uma avaliação visual os artefatos gerados se mostraram bastante próximos dos reais, embora a previsão de movimento e localização de objetos nas imagens não tenha sido implementada
+
+%TODO metodologia/netsim = simulador elimina etapas de hardware
+
+Com a troca da \emph{interface} de FLEX para Java eliminou-se a necessidade de uma ferramenta de desenvolvimento paga, atendendo ao requisito de projeto de utilizar ferramentas de distribuição livre (definido em \ref{met:reqnaofunc}). Além disso, o controle, desenvolvimento e \emph{debug} de código tornou-se mais simples, pois foram utilizadas bibliotecas há bastante tempo estáveis, ao contrário das utilizadas para a comunicação FLEX/Java.
+
+A implementação de métricas subjetivas foi restringida pelo \emph{firmware} do equipamento de avaliação, que não foi modificado por não fazer parte do escopo do projeto. Mesmo assim, outras métricas podem ser implementadas de forma simples pois o código foi desenvolvido para dar o devido suporte, bastando que o \emph{firmware} seja corrigido para atender às normas.
+
+A portabilidade do sistema foi alcançada ao ser possível executá-lo com apenas um arquivo .jar (executável Java), tendo como requisito a instalação do JRE.
+
+Por fim, é possível evidenciar o papel multidisciplinar deste projeto, que integra conhecimentos adquiridos ao longo do curso de Engenharia de Computação como técnicas de programação, gerenciamento de projetos relações interpessoais, estrutura de dados, técnicas de processamento digital de imagens, entre outras. Como resultado desta integração, este projeto se mostra uma solução de engenharia que busca o aperfeiçoamento de uma tecnologia cada vez mais presente no dia a dia das  pessoas.
 
 \section{Trabalhos Futuros}
-\subsection{Alterações no Banco de Dados}
-\subsection{Métricas Subjetivas}
+
+Uma sugestão na parte de \emph{hardware} é a implementação das métricas subjetivas que estão em modo teste para que seja possível realizar sessões de avaliação.
+
+Já na parte de \emph{software}, podem ser desenvolvidas novas ferramentas que parametrizem outros artefatos como efeito escada, \emph{ringing}, contornos falsos, \emph{jerkiness}, etc. Sugere-se o contínuo aperfeiçoamento dos artefatos já desenvolvidos para que se aproximem cada vez mais dos reais. Pode-se implementar a geração de níveis aleatórios a serem eliminados na DCT da blocagem. No NetSim é possível implementar novas formas de perda de pacotes como embaralhamento, ruído e atrasos. 
+
+Sobre o banco de dados, uma sugestão é alterá-lo de forma a permitir o armazenamento de dados referentes a avaliação objetiva que sejam calculados \emph{frame} a \emph{frame}, que por sua vez pode permitir novas visualizações de resultados. Outra  implementação sugerida é o recarregamento de sessões de avaliação, para que não seja necessário recriar uma mesma sessão.
+
+%link ferramenta e artefato
+%notas frame a frame
+%funçoes de consulta bd
+%reprodução de sessões
+%firmware/novas metricas subjetivas
+%novos artefatos/regiões de movimento
+%alterações no banco de dados -> visualizações diversas frame a frame, etc
+%netsim - outras formas de perda embaralhamento, ruidos, atrasos
+%Em uma avaliação visual os artefatos gerados se mostraram bastante próximos dos reais, dadas as devidas limitações. É sabido que determinados artefatos ocorrem especialmente em regiões de bastante movimento, porém a abordagem de previsão de movimento não foi implementada.
+
