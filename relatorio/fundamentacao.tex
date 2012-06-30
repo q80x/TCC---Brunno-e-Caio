@@ -20,14 +20,14 @@ Para a obtenção de sinais digitais, o sinal analógico (uma imagem é um sinal
 Atualmente a forma digital de captura de imagens e vídeos, criada no fim da década de 1960, está bastante difundida por causa das vantagens que oferece, entre elas:
 
 \begin{itemize}
-	\item Editar, adicionar efeitos, corrigir imperfeições, enfim, a manipulação é mais fácil e algumas operações só podem ser realizadas neste formato;
-	\item O arquivo não perde a qualidade ao longo do tempo, como acontece com fitas magnéticas e filmes, onde o meio de armazenamento afeta diretamente a qualidade do conteúdo;
-	\item A cópia é fiel, não causando modificação no conteúdo;
-	\item O custo de armazenamento tem se tornado cada vez mais baixo;
-	\item A integração com outras tecnologias e equipamentos é mais simples;
-	\item Possibilidade de correção de erros a partir de checksums e redundância;
-	\item Possibilidade de compressão com ou sem perdas;
-	\item A repetibilidade da informação, em qualquer momento.
+	\item editar, adicionar efeitos, corrigir imperfeições, enfim, a manipulação é mais fácil e algumas operações só podem ser realizadas neste formato;
+	\item o arquivo não perde a qualidade ao longo do tempo, como acontece com fitas magnéticas e filmes, onde o meio de armazenamento afeta diretamente a qualidade do conteúdo;
+	\item a cópia é fiel, não causando modificação no conteúdo;
+	\item o custo de armazenamento tem se tornado cada vez mais baixo;
+	\item a integração com outras tecnologias e equipamentos é mais simples;
+	\item possibilidade de correção de erros a partir de checksums e redundância;
+	\item possibilidade de compressão com ou sem perdas;
+	\item a repetibilidade da informação, em qualquer momento.
 \end{itemize}
 
 Vídeos digitais nada mais são que sequência de imagens digitais, e todos os conceitos do segundo valem para o primeiro. O contrário pode não ser verdadeiro, uma vez que num vídeo a presença da variável tempo permite-lhe operações exclusivas, como por exemplo a compressão temporal ou codificação inter-frame, detalhada mais adiante.
@@ -86,7 +86,7 @@ No espaço de cores RGB mostrado na figura \ref{fig:rgbdiscrete}, é possível o
 
 A quantização e a quantidade de bits por pixel representam uma das vantagens da utilização de formatos digitais pois muita informação redundante aos olhos humanos (tons de cores muito próximos, por exemplo) pode ser removida. Neste aspecto, um ponto chave da fisiologia humana que favorece a compressão de imagens é o fato de a acuidade visual ser maior em relação à luminância do que à crominância \cite{vandenbranden}.
 
-Um conceito importante que aproveita esta característica da visão humana é a subamostragem. Este conceito define que a resolução da camada de crominância pode ser menor que a resolução da camada de luminância, ou seja, para um conjunto de pixels, cada um possuirá seu valor de luminância, porém o de crominância poderá ser repetido, desta forma economizando recursos (BRICE, 2000). A figura \ref{fig:subsampling} apresenta, em colunas, alguns esquemas de subamostragem:
+Um conceito importante que aproveita esta característica da visão humana é a subamostragem. Este conceito define que a resolução da camada de crominância pode ser menor que a resolução da camada de luminância, ou seja, para um conjunto de pixels, cada um possuirá seu valor de luminância, porém o de crominância poderá ser repetido, desta forma economizando recursos \cite{brice}. A figura \ref{fig:subsampling} apresenta, em colunas, alguns esquemas de subamostragem:
 
 \begin{figure}[!htb]
 	\centering
@@ -99,11 +99,11 @@ Um conceito importante que aproveita esta característica da visão humana é a 
 Onde:
 \begin{itemize}
 	\item J - largura da amostra de referência, normalmente igual a 4;
-	\item a - número de amostras de crominância (Cb, Cr) na primeira 
+	\item a - número de amostras de crominância (Cb, Cr) na primeira linha;
 	\item b - número de amostras de crominância (Cb, Cr) na segunda linha.
 \end{itemize}
 
-O fator alpha (coeficiente de opacidade) pode ser considerado na notação, mas normalmente é omitido por ter valor igual a J. A notação dos esquemas é obtida considerando-se J:a:b. Desta forma, no esquema 4:1:1 é obtida uma amostra de crominância para cada linha; no esquema 4:2:0 são obtidas duas amostras na primeira linha que serão repetidas na segunda; no esquema 4:2:2 uma amostra de crominância é feita para cada conjunto de dois pixels (na horizontal) e, por fim, no esquema 4:4:4 não há subamostragem, uma vez que a crominância é amostrada para cada pixel, não ocorrendo compressão por não haver possibilidade de repetição.
+O fator \emph{alpha} (coeficiente de opacidade) pode ser considerado na notação, mas normalmente é omitido por ter valor igual a J. A notação dos esquemas é obtida considerando-se J:a:b. Desta forma, no esquema 4:1:1 é obtida uma amostra de crominância para cada linha; no esquema 4:2:0 são obtidas duas amostras na primeira linha que serão repetidas na segunda; no esquema 4:2:2 uma amostra de crominância é feita para cada conjunto de dois pixels (na horizontal) e, por fim, no esquema 4:4:4 não há subamostragem, uma vez que a crominância é amostrada para cada pixel, não ocorrendo compressão por não haver possibilidade de repetição.
 
 Em valores reais, considerando-se 24 bpp (8 para cada componente de crominância e 8 para a componente de luminância), uma imagem sem subamostragem (esquema 4:4:4) de dimensões 4x2, como a da figura, equivaleria à 24x4x2 = 192 bits. A tabela \ref{tab:subsampling}  sintetiza o valor em bits desta mesma imagem para cada esquema de subamostragem:
 
@@ -150,7 +150,7 @@ A codificação ou compressão é o processo que reduz o número de bits de dado
 
 Um exemplo de como a compressão é importante atualmente pode ser verificado na transmissão de vídeos por streaming. Considerando-se apenas os valores de luminância (escala de cinza) de um vídeo com definição standard (SD - Standard Definition) de 640x480 pixels com 8 BPP, tem-se que cada quadro de imagem ocupa 8x640x480 = 2.45 Mbits de memória. Se o vídeo deve ser apresentado a uma taxa de 30 FPS (frames per second - quadros por segundo), a banda necessária para transmitir o vídeo deve ser de 30x2.45 Mbits/s = 73.50 Mbps. Adicionando-se informações de cor e de áudio, esta taxa chega facilmente aos 270 Mbps numa qualidade SD, e ultrapassa 1.4 Gbps numa qualidade HD (High Definition - alta definição), valores que teriam um custo impraticável para usuários domésticos e até mesmo para empresas \cite{ciscoieee}. A codificação permite que até 98\% do sinal digital original seja removido sem que haja uma degradação inaceitável na qualidade da imagem \cite{mpeg2ref}.
 
-A Figura \ref{fig:codingprocess} apresenta o processo de obtenção, codificação (etapa A), transmissão, recepção e decodificação (etapa B) de um sinal de áudio e/ou vídeo sendo, por fim, apresentado. As etapas de conversão A/D (analógico-digital) e conversão D/A (digital-analógico) podem ser suprimidas caso a conversão A/D já seja realizada nos equipamentos de obtenção de dados e caso os monitores e dispositivos de armazenamento sejam digitais (\cite{rehme}).
+A Figura \ref{fig:codingprocess} apresenta o processo de obtenção, codificação (etapa A), transmissão, recepção e decodificação (etapa B) de um sinal de áudio e/ou vídeo sendo, por fim, apresentado. As etapas de conversão A/D (analógico-digital) e conversão D/A (digital-analógico) podem ser suprimidas caso a conversão A/D já seja realizada nos equipamentos de obtenção de dados e caso os monitores e dispositivos de armazenamento sejam digitais \cite{rehme}.
 
 \begin{figure}[!htb]
 	\centering
@@ -176,7 +176,7 @@ Em relação aos mecanismos de codificação de fonte, \cite{rehme} afirma que �
 
 Percebe-se desta forma que existe um equilíbrio entre método e taxa de compressão, degradação da qualidade aceitável e recursos disponíveis, ambos dependentes da aplicação.
 
-Em 1987, a International Electrotechnical Commission (IEC - Comissão Eletrotécnica Internacional) juntamente com a International Organization for Standardization (ISO - Organização Internacional para Padronização) organizou um grupo de especialistas com o objetivo de padronizar a compressão de áudio e vídeo digitais, mais conhecido como Moving Picture Experts Group, ou MPEG. No primeiro encontro, realizado em 1988, após o sucesso da digitalização do sinal de áudio (de natureza analógica) e posterior compressão para o desenvolvimento do popular CD (com áudio de alta qualidade), percebeu-se que aplicar a ideia na transmissão de TV diminuiria a largura de banda necessária, possibilitando a emissão de programas interativos, serviços de internet e ainda mais programas \cite{mpeg2ref}.
+Em 1987, a International Electrotechnical Commission (IEC - Comissão Eletrotécnica Internacional) juntamente com a International Organization for Standardization (ISO - Organização Internacional para Padronização) organizou um grupo de especialistas com o objetivo de padronizar a compressão de áudio e vídeo digitais, mais conhecido como Moving Picture Experts Group, ou MPEG. Em seu primeiro encontro, realizado em 1988, após o sucesso da digitalização do sinal de áudio (de natureza analógica) e posterior compressão para o desenvolvimento do popular CD (com áudio de alta qualidade), percebeu-se que aplicar a ideia na transmissão de TV diminuiria a largura de banda necessária, possibilitando a emissão de programas interativos, serviços de internet e ainda mais programas \cite{mpeg2ref}.
 
 O MPEG desenvolveu uma série de protocolos para as questões que surgiram ao longo do desenvolvimento de novas tecnologias, novos equipamentos e novos padrões internacionais, a fim de padronizar emissões digitais. Os padrões desenvolvidos incluem MPEG-1, MPEG-2, MPEG-4 e, mais recentemente, MPEG-7.
 
@@ -193,7 +193,7 @@ O processo de codificação espacial envolve as seguintes etapas, segundo \cite{
     \item Codificação de Entropia (\emph{Entropy Conding}): os coeficientes são reajustados de acordo com sua frequência de ocorrência. Os que mais se repetem são expressos com menor número de \emph{bits}, o que diminui consideravelmente a banda necessária para transmití-los.
 \end{itemize}
 
-Já codificação temporal aproveita-se da similaridade entre \emph{frames} sequenciais, codificando apenas a diferença entre eles. Isso é possível devido a dois tipos de codificação temporal: previsão entre \emph{frames} e previsão de movimento (\emph{inter-frame prediction} e \emph{motion prediction}).
+Já a codificação temporal aproveita-se da similaridade entre \emph{frames} sequenciais, codificando apenas a diferença entre eles. Isso é possível devido a dois tipos de codificação temporal: previsão entre \emph{frames} e previsão de movimento (\emph{inter-frame prediction} e \emph{motion prediction}).
 
 A previsão entre \emph{frames} codifica um \emph{frame} completo apenas periodicamente. O resultado, chamado de \emph{intra-coded frame} ou I-\emph{frame}, é utilizado como referência para \emph{frames} anteriores e posteriores.
 
@@ -316,26 +316,26 @@ o MSE pode ser calculado conforme a seguinte equação:
 
     Equação: \[MSE = \frac{1}{\left (T \cdot X \cdot Y \right )} \sum_{t}^{T} \sum_{x}^{X} \sum_{y}^{Y} \left ( P_{1} - P_{2} \right )^{2}\]
 
-para vídeos com T \emph{frames} de tamanho X x Y (WINKLER, 2005).
+para vídeos com T \emph{frames} de tamanho X x Y \cite{winkler2005}.
 
     Conforme a medida obtida, a seguinte análise é feita: quanto menor o valor do MSE, mais próxima a imagem avaliada está da imagem original \cite{albini}. A imagem da função MSE é o conjunto dos reais, maiores ou iguais a zero, ou seja, um valor zero indica que as imagens são idênticas.
 
 \subsubsection[PSNR]{PSNR - Peak Signal to Noise Ratio}
-O PSNR é calculado com base num valor MSE e é dado em escala logarítmica. O PSNR mede a fidelidade entre imagens, ao contrário do MSE que mede diferenças entre imagens (WINKLER, 2005). Esta medida é encontrada conforme a equação a seguir:
+O PSNR é calculado com base num valor MSE e é dado em escala logarítmica. O PSNR mede a fidelidade entre imagens, ao contrário do MSE que mede diferenças entre imagens \cite{winkler2005}. Esta medida é encontrada conforme a equação a seguir:
 
 Equação: \[PSNR_{dB} = 10 \cdot log_{10} \frac{{\left(2^{n} -1 \right )}^{2}}{MSE}\]
 
 onde n é o número de bits que representa o nível de cinza de cada pixel.
 
-A popularidade na utilização desta métrica se deve ao fato de que o cálculo pode ser realizado rapidamente, sendo bastante utilizado para comparar vídeos comprimidos e descomprimidos (RICHARDSON, 2003; SILVA).
+A popularidade na utilização desta métrica se deve ao fato de que o cálculo pode ser realizado rapidamente, sendo bastante utilizado para comparar vídeos comprimidos e descomprimidos \cite{emmersonsilva, richardson2003}.
 
-Dentre as limitações desta métrica, está a necessidade de sincronização entre as imagens original e degradada, baixa correlação com as métricas subjetivas definidas na norma ITU-R (ITU-R BT-500.11, Methodology for the Subjective Assessment for the Television Pictures, 2002.; SILVA).
+Dentre as limitações desta métrica, está a necessidade de sincronização entre as imagens original e degradada, baixa correlação com as métricas subjetivas definidas na norma ITU-R \cite{emmersonsilva, itubt500}.
 
 Analisando os resultados, valores de PSNR altos indicam alta fidelidade entre as imagens comparadas, enquanto que valores baixos indicam baixa fidelidade.
 
 \subsubsection[SSIM]{SSIM - Structural Similarity Index}
 
-Esta métrica surgiu com o objetivo de melhor aproximar a avaliação objetiva à percepção humana, pois métricas como o MSE e o PSNR se mostraram ineficientes para tanto \cite{emmersonsilva}. Aplicado sobre valores de luminância, contraste e a estrutura para várias janelas de mesmas dimensões em uma imagem (WANG e BOVIK, 2002), tem como equação:
+Esta métrica surgiu com o objetivo de melhor aproximar a avaliação objetiva à percepção humana, pois métricas como o MSE e o PSNR se mostraram ineficientes para tanto \cite{emmersonsilva}. Aplicado sobre valores de luminância, contraste e a estrutura para várias janelas de mesmas dimensões em uma imagem \cite{wangbovik2004}, tem como equação:
 
     Equação: \[SSIM(x, y) = \frac{(2\mu_{x}\mu_{y} + C_{1})(2\sigma_{xy} + C_{2})} {(\mu_{x}^{2} + \mu_{y}^{2}+C_{1})(\sigma_{x}^{2} + \sigma_{y}^{2}+C_{2})}\]
 
@@ -367,7 +367,7 @@ onde:
 
 \subsection{Métricas Subjetivas}
 
-Por causa das limitações das métricas objetivas, muitos trabalhos foram realiz'os nos últimos anos para tentar desenvolver um teste objetivo mais sofisticado que se aproximasse dos resultados subjetivos (WATSON, McGOWAN e MULLIGA, 1999; WANG et al, 2004). Embora muitas métricas tenham sido propostas, nenhuma ofereceu um nível de qualidade em comparação aos testes subjetivos (VQEG, 2003).
+Por causa das limitações das métricas objetivas, muitos trabalhos foram realiz'os nos últimos anos para tentar desenvolver um teste objetivo mais sofisticado que se aproximasse dos resultados subjetivos \cite{watson1999, wangbovik2004}. Embora muitas métricas tenham sido propostas, nenhuma ofereceu um nível de qualidade em comparação aos testes subjetivos \cite{vqeg2003}.
 
 A avaliação subjetiva depende de observadores humanos que atribuem notas a partir de suas opiniões sobre a qualidade. Posteriormente, uma análise estatística dos dados coletados é realizada, resultando em uma nota chamada MOS (Mean Opinion Score) \cite{itup930} \cite{albini}. Estes tipos de avaliação possuem algumas recomendações estabelecidas por órgãos internacionais com a finalidade de padronizar os procedimentos e ambientes de avaliação, alguns exemplos destas normas podem ser observados na Tabela \ref{tab:recomendacoes}:
 
