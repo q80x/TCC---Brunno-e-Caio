@@ -109,7 +109,7 @@ Em valores reais, considerando-se 24 bpp (8 para cada componente de crominância
 
 \begin{table}[!h]
 	\centering
-	\caption{Tamanho em bits da mesma imagem (4x2) para cada esquema de subamostragem.}
+	\caption[Tamanho em bits para cada subamostragem]{Tamanho em bits da mesma imagem (4x2) para cada esquema de subamostragem.}
 	\label{tab:subsampling}
 	\begin{tabular}{|c|c|c|c|}
 		\hline
@@ -126,7 +126,7 @@ Em valores reais, considerando-se 24 bpp (8 para cada componente de crominância
 	\end{tabular}
 \end{table}
 
-O vídeo digital com qualidade \emph{standard} (\sigla{SDTV}{Standard Definition Television}) é definido pela norma \sigla{SMPTE}{Society of Motion Picture and Television Engeneers} 259M (Society of Motion Picture and Television Engeneers). Possui dimensões de 720x480 pixels com esquema de subamostragem 4:2:2. O padrão de \sigla{DVD}{Digital Video Disk} (Digital Video Disk) utiliza o esquema 4:2:0 de subamostragem.
+O vídeo digital com qualidade \emph{standard} (\sigla{SDTV}{Standard Definition Television}) é definido pela norma \sigla{SMPTE}{Society of Motion Picture and Television Engineers} 259M (Society of Motion Picture and Television Engineers). Possui dimensões de 720x480 pixels com esquema de subamostragem 4:2:2. O padrão de \sigla{DVD}{Digital Video Disk} (Digital Video Disk) utiliza o esquema 4:2:0 de subamostragem.
 
 \subsection{Arquivo em formato bruto}
 
@@ -256,7 +256,7 @@ Em se tratando de vídeos digitais, os artefatos de maior notoriedade são: \emp
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.9\textwidth]{./imgs/artefatosdigitais.png}
-	\caption{.}
+	\caption[Artefatos digitais]{Artefatos digitais (a) blocagem; (b) borramento; (c) \emph{noiseness} e (d) \emph{ringing}.}
 	\label{fig:artefatosdigitais}
 	\fonte{\cite{farias2007}}
 \end{figure}
@@ -281,7 +281,7 @@ A recomendação P.930 fornece os filtros a serem utilizados para a simulação 
 
 Este artefato é facilmente percebido em sistemas com baixa taxa de bits para vídeo, como em sistemas de teleconferência \cite{itup930} em que a imagem parece congelar em determinados instantes. Isso se deve à repetição de \emph{frames} com o objetivo de reduzir a quantidade de informação a ser transmitida ou processada \cite{itup930}.
 
-A recomendação P.930 fornece dois fatores para controlar as repetições numa simulção: o FRF (Frame Repetition Factor) e o EFR (Effective Frame Rate). Um FRF igual a 3 causa a repetição do terceiro \emph{frame} de uma sequência durante os próximos dois \emph{frames}. O EFR é calculado como 30/FRF, e para o exemplo dado tem valor de 10 FPS.
+A recomendação P.930 fornece dois fatores para controlar as repetições numa simulação: o FRF (Frame Repetition Factor) e o EFR (Effective Frame Rate). Um FRF igual a 3 causa a repetição do terceiro \emph{frame} de uma sequência durante os próximos dois \emph{frames}. O EFR é calculado como 30/FRF, e para o exemplo dado tem valor de 10 FPS.
 
 \section{Métricas de Avaliação}
 
@@ -367,7 +367,7 @@ onde:
 
 \subsection{Métricas Subjetivas}
 
-Por causa das limitações das métricas objetivas, muitos trabalhos foram realiz'os nos últimos anos para tentar desenvolver um teste objetivo mais sofisticado que se aproximasse dos resultados subjetivos \cite{watson1999, wangbovik2004}. Embora muitas métricas tenham sido propostas, nenhuma ofereceu um nível de qualidade em comparação aos testes subjetivos \cite{vqeg2003}.
+Por causa das limitações das métricas objetivas, muitos trabalhos foram realizados nos últimos anos para tentar desenvolver um teste objetivo mais sofisticado que se aproximasse dos resultados subjetivos \cite{watson1999, wangbovik2004}. Embora muitas métricas tenham sido propostas, nenhuma ofereceu um nível de qualidade em comparação aos testes subjetivos \cite{vqeg2003}.
 
 A avaliação subjetiva depende de observadores humanos que atribuem notas a partir de suas opiniões sobre a qualidade. Posteriormente, uma análise estatística dos dados coletados é realizada, resultando em uma nota chamada MOS (Mean Opinion Score) \cite{itup930} \cite{albini}. Estes tipos de avaliação possuem algumas recomendações estabelecidas por órgãos internacionais com a finalidade de padronizar os procedimentos e ambientes de avaliação, alguns exemplos destas normas podem ser observados na Tabela \ref{tab:recomendacoes}:
 
@@ -404,9 +404,9 @@ A Figura \ref{fig:dsisvariantes} apresenta as fases de apresentação para cada 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.9\textwidth]{./imgs/dsisvariantes.png}
-	\caption{.}
+	\caption{Variantes de aplicação da métrica DSIS.}
 	\label{fig:dsisvariantes}
-	\fonte{\cite{itubt500}}
+	\fonte{Adaptado de \cite{itubt500}}
 \end{figure}
 
 \begin{table}
@@ -453,9 +453,9 @@ As fases da apresentação DSCQS podem ser observadas na Figura \ref{fig:dscqsfa
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.9\textwidth]{./imgs/dscqsfases.png}
-	\caption{.}
+	\caption{Fases de apresentação do método DSCQS.}
 	\label{fig:dscqsfases}
-	\fonte{\cite{itubt500}}
+	\fonte{Adaptado de \cite{itubt500}}
 \end{figure}
 
 \begin{table}
@@ -478,9 +478,9 @@ Para realizar a avaliação, o avaliador deve marcar as notas em uma escala cont
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.9\textwidth]{./imgs/dscqsescala.png}
-	\caption{.}
+	\caption{Escala de avaliação da métrica DSCQS.}
 	\label{fig:dscqsescala}
-	\fonte{\cite{itubt500}}
+	\fonte{Adaptado de \cite{itubt500}}
 \end{figure}
 
 \subsubsection[Método SSCQE]{Método SSCQE - Single Stimulus Continuous Quality Evaluation}
@@ -496,7 +496,7 @@ Para este método, as sequências de referência e de teste são apresentadas de
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.9\textwidth]{./imgs/sdsce.png}
-	\caption{.}
+	\caption{Sessão de apresentação SDSCE.}
 	\label{fig:sdsce}
 	\fonte{\cite{itubt500}}
 \end{figure}
