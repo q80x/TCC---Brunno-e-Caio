@@ -294,7 +294,7 @@ A janela de Sessão consiste de um passo inicial de configuração --- onde se s
 
 A primeira tela se trata de configurações básicas da sessão, tal como um nome e descrição para facilitar a identificação como também a métrica a que será utilizada e o número de espectadores. Devido à limitações encontradas no \emph{hardware}, somente as métricas DSIS e SDSCE foram implementadas.
 Na sequência é apresentada uma tela onde pode-se buscar e selecionar vídeos para serem exibidos na sessão de avaliação e for fim a tela para selecionar quais dispositivos remotos serão utilizados na avaliação. Ao final da configuração, pode-se dar início ao processo de avaliação subjetiva onde os vídeos selecionados serão então exibidos conforme a métrica selecionada.
-Na Figura \ref{} pode-se observar o ambiente de exibição dos vídeos durante a avaliação segundo a métrica SDSCE.
+Na Figura \ref{fig:sessao} pode-se observar o ambiente de exibição dos vídeos durante a avaliação segundo a métrica SDSCE.
 Para a execução desta métrica são executados dois players distintos de forma sincronizada, garantindo que ambos exibam o mesmo frame.
 
 \begin{figure}[!htb]
@@ -312,13 +312,21 @@ Por meio das abas presentes na parte superior da janela é possível acessar tr�
 
 \subsubsection{Gerador de Artefatos}
 
-A tela do gerador de artefatos permite controlar de forma gráfica a execução e parametrização das ferramentas \emph{block}, \emph{blur} e \emph{netsim}. Nela pode-se observar três regiões distintas:
+A tela do gerador de artefatos permite controlar de forma gráfica a execução e parametrização das ferramentas \emph{block}, \emph{blur} e \emph{netsim}. Nela pode-se observar três regiões distintas, presente na figura \ref{fig:geradorartefatos}:
 
 \begin{itemize}
 	\item Uma lista de busca dos vídeos passíveis de degradação.
 	\item Controladores específicos para cada ferramenta de degradação.
 	\item Uma fila de tarefas de degradação a serem executadas.
 \end{itemize}
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./imgs/degradacao.png}
+	\caption{Janela do gerador de artefatos.}
+	\label{fig:geradorartefatos}
+	\fonte{Autoria Própria.}
+\end{figure}
 
 Para adicionar um artefato em um vídeo é preciso selecionar um vídeo da lista e configurar uma das três ferramentas a disposição. 
 Os parâmetros disponíveis na interface são condizentes com os parâmetros apresentados em \ref{des:ferramentas} para cada ferramenta.
@@ -359,7 +367,7 @@ Os parâmetros de configuração são exatamente os mesmos fornecidos à ferrame
 
 \subsection{Configurações}
 
-
+Esta janela tem o simples propósito de permitir configurar alguns aspectos do sistema SASQV2, tais como os diretórios padrão e os intervalos usados nas fases de apresentação durante a avaliação subjetiva.
 
 \subsection{Ajuda}
 
