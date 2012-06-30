@@ -125,6 +125,15 @@ Esse módulo é resposável por todas as ferramentas que de alguma forma manipul
 \end{description}
 
 Estas ferramentas podem receber configurações independentes e flexíveis, diversificando as possibilidades de geração de degradações e artefatos e tornando possível a criação de resultados diferenciados para um mesmo vídeo usado como referência. Dentre essas configurações pode-se destacar a distribuição dos artefatos no tempo e no espaço e a intensidade de aplicação dos mesmos. Cada ferramenta citada será descrita com mais detalhes em \ref{des:ferramentas}. 
+A independência das ferramentas permite a utilização combinada em sequência, de forma que a cada utilização é possível aplicar artefatos à videos originais ou já degradados, criando inúmeras combinações de degradação. A figura \ref{fig:fluxogramaferramentas} demonstra o fluxo de utilização das ferramentas em conjunto com uma base de vídeos.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./diagramas/fluxodegradacao.png}
+	\caption{Fluxograma de utilização das ferramentas.}
+	\label{fig:fluxogramaferramentas}
+	\fonte{Autoria Própria}
+\end{figure}
 
 \subsubsection{Interface Gráfica}
 
