@@ -145,4 +145,63 @@ Observando os resultados para MSE e PSNR pode-se dizer que os resultados são fi
 
 \section{Análise de Impacto Sobre Métricas Objetivas}
 
+
+
+Para este teste foi utilizada a combinação de três distribuições de artefatos geradas pela ferramenta raffle, que foram concatenadas para criar três rajadas de ruídos em um conjunto de vídeos. As configurações adotadas foram as seguintes:
+
+\begin{enumerate}
+	\item Distribuição 1
+	\begin{itemize}
+		\item Duração: uniforme de 1 a 5
+		\item Frames: normal com \(\mu = 25\) e \(\sigma = 10\)
+		\item largura: uniforme de 1 a 10
+		\item altura: uniforme de 20 a 30
+	\end{itemize}
+	\item Distribuição 2
+	\begin{itemize}
+		\item Duração: constante em 3
+		\item Frames: uniforme de 70 a 100
+		\item largura: uniforme de 10 a 40
+		\item altura: uniforme de 10 a 20
+	\end{itemize}
+	\item Distribuição 3
+	\begin{itemize}
+		\item Duração: uniforme de 3 a 5
+		\item Frames: normal com \(\mu = 220\) e \(\sigma = 40\)
+		\item largura: uniforme de 1 a 43
+		\item altura: normal com \(\mu = 28\) e \(\sigma = 5\)
+	\end{itemize}
+\end{enumerate}
+
+O número de artefados em cada frame obtido a partir desta configuração é apresentado na figura \ref{fig:histogram}.
+
+Esta configuração foi então usada na aplicação de blocagem em três vídeos diferentes: Akiyo, CoastGuard e Foreman, todos possuindo 300 \emph{frames} de duração e obtidos em \cite{xiph}. Estes vídeos foram escolhidos pelas suas características de textura e movimento, possibilitando uma análise variada.
+
+Nas figuras \ref{fig:mse} e \ref{fig:mssim} pode-se acompanhar a evolução das métricas MSE e MSSIM quadro a quadro para os três vídeos degradados. Observando o comportamento das métricas nota-se que, apesar da natureza e da distribuição dos artefatos utilizados ser exatamente a mesma para todos os vídeos, os valores obtidos possuem picos diferentes, embora o comportamento seja semelhante.
+
+Outro fato notável é a análise individual das métricas, que dependendo do conjunto de frames análisado pode levar a conclusões diferentes a respeito do nível de degradação encontrado em cada vídeo.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./imgs/histogram.png}
+	\caption{Histograma dos artefatos produzidos}
+	\label{fig:histogram}
+	\fonte{Autoria Própria.}
+\end{figure}
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./imgs/mse.png}
+	\caption{MSE quadro a quadro}
+	\label{fig:mse}
+	\fonte{Autoria Própria.}
+\end{figure}
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./imgs/mssim.png}
+	\caption{MSSIM quadro a quadro}
+	\label{fig:mssim}
+	\fonte{Autoria Própria.}
+\end{figure}
 \section{Resumo e Conclusão do Capítulo}
