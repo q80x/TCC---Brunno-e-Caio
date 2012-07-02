@@ -41,7 +41,7 @@ As ferramentas foram planejadas para uma utilização modular, ou seja, para ser
 \subsection{Raffle}
 \label{des:raffle}
 
-A ferramenta raffle tem como objetivo gerar elementos aleatórios multi-dimensionais no domínio dos naturais, armazenado-os em arquivo.
+A ferramenta \emph{raffle} tem como objetivo gerar elementos aleatórios multi-dimensionais no domínio dos naturais, armazenado-os em arquivo.
 
 No arquivo gerado, cada coluna representa uma dimensão que deve seguir alguma distribuição de probabilidade, informada via parâmetros. Dentre as distribuições possíveis e seus respectivos parâmetros tem-se: 
 
@@ -95,56 +95,60 @@ Observações:
     \item[-] Todo parâmetro -d deve ser imediatamente sucedido por um parâmetro -p
     \item[-] O parâmetro -u deve ser imediatamente sucedido por um parâmetro -r
     \item[-] Cada conjunto (-d -p) representa uma dimensão, ou uma coluna, a ser gerada.
+    \item[-] Cabe ao usuário conhecer a ferramenta para adequá-la corretamente as suas necessidades.
 \end{itemize}
 
 Exemplos de utilização através da linha de comando são descritos abaixo. A diferença para a \emph{interface} gráfica reside apenas no fornecimento dos dados, uma vez que a \emph{interface} deve executar o mesmo comando para gerar o arquivo.
 
-No comando a seguir, será gerado um arquivo com nome raffleout.rff contendo 30 elementos. Para este exemplo, será utilizado um valor de duração constante e igual a 1, no próximo exemplo este conceito de duração será melhor detalhado. A primeira dimensão deve seguir uma distribuição uniforme dentro do intervalo [1, 5), a segunda dimensão deve ter valor constante 3 para todos os elementos gerados e a terceira e última dimensão deve seguir uma distribuição triangular no intervalo [3, 20) com pico no ponto 10.
+No comando a seguir, será gerado um arquivo com nome raffleout.rff contendo 30 elementos. Para este exemplo, será utilizado um valor de duração constante e igual a 1, no próximo exemplo este conceito de duração será melhor detalhado. A primeira dimensão deve seguir uma distribuição uniforme dentro do intervalo [1, 30), a segunda dimensão deve ter valor constante 3 para todos os elementos gerados e a terceira e última dimensão deve seguir uma distribuição triangular no intervalo [3, 20) com pico no ponto 10.
 
-./raffle -o raffleout.rff -u constant -r 1 -e 30 -d uniform -p 1,5 -d constant -p 3 -d triangular -p 3,20,10
+./raffle -o raffleout.rff -u constant -r 1 -e 30 -d uniform -p 1,30 -d constant -p 3 -d triangular -p 3,20,10
 
 O resultado de uma execução deste comando pode ser observado na Tabela \ref{tab:raffleresult1}, a seguir:
 
 \begin{table}[!h]
 	\centering
-	\caption{Resultado de execução do commando raffle para exemplo 1.}
+	\caption{Resultado de execução do commando \emph{raffle} para exemplo 1.}
 	\label{tab:raffleresult1}
-	\begin{tabular}{|l|l|l|l|l|l|}
+	\begin{tabular}{|lll|lll|lll|lll|lll|lll|}
 		\hline
-		4 3 6 & 1 3 16 & 1 3 16 & 1 3 18 & 3 3 16 & 3 3 11 \\
-		3 3 18 & 3 3 11 & 2 3 6 & 2 3 13 & 2 3 10 & 3 3 14 \\
-		1 3 11 & 2 3 11 & 4 3 9 & 4 3 11 & 2 3 15 & 3 3 10 \\
-		1 3 9 & 3 3 11 & 2 3 7 & 1 3 7 & 4 3 5 & 1 3 4 \\
-		1 3 10 & 3 3 11 & 4 3 10 & 4 3 11 & 2 3 12 & 3 3 6 \\
+		 6 & 3 &  7 & 16 & 3 & 12 & 18 & 3 &  7 & 23 & 3 & 14 &  9 & 3 &  9 & 15 & 3 &  7 \\
+		 9 & 3 & 11 & 28 & 3 & 10 & 21 & 3 &  8 &  1 & 3 &  7 & 12 & 3 & 11 & 18 & 3 & 14 \\
+		11 & 3 & 10 & 25 & 3 & 11 & 17 & 3 & 14 & 20 & 3 & 14 & 28 & 3 &  8 & 13 & 3 & 11 \\
+		10 & 3 &  8 & 10 & 3 & 12 & 15 & 3 & 14 & 22 & 3 & 14 & 10 & 3 & 12 &  6 & 3 &  4 \\
+		27 & 3 &  8 &  5 & 3 &  9 & 23 & 3 & 13 &  3 & 3 &  7 &  6 & 3 & 17 & 20 & 3 & 13 \\
 		\hline
 	\end{tabular}
 \end{table}
 
 No comando abaixo, será gerado um arquivo de nome raffleout2.rff com 50 elementos de duas dimensões: a primeira seguirá uma distribuição uniforme dentro do intervalo [1,5) e a segunda seguirá uma distribuição normal com média 2 e desvio padrão 1:
 
-./raffle -o raffleout2.rff -u constant -r 3 -e 50 -d uniform -p 1,5 -d normal -p 2,1
+./raffle -o raffleout2.rff -u constant -r 3 -e 50 -d uniform -p 1,30 -d normal -p 10,2
 
-A duração, neste exemplo, tem duração constante 3, ou seja, para todo elemento gerado, ele deverá ter duração de 3 elementos no total. O efeito da duração pode ser observado na figura, onde o primeiro elemento (4 1) tem duração 3 tendo a primeira dimensão como referência temporal: (4 1), (5 1) e (6 1). A geração de elementos prossegue até que o número de elementos gerados atinja o desejado, informado no parâmetro -e. Um resultado importante, que pode ser observado na Tabela \ref{tab:raffleresult2}, é que a duração não ultrapassa os limites definidos para a primeira coluna fazendo com que nem todos os artefatos tenham a duração estabelecida.
+A duração, neste exemplo, tem duração constante 3, ou seja, para todo elemento gerado, ele deverá ter duração de 3 elementos no total. O efeito da duração pode ser observado na figura, onde o primeiro elemento (7 10) tem duração 3 tendo a primeira dimensão como referência temporal: (7 10), (8 10) e (9 10). A geração de elementos prossegue até que o número de elementos gerados atinja o desejado, informado no parâmetro -e. Um resultado importante, que pode ser observado na Tabela \ref{tab:raffleresult2}, é que a duração não ultrapassa os limites definidos para a primeira coluna, [1, 30), fazendo com que nem todos os artefatos tenham a duração estabelecida.
 
 \begin{table}[!h]
 	\centering
-	\caption{Resultado de execução do commando raffle para exemplo 2.}
+	\caption{Resultado de execução do commando \emph{raffle} para exemplo 2.}
 	\label{tab:raffleresult2}
-	\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+	\begin{tabular}{|ll|ll|ll|ll|ll|ll|ll|ll|ll|ll|}
 		\hline
-		3 2 & 4 2 & 3 1 & 4 1 & 4 1 & 2 1 & 3 1 & 4 1 & 3 2 & 4 2 \\
-		3 4 & 4 4 & 2 3 & 3 3 & 4 3 & 4 1 & 1 2 & 2 2 & 3 2 & 4 1 \\
-		4 0 & 3 2 & 4 2 & 3 1 & 4 1 & 4 1 & 2 3 & 3 3 & 4 3 & 1 2 \\
-		2 2 & 3 2 & 1 0 & 2 0 & 3 0 & 1 2 & 2 2 & 3 2 & 2 2 & 3 2 \\
-		4 2 & 2 3 & 3 3 & 4 3 & 1 0 & 2 0 & 3 0 & 1 2 & 2 2 & 3 2 \\
+		 7 & 10 & 28 & 10 & 17 & 10 & 19 & 8 & 16 &  9 & 20 & 11 & 29 &  8 & 14 &  9 & 21 & 7 & 1 & 8 \\
+         8 & 10 & 19 &  7 & 18 & 10 & 20 & 8 &  4 &  8 & 21 & 11 & 12 & 10 & 15 &  9 & 22 & 7 & 2 & 8 \\
+         9 & 10 & 20 &  7 & 11 &  8 & 21 & 8 &  5 &  8 & 27 &  9 & 13 & 10 &  3 & 12 & 23 & 7 & 3 & 8 \\
+        26 & 10 & 21 &  7 & 12 &  8 & 14 & 9 &  6 &  8 & 28 &  9 & 14 & 10 &  4 & 12 & 28 & 9 & 8 & 8 \\
+        27 & 10 & 16 & 10 & 13 &  8 & 15 & 9 & 19 & 11 & 29 &  9 & 13 &  9 &  5 & 12 & 29 & 9 & 9 & 8 \\
 		\hline
 	\end{tabular}
 \end{table}
 
-%TODO
-Na aplicação do efeito de blocagem, por exemplo, a posição de cada pixel no vídeo é representada por uma tupla de três dimensões: o frame F em que o pixel aparece, a posição X em relação ao eixo vertical e a posição Y em relação ao eixo horizontal. Na simulação de rede, os vídeos são representados por uma sequência de pacotes,
+No planejamento inicial, as ferramentas de blocagem, borramento e simulador deveriam receber parâmetros para geração aleatória de artefatos. Posteriormente, notou-se que a modularização desta funcionalidade seria possível e poderia trazer algumas vantagens:
 
-A ferramenta raffle foi inicialmente utilizada de forma interna nas ferramentas block e netsim. %TODO
+\begin{itemize}
+    \item com uma ferramenta específica para a geração de pontos de inserção de artefatos, seria possível armazenar os resultados em forma de arquivo de texto, ocupando muito menos espaço que um vídeo degradado;
+    \item a reprodução de determinada degradação poderia ser realizada. Na ideia inicial, apesar do fornecimento de parâmetros iguais, seria improvável gerar dois vídeos com degradações iguais;
+    \item o arquivo de degradação pode ser aplicado em outros vídeos, a fim de testar o impacto de uma mesma degradação em vídeos com possíveis cenas, objetos, movimentos diferente.
+\end{itemize}
 
 \subsection{Block}
 \label{des:block}
@@ -165,9 +169,9 @@ Esta ferramenta é responsável por aplicar o efeito de blocagem sobre o vídeo 
 	\end{tabular}
 \end{table}
 
-A partir do vídeo desejado, deve-se escolher o nome do vídeo resultante e informar as dimensões do vídeo original, o tamanho da janela a ser utilizada na DCT, os subníveis de energia que deverão ser eliminados (zerados) e o nome do arquivo raffle a ser utilizado.
+A partir do vídeo desejado, deve-se escolher o nome do vídeo resultante e informar as dimensões do vídeo original, o tamanho da janela a ser utilizada na DCT, os subníveis de energia que deverão ser eliminados (zerados) e o nome do arquivo \emph{raffle} a ser utilizado.
 
-O arquivo raffle de entrada deve sempre conter três colunas. A primeira diz respeito ao \emph{frame} em que será aplicado o artefato. A segunda e a terceira coluna devem ter como limite o resultado da divisão da largura e altura do vídeo pelo tamanho da janela desejada, respectivamente, pois seus valores indicam qual grupo de pixels será afetado e nao o pixel inicial de aplicação da DCT.
+O arquivo \emph{raffle} de entrada deve sempre conter três colunas. A primeira diz respeito ao \emph{frame} em que será aplicado o artefato. A segunda e a terceira coluna devem ter como limite o resultado da divisão da largura e altura do vídeo pelo tamanho da janela desejada, respectivamente, pois seus valores indicam qual grupo de pixels será afetado e não o \emph{pixel} inicial de aplicação da DCT. Caso o parâmetro -r e respectivo arquivo de degradação \emph{raffle} sejam omitidos, a blocagem será aplicada a todos os \emph{frames} do vídeo, em sua totalidade.
 
 Os subníveis de energia (diagonais da matriz resultante da DCT) que serão cancelados dependem diretamente do tamanho da janela a ser aplicada. Seja uma janela de dimensões AxA, existem N = 2A-1 níveis de energia. O maior nível, 2A-1, representa o nível de energia \sigla{DC}{Differential Coding} (\emph{Differential Coding}) (a média dos valores do bloco). Nos demais níveis, conforme o nível diminui, a energia diminui porém a frequência aumenta. São conhecidos como coeficientes \sigla{AC}{Arithmetic Coding} (\emph{Arithmetic Coding}). A Figura \ref{fig:niveisdct} apresenta a organização dos níveis de energia numa janela de dimensões 8x8 pixels.
 
@@ -185,11 +189,11 @@ Como exemplo de utilização temos que na execução do comando a seguir, o arqu
 
 ./block -i entrada.yuv -o saida.yuv -s 352x288 -w 8 -l 1,2,4,6,7,15 -r raffle\_352x288.rff
 
-A única restrição se deve aos valores do arquivo raffle, como já mencionado. Este deve conter três colunas, em que a primeira, segunda e terceira colunas devem ter como limites superiores, respectivamente, o número de \emph{frames} do vídeo original e as dimensões largura e altura divididas pelo tamanho da janela (352/8 = 44 e 288/8 = 36).
+A única restrição se deve aos valores do arquivo \emph{raffle}, como já mencionado. Este deve conter três colunas, em que a primeira, segunda e terceira colunas devem ter como limites superiores, respectivamente, o número de \emph{frames} do vídeo original e as dimensões largura e altura divididas pelo tamanho da janela (352/8 = 44 e 288/8 = 36).
 
 \subsection{Blur}
 
-A ferramenta blur aplica o artefato de borramento utilizando para tanto um filtro da média ou um filtro da mediana, de dimensão configurável. O arquivo de saída é gerado aplicando-se o artefato configurado em todos os frames do vídeo original. Os parâmetros de configuração e respectivas descrições podem ser observados adiante:
+A ferramenta blur aplica o artefato de borramento utilizando para tanto um filtro da média ou um filtro da mediana, de dimensão configurável. O arquivo de vídeo de saída é gerado aplicando-se o artefato de acordo com o arquivo \emph{raffle} fornecido por parâmetro. Este, por sua vez, deve conter duas colunas: a primeira indica o \emph{frame} inicial de aplicação, a segunda indica a duração do artefato. Os parâmetros de configuração e respectivas descrições podem ser observados adiante:
 
 \begin{table}[!h]
 	\begin{tabular}{llll}
@@ -200,9 +204,12 @@ A ferramenta blur aplica o artefato de borramento utilizando para tanto um filtr
 	& & & (largura por altura em pixels) \\
 	& \texttt{--blur} & \texttt{-b}  & tipo do filtro a ser aplicado \\
 	& \texttt{--window} & \texttt{-w}  & tamanho do filtro \\
+	& \texttt{--rafflelist} & \texttt{-r}  & arquivo\_raffle \\
 	& \texttt{--help} & \texttt{-h}  & menu de ajuda \\
 	\end{tabular}
 \end{table}
+
+Assim como na ferramenta de blocagem, a omissão do parâmetro -r e do arquivo de degradação \emph{raffle} implica na aplicação do borramento em todo o vídeo, de acordo com os parâmetros fornecidos.
 
 Numa possível execução da ferramenta como indicada abaixo, o filtro da média de dimensões 5x5 pixels será aplicado no vídeo original, gerando o vídeo degradado saida.yuv de dimensões iguais às do original (\sigla{Full-HD}{Resolução Full-HD de 1080 linhas contendo 1980 pixels cada.}).
 
@@ -222,7 +229,7 @@ As simulações efetuadas pela ferramenta atuam sobre vídeos encapsulados no fo
 
 A entidade de dados a ser descartada pode ser tanto um único TS quanto o equivalente a um pacote UDP da camada de transporte, o qual comporta usualmente sete unidades TS.
 
-O descarte é controlado precisamente por meio de um arquivo de configuração fornecido como paramêtro ao programa, podendo este ser gerado pela ferramenta Raffle descrita em \ref{des:raffle}.
+O descarte é controlado precisamente por meio de um arquivo de configuração fornecido como paramêtro ao programa, podendo este ser gerado pela ferramenta \emph{raffle} descrita em \ref{des:raffle}.
 
 Este arquivo de configuração deve conter duas colunas com valores numéricos inteiros. 
 
@@ -291,20 +298,22 @@ A presente seção irá descrever com maiores detalhes as funcionalidades da int
 
 \subsection{Sessão}
 
-A janela de Sessão consiste de um passo inicial de configuração --- onde se sucedem três telas conforme são fornecidos dados para a aplicação --- e um segundo passo onde é disparada uma sessão de avaliação subjetiva baseada na configuração fornecida préviamente.
+A janela de Sessão possui dois momentos: o de configuração, em que os dados são fornecidos em três telas diferentes; e o de sessão propriamente dita, em que os vídeos são apresentados e avaliados de acordo com a métrica escolhida.
 
-A primeira tela se trata de configurações básicas da sessão, tal como um nome e descrição para facilitar a identificação como também a métrica a que será utilizada e o número de espectadores. Devido à limitações encontradas no \emph{hardware}, somente as métricas DSIS e SDSCE foram implementadas.
-Na sequência é apresentada uma tela onde pode-se buscar e selecionar vídeos para serem exibidos na sessão de avaliação e for fim a tela para selecionar quais dispositivos remotos serão utilizados na avaliação. Ao final da configuração, pode-se dar início ao processo de avaliação subjetiva onde os vídeos selecionados serão então exibidos conforme a métrica selecionada.
+A primeira tela trata de configurações básicas da sessão, tal como um nome e descrição para facilitar a identificação, assim como a métrica que será utilizada e o número de espectadores. Devido as limitações encontradas no \emph{hardware}, somente as métricas DSIS e SDSCE foram implementadas. As demais, DSCQS e SSCQE, que estão em modo teste no equipamento de avaliação, não foram implementadas pois a modificação do \emph{firmware} não faz parte do escopo deste projeto.
+
+Na sequência é apresentada uma tela em que pode-se buscar e selecionar vídeos para serem exibidos na sessão de avaliação. Por fim, é apresentada a tela para selecionar quais dispositivos remotos serão utilizados na avaliação. Ao final da configuração, pode-se dar início ao processo de avaliação subjetiva onde os vídeos selecionados serão então exibidos.
+
 Na Figura \ref{fig:sessao} pode-se observar o ambiente de exibição dos vídeos durante a avaliação segundo a métrica SDSCE.
 Para a execução desta métrica são executados dois players distintos de forma sincronizada, garantindo que ambos exibam o mesmo frame.
 
-%\begin{figure}[!htb]
-%	\centering
-%	\includegraphics[width=0.9\textwidth]{./imgs/sessao.png}
-%	\caption{Exemplo de sessão de avaliação.}
-%	\label{fig:sessao}
-%	\fonte{Autoria Própria.}
-%\end{figure}
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./imgs/sessao.png}
+	\caption{Exemplo de sessão de avaliação.}
+	\label{fig:sessao}
+	\fonte{Autoria Própria.}
+\end{figure}
 
 \subsection{Ferramentas}
 
