@@ -34,13 +34,13 @@ Abaixo se encontram os requisitos não funcionais levantados:
 
 \begin{itemize}
 	\item As ferramentas de degradação e métricas objetivas deverão operar sobre vídeos em formato YUV planificado com subamostragem 4:2:0.
-	\item A ferramenta de simulação deverá operar sobre vídeos no formato \sigla{H.262}{Padrão de compressão de vídeo digital também conhecido MPEG-2 Part 2} encapsulados em um \emph{Transport Stream} (\sigla{TS}{Transport Stream}).
+	\item A ferramenta de simulação deverá operar sobre vídeos no formato \sigla{H.262}{Padrão de compressão de vídeo digital também conhecido MPEG-2 Part 2} encapsulados em um TS.
 	\item O sistema deve fornecer documentação detalhada de auxílio ao uso das ferramentas.
 	\item A ferramenta de exibição deverá ser executada em um sistema capaz de prover um \emph{display} com resolução igual ou maior que a dos vídeos a serem exibidos.
-	\item A interface gráfica do sistema necessita que haja um \emph{Java Runtime Environment} (\sigla{JRE}{Java Runtime Environment}) instalado no sistema operacional.
+	\item A \emph{Interface} gráfica do sistema necessita que haja um \emph{Java Runtime Environment} (\sigla{JRE}{Java Runtime Environment}) instalado no sistema operacional.
 	\item O \emph{player} de vídeo MPlayer, livre e de código aberto, é necessário para mostrar os vídeos durante as sessões.
 	\item O projeto deverá ser desenvolvido utilizando ferramentas de distribuição livre.
-	\item O \emph{software} deve ser capaz de operar independentemente do SGBD utilizado.
+	\item O \emph{software} deve ser capaz de operar independentemente do \sigla{SGBD}{Sistema Gerenciador de Banco de Dados} (Sistema Gerenciador de Banco de Dados) utilizado.
 	\item O sistema deve ter um tempo de resposta adequado, de forma que este não interfira no \emph{timing} das avaliações subjetivas.
 	\item As ferramentas desenvolvidas devem estar disponíveis independentemente do sistema (\emph{stand-alone}).
 \end{itemize}
@@ -53,7 +53,7 @@ Esta seção tem o propósito de descrever a arquitetura proposta para o SASQV2,
 
 Por se tratar da continuação do desenvolvimento do projeto SASQV, este trabalho reutiliza e adapta grande parte dos componentes existentes no trabalho original.
 
-A Figura \ref{fig:arquitetura} mostra uma comparação entre as visões gerais de ambos os projetos. A diferença mais notável entre estas arquiteturas é a separação dos componentes de serviço e o de ferramentas, além de também recriar o componente de interface gráfica para melhor atender às necessidades do sistema.
+A Figura \ref{fig:arquitetura} mostra uma comparação entre as visões gerais de ambos os projetos. A diferença mais notável entre estas arquiteturas é a separação dos componentes de serviço e o de ferramentas, além de também recriar o componente de \emph{Interface} gráfica para melhor atender às necessidades do sistema.
 
 Mais detalhes sobre cada componente da arquitetura são descritos em seções específicas a seguir.
 
@@ -69,7 +69,7 @@ Mais detalhes sobre cada componente da arquitetura são descritos em seções es
 
 O componente banco de dados foi completamente reaproveitado, seguindo as mesma especificações do SASQV.
 
-O Sistema Gerenciador de Banco de Dados (\sigla{SGBD}{Sistema Gerenciador de Banco de Dados}) escolhido foi o MySQL, atualmente o SGDB \emph{open source} mais utilizado no mundo \cite{mysqlmarket}.
+O SGBD escolhido foi o MySQL, atualmente o SGDB \emph{open source} mais utilizado no mundo \cite{mysqlmarket}.
 O MySQL foi lançado e desenvolvido em 1995 pela empresa Sueca MySQL AB, atualmente incorporada pela Oracle Corporation, na forma de um SGDB que fornece um servidor multi-usuários para bancos de dados relacionais \cite{wikipediamysql}.
 
 Juntamente do MySQL também é utilizado o MySQL Workbench, uma ferramenta distribuída pela Oracle que concilia um cliente MySQL, uma ferramenta de \emph{Database Moddeling} e um administrador de servidor MySQL.
@@ -97,7 +97,7 @@ Estima-se que até cerca de 30\% do código de uma aplicação possa ser poupado
 \subsubsection{Service}
 
 Este elemento também foi reaproveitado, no entanto sofreu diversas adaptações em sua estrutura para comportar novas funcionalidades e continuar suportando as antigas.
-O componente presente no SASQV se trata de uma fachada de serviço responsável por interpretar mensagens provenientes da interface e distribuí-las em uma das três formas a seguir:
+O componente presente no SASQV se trata de uma fachada de serviço responsável por interpretar mensagens provenientes da \emph{Interface} e distribuí-las em uma das três formas a seguir:
 
 \begin{enumerate}
 	\item Executar uma ação de degradação ou métrica objetiva.
@@ -105,7 +105,7 @@ O componente presente no SASQV se trata de uma fachada de serviço responsável 
 	\item Repassar uma ação para o elemento model e esperar por resposta.
 \end{enumerate}
 
-Na arquitetura do SASQV2 a interpretação de mensagens foi descartada, uma vez que foi prosposta a implementação de uma nova interface em linguagem Java, que deu lugar a métodos de finalidades distintas dentro de cada ação enumerada acima. 
+Na arquitetura do SASQV2 a interpretação de mensagens foi descartada, uma vez que foi prosposta a implementação de uma nova \emph{Interface} em linguagem Java, que deu lugar a métodos de finalidades distintas dentro de cada ação enumerada acima. 
 Com isso a execução de tarefas de degradação ou avaliação por métrica objetiva, antes executadas localmente, passaram a ser delegadas para um novo componente chamado Ferramentas, descrito em \ref{met:ferramentas}.
 
 Já o conteúdo dos métodos que repassam as ações para o dispositivo sem-fio e para o model permanecem muito semelhantes aos encontrados na interpretação de mensagens originalmente feito no SASQV, sofrendo apenas pequenas modificações para acomodar a nova estrutura.
@@ -161,7 +161,7 @@ Um dos principais atrativos da linguagem para o desenvolvimento das ferramentas 
 Essas funcionalidades simplificam e facilitam o acesso e manipulação \emph{byte} a \emph{byte} de \emph{streams} de dados, algo que é usado extensivamente ao longo da implementação das ferramentas.
 Outro aspecto importante derivado destas funcionalidades é o impacto na performance do software. 
 Segundo \cite{benchmarks}, para o \emph{benchmark reverse-complement} --- onde são efetuadas diversas operações de leitura e escrita em arquivos, além de um leve processamento --- a melhor implementação em Java foi 1.9 vezes mais lenta que a melhor implementação em C++.
-A simplicidade da linguagem também facilita o desenvolvimento de ferramentas \emph{stand-alone} com interface por linhas de comando, além de possuir diversas bibliotecas de \emph{parsing} para comandos e opções.
+A simplicidade da linguagem também facilita o desenvolvimento de ferramentas \emph{stand-alone} com \emph{Interface} por linhas de comando, além de possuir diversas bibliotecas de \emph{parsing} para comandos e opções.
 
 Ambas as linguagens eram previamente conhecidas pelos integrantes do projeto, os quais também possuem um nível confortável de experiência no desenvolvimento de aplicações com estas linguagems e com diversas ferramentas associadas a elas, como IDE's, bibliotecas gráficas e conectividade com bancos de dados.
 
@@ -171,7 +171,7 @@ Uma das primeiras fases em um projeto de \emph{software} é a construção de di
 
 Os casos de uso elaborados foram divididos em diferentes diagramas, dando enfoque as funcionalidades mais importantes a serem desempenhadas pelo \emph{software}: degradar vídeos, realizar avaliação objetiva e realizar avaliação subjetiva através da criação de uma sessão de vídeos.
 
-O diagrama apresentado na Figura \ref{fig:ucdgeral} mostra o caso de uso geral. Para que o usuário possa interagir com o sistema é necessário realizar \emph{login} no sistema utilizando usuário e senha válidos. Esta validação é realizada pelo \sigla{SGBD}{Sistema Gerenciador de Banco de Dados} (Sistema Gerenciador de Banco de Dados), representado no diagrama pelo ator de mesmo nome.
+O diagrama apresentado na Figura \ref{fig:ucdgeral} mostra o caso de uso geral. Para que o usuário possa interagir com o sistema é necessário realizar \emph{login} no sistema utilizando usuário e senha válidos. Esta validação é realizada pelo SGBD, representado no diagrama pelo ator de mesmo nome.
 
 O sistema SASQV original previa a existência de dois tipos de ator: administrador e avaliador. O primeiro possuía permissões para acessar o sistema e realizar todas as operações, menos realizar avaliações de vídeo. O segundo, ao contrário do primeiro, só poderia realizar avaliações. Em prol da simplicidade, optou-se por permitir que avaliadores também pudessem realizar as mesmas ações que o administrador, sendo necessário apenas um destes atores.
 

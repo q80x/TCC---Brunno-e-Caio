@@ -34,9 +34,9 @@ Vídeos digitais nada mais são que sequência de imagens digitais, e todos os c
 
 A gama de aplicações de vídeos digitais é ampla. Alguns exemplos são: transmissão de TV, streaming via internet, exames médicos, uso pessoal, web cams, câmeras em celulares e smartphones, câmeras de segurança, cinema, imagens via satélite, entre outros.
 
-As limitações da tecnologia digital residem na capacidade de armazenamento de dados digitais, velocidade de armazenamento, dispositivos de captura e até mesmo na capacidade humana (por exemplo, de diferenciar cores, tonalidades, etc). Essas limitações moldam a representação digital de imagens, que são formadas por pixels (menor estrutura representativa de cor). Desta forma, a informação que se pode agregar a cada pixel é limitada e, consequentemente, afeta diretamente a quantidade de cores que cada pixel pode assumir.
+As limitações da tecnologia digital residem na capacidade de armazenamento de dados digitais, velocidade de armazenamento, dispositivos de captura e até mesmo na capacidade humana (por exemplo, de diferenciar cores, tonalidades, etc). Essas limitações moldam a representação digital de imagens, que são formadas por \emph{pixels} (menor estrutura representativa de cor). Desta forma, a informação que se pode agregar a cada \emph{pixel} é limitada e, consequentemente, afeta diretamente a quantidade de cores que cada \emph{pixel} pode assumir.
 
-Antes de explicar sobre o processo de quantização que determinará o conteúdo de cada pixel e seu formato, é importante que o conceito de modelo de cores seja introduzido.
+Antes de explicar sobre o processo de quantização que determinará o conteúdo de cada \emph{pixel} e seu formato, é importante que o conceito de modelo de cores seja introduzido.
 
 Um modelo de cores é um modelo matemático que associa números a cores, ou seja, é uma função matemática de tuplas, de normalmente três ou quatro variáveis, que representam cores no espaço correspondente.
 
@@ -70,9 +70,9 @@ Várias são as formas de construir um modelo de cores e dentre alguns deles est
 
 O modelo de cores RGB possui três componentes e a partir da combinação delas é possível criar uma infinidade de cores. Da mesma forma, o modelo de cores CMYK combina as componentes ciano, magenta, amarelo e preto para formar cores. Já no modelo YUV existe uma componente de luminância, ou brilho, e duas componentes de cor efetivamente (na realidade, essas componentes são respectivamente a diferença entre valores padrões de azul e vermelho e a luminância).
 
-De posse destes conceitos iniciais, o significado de quantização torna-se mais simples. Numa imagem analógica, cada partícula da imagem pode assumir infinitos valores pois a intensidade luminosa registrada, por exemplo num filme, é uma grandeza física com domínio real. Já numa imagem digital, cada pixel deve ter uma quantidade finita de informação para que possa ser armazenado. Desta necessidade de se limitar o tamanho da informação surge o conceito de quantização: um espaço de cores é dividido em subespaços em que apenas uma cor o representa. Este processo pode ser visto como uma compressão com perdas, pois várias cores são perdidas.
+De posse destes conceitos iniciais, o significado de quantização torna-se mais simples. Numa imagem analógica, cada partícula da imagem pode assumir infinitos valores pois a intensidade luminosa registrada, por exemplo num filme, é uma grandeza física com domínio real. Já numa imagem digital, cada \emph{pixel} deve ter uma quantidade finita de informação para que possa ser armazenado. Desta necessidade de se limitar o tamanho da informação surge o conceito de quantização: um espaço de cores é dividido em subespaços em que apenas uma cor o representa. Este processo pode ser visto como uma compressão com perdas, pois várias cores são perdidas.
 
-Partindo-se da quantização, é necessário determinar a quantidade de bits por pixel (bpp ou profundidade de cor) que é equivalente ao número de níveis de intensidade de cada componente de cor do espaço de cores desejado. Por exemplo, utilizando-se 8 bits para cada componente do modelo RGB, o espaço de cores fica limitado a 256 valores para cada componente que, combinados, geram mais de 16 milhões de cores.
+Partindo-se da quantização, é necessário determinar a quantidade de bits por \emph{pixel} (\sigla{BPP}{bits por pixel} ou profundidade de cor) que é equivalente ao número de níveis de intensidade de cada componente de cor do espaço de cores desejado. Por exemplo, utilizando-se 8 bits para cada componente do modelo RGB, o espaço de cores fica limitado a 256 valores para cada componente que, combinados, geram mais de 16 milhões de cores.
 
 No espaço de cores RGB mostrado na figura \ref{fig:rgbdiscrete}, é possível observar o efeito da quantização. Os eixos, que a princípio tinham como domínio os reais, foram discretizados para assumir apenas valores inteiros não-negativos. Cada componente pode assumir seis valores e a combinação delas gera um total de 6\textsuperscript{3} = 216 cores. Desta forma, pode-se perceber que cada subespaço assumiu um único valor para representá-lo, ignorando as tonalidades de transição entre cada ponto do espaço.
 
@@ -84,7 +84,7 @@ No espaço de cores RGB mostrado na figura \ref{fig:rgbdiscrete}, é possível o
 	\fonte{\cite{wikicolormodel}}
 \end{figure}
 
-A quantização e a quantidade de bits por pixel representam uma das vantagens da utilização de formatos digitais pois muita informação redundante aos olhos humanos (tons de cores muito próximos, por exemplo) pode ser removida. Neste aspecto, um ponto chave da fisiologia humana que favorece a compressão de imagens é o fato de a acuidade visual ser maior em relação à luminância do que à crominância \cite{vandenbranden}.
+A quantização e a quantidade de bits por \emph{pixel} representam uma das vantagens da utilização de formatos digitais pois muita informação redundante aos olhos humanos (tons de cores muito próximos, por exemplo) pode ser removida. Neste aspecto, um ponto chave da fisiologia humana que favorece a compressão de imagens é o fato de a acuidade visual ser maior em relação à luminância do que à crominância \cite{vandenbranden}.
 
 Um conceito importante que aproveita esta característica da visão humana é a subamostragem. Este conceito define que a resolução da camada de crominância pode ser menor que a resolução da camada de luminância, ou seja, para um conjunto de pixels, cada um possuirá seu valor de luminância, porém o de crominância poderá ser repetido, desta forma economizando recursos \cite{brice}. A figura \ref{fig:subsampling} apresenta, em colunas, alguns esquemas de subamostragem:
 
@@ -103,7 +103,7 @@ Onde:
 	\item b - número de amostras de crominância (Cb, Cr) na segunda linha.
 \end{itemize}
 
-O fator \emph{alpha} (coeficiente de opacidade) pode ser considerado na notação, mas normalmente é omitido por ter valor igual a J. A notação dos esquemas é obtida considerando-se J:a:b. Desta forma, no esquema 4:1:1 é obtida uma amostra de crominância para cada linha; no esquema 4:2:0 são obtidas duas amostras na primeira linha que serão repetidas na segunda; no esquema 4:2:2 uma amostra de crominância é feita para cada conjunto de dois pixels (na horizontal) e, por fim, no esquema 4:4:4 não há subamostragem, uma vez que a crominância é amostrada para cada pixel, não ocorrendo compressão por não haver possibilidade de repetição.
+O fator \emph{alpha} (coeficiente de opacidade) pode ser considerado na notação, mas normalmente é omitido por ter valor igual a J. A notação dos esquemas é obtida considerando-se J:a:b. Desta forma, no esquema 4:1:1 é obtida uma amostra de crominância para cada linha; no esquema 4:2:0 são obtidas duas amostras na primeira linha que serão repetidas na segunda; no esquema 4:2:2 uma amostra de crominância é feita para cada conjunto de dois \emph{pixels} (na horizontal) e, por fim, no esquema 4:4:4 não há subamostragem, uma vez que a crominância é amostrada para cada pixel, não ocorrendo compressão por não haver possibilidade de repetição.
 
 Em valores reais, considerando-se 24 bpp (8 para cada componente de crominância e 8 para a componente de luminância), uma imagem sem subamostragem (esquema 4:4:4) de dimensões 4x2, como a da figura, equivaleria à 24x4x2 = 192 bits. A tabela \ref{tab:subsampling}  sintetiza o valor em bits desta mesma imagem para cada esquema de subamostragem:
 
@@ -126,13 +126,13 @@ Em valores reais, considerando-se 24 bpp (8 para cada componente de crominância
 	\end{tabular}
 \end{table}
 
-O vídeo digital com qualidade \emph{standard} (\sigla{SDTV}{Standard Definition Television}) é definido pela norma \sigla{SMPTE}{Society of Motion Picture and Television Engineers} 259M (Society of Motion Picture and Television Engineers). Possui dimensões de 720x480 pixels com esquema de subamostragem 4:2:2. O padrão de \sigla{DVD}{Digital Video Disk} (Digital Video Disk) utiliza o esquema 4:2:0 de subamostragem.
+O vídeo digital com qualidade \emph{standard} (\sigla{SDTV}{Standard Definition Television}) é definido pela norma \sigla{SMPTE}{Society of Motion Picture and Television Engineers} 259M (Society of Motion Picture and Television Engineers). Possui dimensões de 720x480 \emph{pixels} com esquema de subamostragem 4:2:2. O padrão de \sigla{DVD}{Digital Video Disk} (Digital Video Disk) utiliza o esquema 4:2:0 de subamostragem.
 
 \subsection{Arquivo em formato bruto}
 
 É possível armazenar diretamente os valores das amostras num arquivo. Este tipo de arquivo, conhecido como arquivo raw, ou bruto, não passa por qualquer processamento, codificação ou encapsulamento. Existe uma infinidade de formatos de arquivo de vídeo bruto, cada um com uma organização particular que ordena os valores das componentes de cada pixel, entre eles os formatos: AYUV, UYVY, CYUV, YUY2, Y41P, Y411, YUVP, Y211, YV16, YV9, Y800 \cite{fourccyuv}. %TODO precisa dessa jeba enorme de siglas?
 
-A figura \ref{fig:yuvorganization} mostra a organização de um arquivo no formato IYUV (ou I420) de subamostragem 4:2:0 e o respectivo fluxo de bytes em memória. Primeiramente são armazenados os valores de luminância de cada pixel, os valores de crominância U (Cb) para cada conjunto de 4 pixels e os de crominância V (Cr) para o mesmo conjunto.
+A figura \ref{fig:yuvorganization} mostra a organização de um arquivo no formato IYUV (ou I420) de subamostragem 4:2:0 e o respectivo fluxo de bytes em memória. Primeiramente são armazenados os valores de luminância de cada pixel, os valores de crominância U (Cb) para cada conjunto de 4 \emph{pixels} e os de crominância V (Cr) para o mesmo conjunto.
 
 \begin{figure}[!htb]
 	\centering
@@ -148,9 +148,9 @@ O objetivo principal da codificação de vídeos é a compressão de dados que t
 
 A codificação ou compressão é o processo que reduz o número de bits de dados digitais a fim de se diminuir a necessidade por recursos, tais como espaço de armazenamento e banda de transmissão. A compressão possui duas categorias básicas: pode ser sem perdas, isto é, apenas informações estatisticamente redundantes são removidas conservando a informação original; e pode ser com perdas, em que informações menos relevantes são descartadas pela necessidade imposta.
 
-Um exemplo de como a compressão é importante atualmente pode ser verificado na transmissão de vídeos por streaming. Considerando-se apenas os valores de luminância (escala de cinza) de um vídeo com definição standard (SD - Standard Definition) de 640x480 pixels com 8 BPP, tem-se que cada quadro de imagem ocupa 8x640x480 = 2.45 Mbits de memória. Se o vídeo deve ser apresentado a uma taxa de 30 FPS (frames per second - quadros por segundo), a banda necessária para transmitir o vídeo deve ser de 30x2.45 Mbits/s = 73.50 Mbps. Adicionando-se informações de cor e de áudio, esta taxa chega facilmente aos 270 Mbps numa qualidade SD, e ultrapassa 1.4 Gbps numa qualidade HD (High Definition - alta definição), valores que teriam um custo impraticável para usuários domésticos e até mesmo para empresas \cite{ciscoieee}. A codificação permite que até 98\% do sinal digital original seja removido sem que haja uma degradação inaceitável na qualidade da imagem \cite{mpeg2ref}.
+Um exemplo de como a compressão é importante atualmente pode ser verificado na transmissão de vídeos por streaming. Considerando-se apenas os valores de luminância (escala de cinza) de um vídeo com definição standard (\sigla{SD}{Standard Definition} - Standard Definition) de 640x480 \emph{pixels} com 8 BPP, tem-se que cada quadro de imagem ocupa 8x640x480 = 2.45 Mbits de memória. Se o vídeo deve ser apresentado a uma taxa de 30 \sigla{FPS}{Frames Per Second} (\emph{frames per second} - quadros por segundo), a banda necessária para transmitir o vídeo deve ser de 30x2.45 Mbits/s = 73.50 Mbps. Adicionando-se informações de cor e de áudio, esta taxa chega facilmente aos 270 Mbps numa qualidade SD, e ultrapassa 1.4 Gbps numa qualidade HD (High Definition - alta definição), valores que teriam um custo impraticável para usuários domésticos e até mesmo para empresas \cite{ciscoieee}. A codificação permite que até 98\% do sinal digital original seja removido sem que haja uma degradação inaceitável na qualidade da imagem \cite{mpeg2ref}.
 
-A Figura \ref{fig:codingprocess} apresenta o processo de obtenção, codificação (etapa A), transmissão, recepção e decodificação (etapa B) de um sinal de áudio e/ou vídeo sendo, por fim, apresentado. As etapas de conversão A/D (analógico-digital) e conversão D/A (digital-analógico) podem ser suprimidas caso a conversão A/D já seja realizada nos equipamentos de obtenção de dados e caso os monitores e dispositivos de armazenamento sejam digitais \cite{rehme}.
+A Figura \ref{fig:codingprocess} apresenta o processo de obtenção, codificação (etapa A), transmissão, recepção e decodificação (etapa B) de um sinal de áudio e/ou vídeo sendo, por fim, apresentado. As etapas de conversão \sigla{A/D}{Analógico/Digital} (analógico-digital) e conversão \sigla{D/A}{Digital/Analógico} (digital-analógico) podem ser suprimidas caso a conversão A/D já seja realizada nos equipamentos de obtenção de dados e caso os monitores e dispositivos de armazenamento sejam digitais \cite{rehme}.
 
 \begin{figure}[!htb]
 	\centering
@@ -176,13 +176,13 @@ Em relação aos mecanismos de codificação de fonte, \cite{rehme} afirma que �
 
 Percebe-se desta forma que existe um equilíbrio entre método e taxa de compressão, degradação da qualidade aceitável e recursos disponíveis, ambos dependentes da aplicação.
 
-Em 1987, a International Electrotechnical Commission (IEC - Comissão Eletrotécnica Internacional) juntamente com a International Organization for Standardization (ISO - Organização Internacional para Padronização) organizou um grupo de especialistas com o objetivo de padronizar a compressão de áudio e vídeo digitais, mais conhecido como Moving Picture Experts Group, ou MPEG. Em seu primeiro encontro, realizado em 1988, após o sucesso da digitalização do sinal de áudio (de natureza analógica) e posterior compressão para o desenvolvimento do popular CD (com áudio de alta qualidade), percebeu-se que aplicar a ideia na transmissão de TV diminuiria a largura de banda necessária, possibilitando a emissão de programas interativos, serviços de internet e ainda mais programas \cite{mpeg2ref}.
+Em 1987, a \sigla{IEC}{International Electrotechnical Commission} (Comissão Eletrotécnica Internacional) juntamente com a \sigla{ISO}{International Organization for Standardization} (Organização Internacional para Padronização) organizou um grupo de especialistas com o objetivo de padronizar a compressão de áudio e vídeo digitais, mais conhecido como Moving Picture Experts Group, ou \sigla{MPEG}{Moving Picture Experts Group}. Em seu primeiro encontro, realizado em 1988, após o sucesso da digitalização do sinal de áudio (de natureza analógica) e posterior compressão para o desenvolvimento do popular CD (com áudio de alta qualidade), percebeu-se que aplicar a ideia na transmissão de TV diminuiria a largura de banda necessária, possibilitando a emissão de programas interativos, serviços de internet e ainda mais programas \cite{mpeg2ref}.
 
 O MPEG desenvolveu uma série de protocolos para as questões que surgiram ao longo do desenvolvimento de novas tecnologias, novos equipamentos e novos padrões internacionais, a fim de padronizar emissões digitais. Os padrões desenvolvidos incluem MPEG-1, MPEG-2, MPEG-4 e, mais recentemente, MPEG-7.
 
 Atualmente, a indústria de transmissão de TV se baseia principalmente no padrão MPEG-2 para transmitir sinal de vídeo digital, áudio e dados pela rede. Este é o padrão para transmissão digital, pois é o único que prevê suporte a transmissão de dados via rede \cite{mpeg2ref}.
 
-Os dois principais tipos de compressão do MPEG são as codificações espacial e temporal. O primeiro tipo elimina redundâncias entre pixels adjacentes num mesmo \emph{frame}, aproveitando-se, também, da inabilidade do olho detectar certas degradações. O segundo tipo minimiza redundâncias entre \emph{frames} \cite{mpeg2ref}.
+Os dois principais tipos de compressão do MPEG são as codificações espacial e temporal. O primeiro tipo elimina redundâncias entre \emph{pixels} adjacentes num mesmo \emph{frame}, aproveitando-se, também, da inabilidade do olho detectar certas degradações. O segundo tipo minimiza redundâncias entre \emph{frames} \cite{mpeg2ref}.
 
 O processo de codificação espacial envolve as seguintes etapas, segundo \cite{mpeg2ref}:
 \begin{itemize}
@@ -190,10 +190,10 @@ O processo de codificação espacial envolve as seguintes etapas, segundo \cite{
     \item Quantização (\emph{Quantization}): os coeficientes da DCT são reorganizados em ordem de importância visual.
     \item Ponderação (\emph{Weighting}): degradação, ou ruído, são estrategicamente adicionados em regiões mais detalhadas ou complexas, onde é pouco provável que o observador note. 
     \item Varredura (\emph{Scanning}): nesta etapa os coeficientes mais significantes são enviados primeiro, seguidos dos menos importantes e, por fim, uma indicação de que os restantes são iguais a zero.
-    \item Codificação de Entropia (\emph{Entropy Conding}): os coeficientes são reajustados de acordo com sua frequência de ocorrência. Os que mais se repetem são expressos com menor número de \emph{bits}, o que diminui consideravelmente a banda necessária para transmití-los.
+    \item Codificação de Entropia (\emph{Entropy Conding}): os coeficientes são reajustados de acordo com sua frequência de ocorrência. Os que mais se repetem são expressos com menor número de \emph{bits}, o que diminui consideravelmente a banda necessária para transmiti-los.
 \end{itemize}
 
-Já a codificação temporal aproveita-se da similaridade entre \emph{frames} sequenciais, codificando apenas a diferença entre eles. Isso é possível devido a dois tipos de codificação temporal: previsão entre \emph{frames} e previsão de movimento (\emph{inter-frame prediction} e \emph{motion prediction}).
+Já a codificação temporal aproveita-se da similaridade entre \emph{frames} sequenciais, codificando apenas a diferença entre eles. Isso é possível devido a dois tipos de codificação temporal: previsão entre \emph{frames} e previsão de movimento (\emph{inter-frame prediction} e \emph{motion prediction}, respectivamente).
 
 A previsão entre \emph{frames} codifica um \emph{frame} completo apenas periodicamente. O resultado, chamado de \emph{intra-coded frame} ou I-\emph{frame}, é utilizado como referência para \emph{frames} anteriores e posteriores.
 
@@ -209,9 +209,9 @@ A previsão entre \emph{frames} codifica um \emph{frame} completo apenas periodi
 	\fonte{\cite{wikiipbframes}}
 \end{figure}
 
-P-\emph{frames} alcançam uma compressão maior que I-\emph{frames}, tipicamente de 20\% a 70\% do tamanho do respectivo I-\emph{frame} de referência. B-\emph{frames}, por sua vez, podem permitem uma compressão ainda maior, tipicamente de 5\% a 40\% do tamanho do respectivo I-\emph{frame} de referência \cite{ciscoieee}.
+P-\emph{frames} alcançam uma compressão maior que I-\emph{frames}, tipicamente de 20\% a 70\% do tamanho do respectivo I-\emph{frame} de referência. B-\emph{frames}, por sua vez, podem permitir uma compressão ainda maior, tipicamente de 5\% a 40\% do tamanho do respectivo I-\emph{frame} de referência \cite{ciscoieee}.
 
-Apesar de reduzir a quantidade de informação a ser transmitida, quanto menos I-\emph{frames} são utilizados, maior é a vulnerabilidade da transmissão. Qualquer erro que ocorrer num I-\emph{frame} será propagado até que um novo seja enviado corretamente  cite{mpeg2ref}. Por este motivo o conceito de \sigla{GOP}{Group Of Pictures} (\emph{Group Of Pictures}) é utilizado \cite{mpeg2ref}. Cada conjunto é iniciado por um I-\emph{frame}, contendo também P-\emph{frames} e B-\emph{frames}.
+Apesar de reduzir a quantidade de informação a ser transmitida, quanto menos I-\emph{frames} são utilizados, maior é a vulnerabilidade da transmissão. Qualquer erro que ocorrer num I-\emph{frame} será propagado até que um novo seja enviado corretamente  \cite{mpeg2ref}. Por este motivo o conceito de \sigla{GOP}{Group Of Pictures} (\emph{Group Of Pictures}) é utilizado \cite{mpeg2ref}. Cada conjunto é iniciado por um I-\emph{frame}, contendo também P-\emph{frames} e B-\emph{frames}.
 
 O tamanho usual para um GOP é entre 12 e 15 \emph{frames} \cite{ciscoieee, mpeg2ref}. Um exemplo de GOP pode ser observado na Figura \ref{fig:gop}.
 
@@ -225,7 +225,7 @@ O tamanho usual para um GOP é entre 12 e 15 \emph{frames} \cite{ciscoieee, mpeg
 
 A previsão de movimento, por sua vez, envia um vetor de movimento (\emph{motion vector}) para o decodificador. Este vetor resulta da identificação de movimento de objetos que se repetem, desta forma, o decodificador apenas move o objeto para a nova posição.
 
-Para que seja possível transportar vídeos codificados com MPEG por uma rede \sigla{IP}{Internet Protocol}, a informação dos \emph{frames} deve ser encapsulada em pacotes MPEG-\sigla{TS}{Transport Stream}, que serão transportados por pacotes IP posteriormente \cite{ciscoieee}. Pacotes IP contém sete pacotes MPEG-TS de 188 \emph{bytes}. 
+Para que seja possível transportar vídeos codificados com MPEG por uma rede \sigla{IP}{Internet Protocol} (Internet Protocol), a informação dos \emph{frames} deve ser encapsulada em pacotes MPEG-\sigla{TS}{Transport Stream}, que serão transportados por pacotes IP posteriormente \cite{ciscoieee}. Pacotes IP contém sete pacotes MPEG-TS de 188 \emph{bytes}. 
 
 A Figura \ref{fig:ts} apresenta o encapsulamento típico de um pacote IP. Cada pacote pode conter informação de dois \emph{frames} consecutivos, ou seja, a perda de um pacote pode trazer a perda de informação referente aos dois \emph{frames}. Vale observar que além de informações de imagem, os pacotes IP também transportam informações de áudio codificado em MPEG e informações de serviço \cite{ciscoieee}.
 
@@ -241,11 +241,11 @@ A Figura \ref{fig:ts} apresenta o encapsulamento típico de um pacote IP. Cada p
 
 Imagens digitais são alvo de uma grande variedade de distorções durante sua aquisição, processamento, compressão, armazenamento, transmissão e reprodução \cite{wangbovik2004}. As características peculiares que são observadas nas imagens são chamadas de artefatos \cite{albini} e podem ser observadas tanto em transmissões digitais quanto em transmissões analógicas.
 
-As imagens digitalmente transmitidas, embora suscetíveis à um grande número de distorções, não sofrem as mesmas distorções que as convencionais, de transmissão analógica (salvo no caso de um sinal analógico ser convertido para ser transmitido em meio digital). O ruído branco gaussiano é um exemplo de distorção que ocorre em meio analógico e podm ser observado na Figura~\ref{fig:artefatosanalogicos} a seguir:
+As imagens digitalmente transmitidas, embora suscetíveis a um grande número de distorções, não sofrem as mesmas distorções que as convencionais, de transmissão analógica (salvo no caso de um sinal analógico ser convertido para ser transmitido em meio digital). O ruído branco gaussiano é um exemplo de distorção que ocorre em meio analógico e pode ser observado na Figura~\ref{fig:artefatosanalogicos} a seguir:
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.9\textwidth]{./imgs/artefatosanalogicos.png}
+	\includegraphics[width=0.25\textwidth]{./imgs/artefatosanalogicos.png}
 	\caption{Ruído branco gaussiano.}
 	\label{fig:artefatosanalogicos}
 	\fonte{\cite{panagiotopoulou}}
@@ -261,7 +261,7 @@ Em se tratando de vídeos digitais, os artefatos de maior notoriedade são: \emp
 	\fonte{\cite{farias2007}}
 \end{figure}
 
-Poder adicionar artefatos de forma artificial e controlada à vídeos digitais é de grande importância no campo de avaliação de vídeos (tanto na avaliação objetiva quanto na avaliação subjetiva) uma vez que, a partir de algoritmos, é possível simular distorções reais. Estes algoritmos não são padronizados, mas existem algumas recomendações internacionais, como por exemplo a recomendação P.930 da ITU \cite{itup930} que descreve os princípios para reproduzir as distorções relativas à compressão de vídeo sem efetivamente precisar comprimí-lo.
+Poder adicionar artefatos de forma artificial e controlada a vídeos digitais é de grande importância no campo de avaliação de vídeos (tanto na avaliação objetiva quanto na avaliação subjetiva) uma vez que, a partir de algoritmos, é possível simular distorções reais. Estes algoritmos não são padronizados, mas existem algumas recomendações internacionais, como por exemplo a recomendação P.930 da \sigla{ITU}{International Telecommunication Union} (International Telecommunication Union)\cite{itup930} que descreve os princípios para reproduzir as distorções relativas à compressão de vídeo sem efetivamente precisar comprimi-lo.
 
 Nas seções que seguem, alguns dos artefatos mais comuns serão detalhados juntamente com as recomendações para a respectiva simulação.
 
@@ -281,7 +281,7 @@ A recomendação P.930 fornece os filtros lineares a serem utilizados para a sim
 
 Este artefato é facilmente percebido em sistemas com baixa taxa de bits para vídeo, como em sistemas de teleconferência \cite{itup930} em que a imagem parece congelar em determinados instantes. Isso se deve à repetição de \emph{frames} com o objetivo de reduzir a quantidade de informação a ser transmitida ou processada \cite{itup930}.
 
-A recomendação P.930 fornece dois fatores para controlar as repetições numa simulação: o FRF (Frame Repetition Factor) e o EFR (Effective Frame Rate). Um FRF igual a 3 causa a repetição do terceiro \emph{frame} de uma sequência durante os próximos dois \emph{frames}. O EFR é calculado como 30/FRF, e para o exemplo dado tem valor de 10 FPS.
+A recomendação P.930 fornece dois fatores para controlar as repetições numa simulação: o \sigla{FRF}{Frame Repetition Factor} (\emph{Frame Repetition Factor}) e o \sigla{EFR}{Effective Frame Rate} (\emph{Effective Frame Rate}). Um FRF igual a 3 causa a repetição do terceiro \emph{frame} de uma sequência durante os próximos dois \emph{frames}. O EFR é calculado como 30/FRF, e para o exemplo dado tem valor de 10 FPS.
 
 \section{Métricas de Avaliação}
 
@@ -295,19 +295,19 @@ Diversas metodologias definidas em normas internacionais foram criadas para aval
 
 \subsection{Métricas Objetivas}
 
-A avaliação objetiva tenta, através de algoritmos, fazer uma previsão aproximada da qualidade observada pelos observadores \cite{albini}. Os métodos mais simples e mais difundidos são definidos estatisticamente como o MSE (Mean Squared Error - Erro Médio Quadrático) e o PSNR (Peak Signal to Noise Ratio - Razão Sinal-Ruído de Pico) \cite{emmersonsilva} entre os dados originais e os dados recebidos (no caso de vídeos, o cálculo é aplicado pixel a pixel).
+A avaliação objetiva tenta, através de algoritmos, fazer uma previsão aproximada da qualidade observada pelos observadores \cite{albini}. Os métodos mais simples e mais difundidos são definidos estatisticamente como o \sigla{MSE}{Mean Squared Error} (Erro Médio Quadrático) e o \sigla{PSNR}{Peak Signal to Noise Ratio} (Razão Sinal-Ruído de Pico) \cite{emmersonsilva} entre os dados originais e os dados recebidos (no caso de vídeos, o cálculo é aplicado \emph{pixel} a pixel).
 
-Outra métrica objetiva, o SSIM (Structural SIMilarity Index - Indice de Similaridade Estrutural), foi elaborado na tentativa de se aproximar a avaliação às percepções do SVH, pois leva em consideração a luminância, estrutura e o contraste (SILVA). Uma métrica derivada do SSIM é o MSSIM (Mean Structural SIMilarity Index - Indice de Similaridade Estrutural Média), sendo uma média dos valores SSIM calculados a partir do vídeo avaliado (WANG et al, 2004).
+Outra métrica objetiva, o \sigla{SSIM}{Structural SIMilarity Index} (Índice de Similaridade Estrutural), foi elaborado na tentativa de se aproximar a avaliação às percepções do SVH, pois leva em consideração a luminância, estrutura e o contraste \cite{emmersonsilva}. Uma métrica derivada do SSIM é o \sigla{MSSIM}{Mean Structural SIMilarity Index} (Índice de Similaridade Estrutural Média), sendo uma média dos valores SSIM calculados a partir do vídeo avaliado \cite{wangbovik2004}.
 
 \subsubsection[MSE]{MSE - Mean Squared Error}
 
-O MSE é a média das diferenças ao quadrado entre os valores de nivel de cinza dos pixels. Considerando que o nível de cinza de cada pixel é dado em função de sua posição de acordo com a equação a seguir:
+O MSE é a média das diferenças ao quadrado entre os valores de nivel de cinza dos pixels. Considerando que o nível de cinza de cada \emph{pixel} é dado em função de sua posição de acordo com a equação a seguir:
 
 Equação: G = f(t, x, y), onde:
 
 \begin{itemize}
 	\item G = nivel de cinza do pixel, dada sua posição;
-	\item t = frame onde o pixel está localizado;
+	\item t = \emph{frame} onde o \emph{pixel} está localizado;
 	\item x = posição relativa ao eixo vertical no frame;
 	\item y = posição relativa ao eixo horizontal no frame.
 \end{itemize}
@@ -348,7 +348,7 @@ onde:
     \item \(\sigma^{2}_{y}\) é a variância de y;
     \item \(\sigma_{xy}\) é a covariância de x e y;
     \item C1 = \((k_{1}L)^{2}\), C2 = \((k_{2}L)^{2}\) são duas variáveis para estabilizar a divisão;
-    \item L é a faixa dinâmica dos valores dos pixels (normalmente é \(2^{bits por pixel} - 1\));
+    \item L é a faixa dinâmica dos valores dos \emph{pixels} (normalmente é \(2^{bits por pixel} - 1\));
     \item \(k_{1}\) = 0.01 e \(k_{2}\) = 0.03. Estes são valores são indicados pelos autores do método \cite{wangbovik2004} em decorrência de experimentos realizados.
 \end{itemize}
 
@@ -369,7 +369,7 @@ onde:
 
 Por causa das limitações das métricas objetivas, muitos trabalhos foram realizados nos últimos anos para tentar desenvolver um teste objetivo mais sofisticado que se aproximasse dos resultados subjetivos \cite{watson1999, wangbovik2004}. Embora muitas métricas tenham sido propostas, nenhuma ofereceu um nível de qualidade em comparação aos testes subjetivos \cite{vqeg2003}.
 
-A avaliação subjetiva depende de observadores humanos que atribuem notas a partir de suas opiniões sobre a qualidade. Posteriormente, uma análise estatística dos dados coletados é realizada, resultando em uma nota chamada MOS (Mean Opinion Score) \cite{itup930} \cite{albini}. Estes tipos de avaliação possuem algumas recomendações estabelecidas por órgãos internacionais com a finalidade de padronizar os procedimentos e ambientes de avaliação, alguns exemplos destas normas podem ser observados na Tabela \ref{tab:recomendacoes}:
+A avaliação subjetiva depende de observadores humanos que atribuem notas a partir de suas opiniões sobre a qualidade. Posteriormente, uma análise estatística dos dados coletados é realizada, resultando em uma nota chamada \sigla{MOS}{Mean Opinion Score} (nota média de opinião) \cite{itup930} \cite{albini}. Estes tipos de avaliação possuem algumas recomendações estabelecidas por órgãos internacionais com a finalidade de padronizar os procedimentos e ambientes de avaliação, alguns exemplos destas normas podem ser observados na Tabela \ref{tab:recomendacoes}:
 
 \begin{table}
 	\centering
@@ -395,7 +395,7 @@ A avaliação subjetiva depende de observadores humanos que atribuem notas a par
 
 As metodologias de avaliação seguem diretrizes que dizem respeito aos critérios para escolha das sequências de imagens, à seleção de observadores, a duração das sessões de avaliação, ao tempo de exposição de cada sequência e intervalos de troca, às condições ambiente, etc.
 
-\subsubsection[Método DSIS]{Método DSIS - Double Stimulus Impairment Scale (Método EBU)}
+\subsubsection[Método DSIS]{Método DSIS - Double Stimulus Impairment Scale}
 
 Comumente usado para avaliação de novos sistemas ou dos prejuízos decorrentes de transmissão. Neste método, ao avaliador é apresentada uma imagem de referência e posteriormente a mesma imagem degradada. As sessões, que devem durar até 30 minutos, podem seguir duas variantes: na primeira, o conjunto referência/degradada é apresentado e ao final o avaliador deve dar uma nota. Na segunda variante, o avaliador é submetido duas vezes ao conjunto referência/degradada e somente ao final lhe é permitido dar a nota. Em ambas a apresentação dos conjuntos referência/degradada é aleatória.
 
@@ -444,11 +444,11 @@ A escala de avaliação a ser utilizada é dada conforme a Tabela \ref{tab:dsise
 
 \subsubsection[Método DSCQS]{Método DSCQS - Double Stimiulus Continuous Quality Scale}
 
-Este método também é aplicável para avaliar os efeitos dos meios de transmissão sobre a qualidade da imagem. Assim como no método DSIS, as imagens são apresentadas aos pares. Uma deve ser a imagem original e a outra deve ser a imagem processada pelo sistema em teste. A ordem de qual será apresentada por primeiro, bem como a ordem de apresentação de cada par, é aleatória. Outra diferença do método DSIS está na avaliação: o avaliador deve dar nota para ambas as imagens.
+Este método também é aplicável para avaliar os efeitos dos meios de transmissão sobre a qualidade da imagem. Assim como no método \sigla{DSIS}{Double Stimulus Impairment Scale}, as imagens são apresentadas aos pares. Uma deve ser a imagem original e a outra deve ser a imagem processada pelo sistema em teste. A ordem de qual será apresentada por primeiro, bem como a ordem de apresentação de cada par, é aleatória. Outra diferença do método DSIS está na avaliação: o avaliador deve dar nota para ambas as imagens.
 
 O número de repetições dos vídeos depende da duração da sequência de teste. Cenas mais estáticas devem durar de 3 a 4 segundos, podendo ser repetidas 5 vezes (as duas últimas são avaliadas), já cenas mais dinâmicas, que possuam artefatos variantes no tempo, devem durar 10 segundos e ser repetidas duas vezes (a segunda é avaliada).
 
-As fases da apresentação DSCQS podem ser observadas na Figura \ref{fig:dscqsfases}. Elas são semelhantes as fases do método DSIS, a diferença está no momento em que a avaliação é permitida. 
+As fases da apresentação \sigla{DSCQS}{Double Stimiulus Continuous Quality Scale} podem ser observadas na Figura \ref{fig:dscqsfases}. Elas são semelhantes as fases do método DSIS, a diferença está no momento em que a avaliação é permitida. 
 
 \begin{figure}[!htb]
 	\centering
@@ -489,9 +489,9 @@ Neste método, uma série de segmentos de programa são apresentados ao grupo de
 
 Este método é mais adequado para avaliar a qualidade de vídeo em sequências longas e sem referência, o que é mais próximo da realidade.
 
-\subsubsection[Método SDSCE]{Método SDSCE - Simultaneous Double Stimulus for Continuous Evaluation Method}
+\subsubsection[Método SDSCE]{Método SDSCE - Simultaneous Double Stimulus for Continuous Evaluation}
 
-Para este método, as sequências de referência e de teste são apresentadas de forma simultânea. O avaliador deve julgar a fidelidade do vídeo em teste utilizando a escala contínua, assim como nos métodos DSCQS e SSCQE. A Figura \ref{fig:sdsce} demonstra como deve ser realizada a apresentação.
+Para este método, as sequências de referência e de teste são apresentadas de forma simultânea. O avaliador deve julgar a fidelidade do vídeo em teste utilizando a escala contínua, assim como nos métodos DSCQS e \sigla{SSCQE}{Single Stimulus Continuous Quality Evaluation}. A Figura \ref{fig:sdsce} demonstra como deve ser realizada a apresentação.
 
 \begin{figure}[!htb]
 	\centering
@@ -641,10 +641,10 @@ X = b - \sqrt{(1-U)(b-a)(b-c)} & \mbox{para } F(c) \leqslant U < 1
 Dada a escala e a complexidade do problema é natural que existam diversos estudos na área, e portanto, existam ferramentas para esse propósito. 
 Um breve levantamento pode destacar duas ferramentas desenvolvidas no meio acadêmico que possuem finalidades similares à proposta neste projeto, além de uma no âmbito comercial.
 
-A primeira delas é a MSU \emph{Video Quality Measurement Tool}, desenvolvida pelo grupo do laboratório \emph{Graphics and Media Lab} da \emph(Moscow State University) (MSU) \cite{moscowuniversity}.
+A primeira delas é a \sigla{MSU}{Moscow State University} \emph{Video Quality Measurement Tool}, desenvolvida pelo grupo do laboratório \emph{Graphics and Media Lab} da \emph{Moscow State University} (MSU) \cite{moscowuniversity}.
 A ferramenta tem o propósito de avaliar a qualidade de vídeos se utilizando de métricas objetivas. 
 O sistema implementa 20 métricas objetivas, suporta os mais populares formatos de vídeo disponíveis e oferece resultados sumarizados em formato CSV ou um vídeo de vizualização normalizada.
-Outra ferramenta é o EvalVid, desenvolvido pelo \emph{Telecommunication Networks Group (TKN)} da \emph{Techinical University of Berlin} \cite{tuberlin}.
+Outra ferramenta é o EvalVid, desenvolvido pelo \emph{Telecommunication Networks Group (\sigla{TKN}{Telecommunication Networks Group})} da \emph{Techinical University of Berlin} \cite{tuberlin}.
 Esta se propõe a avaliar a qualidade de vídeos transmitidos por meio de uma rede de comunicação, seja ela simulada ou real, fornecendo parâmetros de qualidade de serviço assim como calculo do PSNR \emph{frame} a \emph{frame}.
 
 O \emph{Picture Quality Analysis System} PQA600 da Tektronix promete avaliações de vídeo digital por meio de métricas objetivas que correspondem fortemente à avaliação visual humana \cite{tektronix}.

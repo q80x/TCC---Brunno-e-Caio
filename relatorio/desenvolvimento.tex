@@ -11,7 +11,7 @@ O desenvolvimento deste projeto foi totalmente realizado em ambiente Linux, em d
 
 \subsection{Ambientes de Desenvolvimento Integrado}
 
-A primeira etapa de desenvolvimento planejada foi a de construir um modelo para a nova interface gráfica. Tendo em vista a linguagem Java como requisito, optou-se pelo \sigla{IDE}{Integrated Development Environment} NetBeans (versão 7.1.1) que possui uma ferramenta nativa específica para a construção de interfaces gráficas para usuário, a \sigla{GUI}{Graphical User Interface} Builder (Graphical User Interface). Esta ferramenta permite a construção de formulários no estilo drag-and-drop de containers existentes no Java, como por exemplo JFrame, JPanel, JButton, etc.
+A primeira etapa de desenvolvimento planejada foi a de construir um modelo para a nova \emph{interface} gráfica. Tendo em vista a linguagem Java como requisito, optou-se pelo \sigla{IDE}{Integrated Development Environment} NetBeans (versão 7.1.1) que possui uma ferramenta nativa específica para a construção de \emph{interfaces} gráficas para usuário, a \sigla{GUI}{Graphical User Interface} Builder (\emph{Graphical User Interface}). Esta ferramenta permite a construção de formulários no estilo drag-and-drop de containers existentes no Java, como por exemplo JFrame, JPanel, JButton, etc.
 
 Inicialmente, o IDE Eclipse também foi utilizado com a finalidade de se realizar modificações nos projetos originais model e service. Posteriormente, para unificar o projeto em apenas um ambiente de desenvolvimento, os projetos originais foram importados no NetBeans.
 
@@ -19,7 +19,7 @@ Inicialmente, o IDE Eclipse também foi utilizado com a finalidade de se realiza
 
 Os códigos em C++ foram desenvolvidos através do editor de textos Vim, um editor de textos gratuito e de código aberto amplamente configurável para permitir edições eficientes de texto \cite{vimabout}. Este editor é uma versão aperfeiçoada do editor Vi, presente na maioria dos sistemas \sigla{UNIX}{Sistema Operacional}.
 
-Para criar executáveis dos códigos C++ gerados, foi utilizado o compilador g++. Este compilador faz parte da coleção de compiladores \sigla{GCC}{GNU Compiler Collection} \cite{gccabout} produzida e mantida pelo \sigla{GNU Project}{Projeto de desenvolvimento de software livre} \cite{gnuabout}.
+Para criar executáveis dos códigos C++ gerados, foi utilizado o compilador g++. Este compilador faz parte da coleção de compiladores \sigla{GCC}{GNU Compiler Collection} \cite{gccabout} produzida e mantida pelo GNU \emph{Project} \cite{gnuabout}.
 
 A fim de automatizar o processo de geração de executáveis, a ferramenta \emph{make} foi configurada de acordo. Esta ferramenta, também mantida pelo GNU Project, permite que vários códigos-fonte sejam processados ao mesmo tempo através de um arquivo de configuração chamado \emph{makefile}, que pode executar um compilador para gerar arquivos-objeto, ou executar um \emph{linker} para gerar executáveis \cite{makeabout}.
  
@@ -27,7 +27,7 @@ A fim de automatizar o processo de geração de executáveis, a ferramenta \emph
 
 Em função de a equipe contar com dois integrantes desenvolvedores, existe a necessidade de se utilizar uma ferramenta para o controle de versões do projeto. Primeiramente, para realizar testes de algumas funcionalidades foi preciso modificar radicalmente o código o que, em certos casos, não gerou resultados satisfatórios, sendo necessário retornar à um ponto estável e funcional. Além deste motivo, o sistema de controle de versões escolhido, o Git, possui ferramentas de resolução de conflitos eficientes que auxiliam o desenvolvimento simultâneo.
 
-O Git é um software livre e gratuito distribuído sob a licença \sigla{GNU}{General Public License} General Public License versão 2 \cite{git}.
+O Git é um software livre e gratuito distribuído sob a licença \sigla{GNU}{Projeto de desenvolvimento de software livre} General Public License versão 2 \cite{git}.
 
 Aliado a esta ferramenta, foi utilizado um serviço web de hospedagem de projetos que é organizado pelo sistema de controle de versões Git, o GitHub cujo endereço é http://github.com. Existem funcionalidades no estilo rede social como feeds, seguidores e gráficos diversos, bem como funcionalidades de projeto como visualização de pastas e códigos, gráficos de desempenho por usuário, por equipe, por período de desenvolvimento, frequência de código, histórico de modificações, entre outros \cite{githubabout}.
 
@@ -161,8 +161,8 @@ Esta ferramenta é responsável por aplicar o efeito de blocagem sobre o vídeo 
 	& \texttt{--input} & \texttt{-i}  & arquivo\_de\_entrada \\
 	& \texttt{--output} & \texttt{-o}  & arquivo\_de\_saída \\
 	& \texttt{--size} & \texttt{-s}  & dimensões do vídeo de entrada no formato WxH \\ 
-	& & & (largura por altura em pixels) \\
-	& \texttt{--window} & \texttt{-w}  & tamanho da janela da \sigla{DCT}{Discrete Cosine Transform} \\
+	& & & (largura por altura em \emph{pixels} ) \\
+	& \texttt{--window} & \texttt{-w}  & tamanho da janela da DCT \\
 	& \texttt{--levelsdct} & \texttt{-l}  & níveis DCT à serem eliminados, separados por vírgulas \\
 	& \texttt{--rafflelist} & \texttt{-r}  & arquivo\_raffle \\
 	& \texttt{--help} & \texttt{-h}  & menu de ajuda \\
@@ -171,9 +171,9 @@ Esta ferramenta é responsável por aplicar o efeito de blocagem sobre o vídeo 
 
 A partir do vídeo desejado, deve-se escolher o nome do vídeo resultante e informar as dimensões do vídeo original, o tamanho da janela a ser utilizada na DCT, os subníveis de energia que deverão ser eliminados (zerados) e o nome do arquivo \emph{raffle} a ser utilizado.
 
-O arquivo \emph{raffle} de entrada deve sempre conter três colunas. A primeira diz respeito ao \emph{frame} em que será aplicado o artefato. A segunda e a terceira coluna devem ter como limite o resultado da divisão da largura e altura do vídeo pelo tamanho da janela desejada, respectivamente, pois seus valores indicam qual grupo de pixels será afetado e não o \emph{pixel} inicial de aplicação da DCT. Caso o parâmetro -r e respectivo arquivo de degradação \emph{raffle} sejam omitidos, a blocagem será aplicada a todos os \emph{frames} do vídeo, em sua totalidade.
+O arquivo \emph{raffle} de entrada deve sempre conter três colunas. A primeira diz respeito ao \emph{frame} em que será aplicado o artefato. A segunda e a terceira coluna devem ter como limite o resultado da divisão da largura e altura do vídeo pelo tamanho da janela desejada, respectivamente, pois seus valores indicam qual grupo de \emph{pixels} será afetado e não o \emph{pixel} inicial de aplicação da DCT. Caso o parâmetro -r e respectivo arquivo de degradação \emph{raffle} sejam omitidos, a blocagem será aplicada a todos os \emph{frames} do vídeo, em sua totalidade.
 
-Os subníveis de energia (diagonais da matriz resultante da DCT) que serão cancelados dependem diretamente do tamanho da janela a ser aplicada. Seja uma janela de dimensões AxA, existem N = 2A-1 níveis de energia. O maior nível, 2A-1, representa o nível de energia \sigla{DC}{Differential Coding} (\emph{Differential Coding}) (a média dos valores do bloco). Nos demais níveis, conforme o nível diminui, a energia diminui porém a frequência aumenta. São conhecidos como coeficientes \sigla{AC}{Arithmetic Coding} (\emph{Arithmetic Coding}). A Figura \ref{fig:niveisdct} apresenta a organização dos níveis de energia numa janela de dimensões 8x8 pixels.
+Os subníveis de energia (diagonais da matriz resultante da DCT) que serão cancelados dependem diretamente do tamanho da janela a ser aplicada. Seja uma janela de dimensões AxA, existem N = 2A-1 níveis de energia. O maior nível, 2A-1, representa o nível de energia \sigla{DC}{Differential Coding} (\emph{Differential Coding}) (a média dos valores do bloco). Nos demais níveis, conforme o nível diminui, a energia diminui porém a frequência aumenta. São conhecidos como coeficientes \sigla{AC}{Arithmetic Coding} (\emph{Arithmetic Coding}). A Figura \ref{fig:niveisdct} apresenta a organização dos níveis de energia numa janela de dimensões 8x8 \emph{pixels} .
 
 \begin{figure}[!htb]
 	\centering
@@ -201,7 +201,7 @@ A ferramenta blur aplica o artefato de borramento utilizando para tanto um filtr
 	& \texttt{--input} & \texttt{-i}  & arquivo\_de\_entrada \\
 	& \texttt{--output} & \texttt{-o}  & arquivo\_de\_saída \\
 	& \texttt{--size} & \texttt{-s}  & dimensões do vídeo de entrada no formato WxH \\ 
-	& & & (largura por altura em pixels) \\
+	& & & (largura por altura em \emph{pixels} ) \\
 	& \texttt{--blur} & \texttt{-b}  & tipo do filtro a ser aplicado \\
 	& \texttt{--window} & \texttt{-w}  & tamanho do filtro \\
 	& \texttt{--rafflelist} & \texttt{-r}  & arquivo\_raffle \\
@@ -211,7 +211,7 @@ A ferramenta blur aplica o artefato de borramento utilizando para tanto um filtr
 
 Assim como na ferramenta de blocagem, a omissão do parâmetro -r e do arquivo de degradação \emph{raffle} implica na aplicação do borramento em todo o vídeo, de acordo com os parâmetros fornecidos.
 
-Numa possível execução da ferramenta como indicada abaixo, o filtro da média de dimensões 5x5 pixels será aplicado no vídeo original, gerando o vídeo degradado saida.yuv de dimensões iguais às do original (\sigla{Full-HD}{Resolução Full-HD de 1080 linhas contendo 1980 pixels cada.}).
+Numa possível execução da ferramenta como indicada abaixo, o filtro da média de dimensões 5x5 \emph{pixels} será aplicado no vídeo original, gerando o vídeo degradado saida.yuv de dimensões iguais às do original (\sigla{Full-HD}{Resolução Full-HD de 1080 linhas contendo 1980 \emph{pixels} cada.}).
 
 ./blur -i entrada.yuv -o saida.yuv -s 1920x1080 -b average -w 5
 
@@ -254,7 +254,7 @@ Sendo assim o streaming de vídeo da Figura \ref{fig:netsim}  teria seus primeir
 	& & & a ser processado pela simulação. \\
 	& \texttt{--output} & \texttt{-o} & Define o caminho(absoluto ou relativo) e arquivo onde será \\ 
 	& & & armazenado o vídeo resultante. \\
-	& \texttt{--ts} & \texttt{-t} & (Opcional) Se presente, a entidade de descarte considerada \\
+	& \texttt{--ts} & \texttt{-t} & (opcional) Se presente, a entidade de descarte considerada \\
 	& & & é um TS, caso contrário a unidade é um pacote UDP. \\
 	& \texttt{--raffle} & \texttt{-r} & Indica o caminho (absoluto ou relativo) e arquivo a ser usado \\ 
 	& & & como configuração de descartes. \\
@@ -274,7 +274,7 @@ A ferramenta Metric se trata da implementação de três métricas objetivas, as
 \end{itemize}
 
 Implementada em C++, também na forma de uma ferramenta \emph{stand-alone}, seu funcionamento é baseado em verificar disparidades entre dois vídeos fornecidos seguindo uma das métricas implementadas e fornecer um resultado numérico. 
-Os vídeos a serem comparados devem possuir as mesmas dimensões e número de frames para serem passíveis de comparação. 
+Os vídeos a serem comparados devem possuir as mesmas dimensões e número de \emph{frames} para serem passíveis de comparação. 
 A ferramenta Metric pode receber os seguintes parametros:
 
 \begin{table}[!h]
@@ -283,29 +283,29 @@ A ferramenta Metric pode receber os seguintes parametros:
 	& & & vídeos a serem comparados se encontra. \\
 	& \texttt{--reference} & \texttt{-r} & Define o caminho(absoluto ou relativo) e arquivo onde o segundo \\
 	& & & vídeo a ser comparado se encontra. \\
-	& \texttt{--size} & \texttt{-s} & Define as dimensões (em pixels) dos vídeos a serem comparados. \\ 
+	& \texttt{--size} & \texttt{-s} & Define as dimensões (em \emph{pixels} ) dos vídeos a serem comparados. \\ 
 	& & & Deve ser fornecida no formato 'largura'x'altura'. \\
 	& \texttt{--metric} & \texttt{-m} & Define qual métrica será utilizada na comparação entre vídeos, \\
 	& & & sendo uma string entre MSE, PSNR ou MSSIM. \\
-	& \texttt{--window} & \texttt{-w} & Define qual o tamanho da janela (em pixels) a ser usado se \\ 
+	& \texttt{--window} & \texttt{-w} & Define qual o tamanho da janela (em \emph{pixels} ) a ser usado se \\ 
 	& & & a métrica adotada for MSSIM. \\
 	\end{tabular}
 \end{table}
 
 \section{Interface Gráfica}
 
-A presente seção irá descrever com maiores detalhes as funcionalidades da interface gráfica desenvolvida para o SASQV2, separados conforme a finalidade de cada janela presente na mesma.
+A presente seção irá descrever com maiores detalhes as funcionalidades da \emph{interface} gráfica desenvolvida para o SASQV2, separados conforme a finalidade de cada janela presente na mesma.
 
 \subsection{Sessão}
 
 A janela de Sessão possui dois momentos: o de configuração, em que os dados são fornecidos em três telas diferentes; e o de sessão propriamente dita, em que os vídeos são apresentados e avaliados de acordo com a métrica escolhida.
 
-A primeira tela trata de configurações básicas da sessão, tal como um nome e descrição para facilitar a identificação, assim como a métrica que será utilizada e o número de espectadores. Devido as limitações encontradas no \emph{hardware}, somente as métricas DSIS e SDSCE foram implementadas. As demais, DSCQS e SSCQE, que estão em modo teste no equipamento de avaliação, não foram implementadas pois a modificação do \emph{firmware} não faz parte do escopo deste projeto.
+A primeira tela trata de configurações básicas da sessão, tal como um nome e descrição para facilitar a identificação, assim como a métrica que será utilizada e o número de espectadores. Devido as limitações encontradas no \emph{hardware}, somente as métricas DSIS e \sigla{SDSCE}{Simultaneous Double Stimulus for Continuous Evaluation} foram implementadas. As demais, DSCQS e SSCQE, que estão em modo teste no equipamento de avaliação, não foram implementadas pois a modificação do \emph{firmware} não faz parte do escopo deste projeto.
 
 Na sequência é apresentada uma tela em que pode-se buscar e selecionar vídeos para serem exibidos na sessão de avaliação. Por fim, é apresentada a tela para selecionar quais dispositivos remotos serão utilizados na avaliação. Ao final da configuração, pode-se dar início ao processo de avaliação subjetiva onde os vídeos selecionados serão então exibidos.
 
 Na Figura \ref{fig:sessao} pode-se observar o ambiente de exibição dos vídeos durante a avaliação segundo a métrica SDSCE.
-Para a execução desta métrica são executados dois players distintos de forma sincronizada, garantindo que ambos exibam o mesmo frame.
+Para a execução desta métrica são executados dois players distintos de forma sincronizada, garantindo que ambos exibam o mesmo \emph{frame}.
 
 \begin{figure}[!htb]
 	\centering
@@ -339,7 +339,7 @@ A tela do gerador de artefatos permite controlar de forma gráfica a execução 
 \end{figure}
 
 Para adicionar um artefato em um vídeo é preciso selecionar um vídeo da lista e configurar uma das três ferramentas a disposição. 
-Os parâmetros disponíveis na interface são condizentes com os parâmetros apresentados em \ref{des:ferramentas} para cada ferramenta.
+Os parâmetros disponíveis na \emph{interface} são condizentes com os parâmetros apresentados em \ref{des:ferramentas} para cada ferramenta.
 Ao clicar no botão \emph{Adicionar}, uma tarefa com os detalhes do processo selecionado sera adicionada à lista na parte inferior da tela. É possível enfileirar quantas tarefas forem necessárias e então dar início ao processo de degradação dos vídeos clicando em iniciar.
 
 \subsubsection{Avaliador Objetivo}
@@ -381,7 +381,7 @@ Esta janela tem o simples propósito de permitir configurar alguns aspectos do s
 
 \subsection{Ajuda}
 
-A tela de ajuda consiste de uma ampla área de texto dedicada à exibição de páginas \sigla{HTML}{Hyper Text Markup Language}, na qual foram confeccionados os documentos de ajuda.
+A tela de ajuda consiste de uma ampla área de texto dedicada à exibição de páginas \sigla{HTML}{HyperText Markup Language}, na qual foram confeccionados os documentos de ajuda.
 Esta janela conta ainda com uma estrutura de navegação topificada no canto esquerdo, proporcionando o acesso direto a uma determinada seção.
 
 \section{Considerações}

@@ -12,7 +12,7 @@ Foram efetuados diversos processos de degradação sobre o vídeo bus, obtido em
 
 A primeira ferramenta a ser avaliada é a \emph{block}.
 Para a avaliação foram gerados 14 vídeos onde é efetuado o processo de blocagem, com blocos 8x8, de forma integral --- para todos os blocos em todos os quadros. A cada novo vídeo gerado foram eliminadas de forma cumulativa diagonais na matriz resultante da transformação DCT, partindo da diagonal mais inferior, até que no último vídeo restasse somente a componente DC da transformada. 
-Na Figura \ref{fig:blockbus} são apresentados recortes de 160 por 160 \emph{pixels} a partir da posição 64x160 retirados do frame de número 60 de cada um dos 14 vídeos obtidos, sendo que o primeiro recorte foi obtido do vídeo original.
+Na Figura \ref{fig:blockbus} são apresentados recortes de 160 por 160 \emph{pixels} a partir da posição 64x160 retirados do \emph{frame} de número 60 de cada um dos 14 vídeos obtidos, sendo que o primeiro recorte foi obtido do vídeo original.
 
 Observando os recortes com cautela é possível notar degradações extremamente sutis a partir do recorte \emph{07}, verificadas com mais facilidade nos arredores da publicidade na lateral do ônibus.No recorte de número \emph{10} as regiões de alta frequência da imagem denunciam degradações mais acentuadas, e no \emph{11} já não é mais possível identificar o que está escrito na placa de publicidade, embora ainda seja razoavél identificar a cena da imagem.
 Nos três recortes seguintes o efeito de blocagem passa a tomar conta da imagem e apenas objetos de grande escala passam a ser identificávies, sendo que no recorte de número \emph{14} até mesmo a identificação da cena fica prejudicada.
@@ -26,7 +26,7 @@ Nos três recortes seguintes o efeito de blocagem passa a tomar conta da imagem 
 \end{figure}
 
 Para a avaliação da ferramenta \emph{blur} foram feitas duas sequências de testes, a primeira delas utilizando o filtro de médias e a segunda utilizando o filtro da mediana.
-Em cada um dos testes foram utilizadas máscaras matriciais de tamanhos 3x3, 5x5 e 7x7. Nas Figuras \ref{fig:bluraverage} e \ref{fig:blurmedian} são apresentados recortes de 160 por 160 \emph{pixels} a partir da posição 64x160 retirados do frame número 60 de cada vídeo.
+Em cada um dos testes foram utilizadas máscaras matriciais de tamanhos 3x3, 5x5 e 7x7. Nas Figuras \ref{fig:bluraverage} e \ref{fig:blurmedian} são apresentados recortes de 160 por 160 \emph{pixels} a partir da posição 64x160 retirados do \emph{frame} número 60 de cada vídeo.
 
 \begin{figure}[!htb]
 	\centering
@@ -45,14 +45,14 @@ Em cada um dos testes foram utilizadas máscaras matriciais de tamanhos 3x3, 5x5
 \end{figure}
 
 Na validação visual da ferramenta \emph{raffle} foi gerado um arquivo de sorteio contendo 5 mil elementos.
-A distribuição no tempo foi configurada como triangular no intervalo de 0 a 10 com pico no frame 5, sendo que a duração de cada artefato foi distribuída uniformemente no intervalo de 1 a 3 frames.
-Já a distribuição no espaço foi uniforme em toda a largura e altura do frame. 
-A figura \ref{fig:busraffle} mostra a sequencia de recortes retirados dos 11 frames contendo blocos gerados a partir do arquivo raffle obtido com a configuração acima, onde para facilitar a visualização foi eliminada a componente DC da DCT para cada bloco sorteado.
+A distribuição no tempo foi configurada como triangular no intervalo de 0 a 10 com pico no \emph{frame} 5, sendo que a duração de cada artefato foi distribuída uniformemente no intervalo de 1 a 3 \emph{frames}.
+Já a distribuição no espaço foi uniforme em toda a largura e altura do \emph{frame}. 
+A figura \ref{fig:busraffle} mostra a sequencia de recortes retirados dos 11 \emph{frames} contendo blocos gerados a partir do arquivo raffle obtido com a configuração acima, onde para facilitar a visualização foi eliminada a componente DC da DCT para cada bloco sorteado.
 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.8\textwidth]{./imgs/busraffle.png}
-	\caption[Sequência de frames degradados]{Sequência de frames degradados a partir de um arquivo gerado pela ferramenta \emph{raffle}.}
+	\caption[Sequência de \emph{frames} degradados]{Sequência de \emph{frames} degradados a partir de um arquivo gerado pela ferramenta \emph{raffle}.}
 	\label{fig:busraffle}
 	\fonte{Autoria Própria.}
 \end{figure}
@@ -74,7 +74,7 @@ O TS resultante foi então processado pela ferramenta, configurada para fazer os
 	100 50}
 \end{center}
 
-A figura \ref{fig:netsim} contém amostras retiradas dos frames 1, 9 e 40, onde podem ser verificados artefatos como \emph{jerkiness}, \emph{blocking} e \emph{bleeding}.
+A figura \ref{fig:netsim} contém amostras retiradas dos \emph{frames} 1, 9 e 40, onde podem ser verificados artefatos como \emph{jerkiness}, \emph{blocking} e \emph{bleeding}.
 
 \begin{figure}[!htb]
 	\centering
@@ -173,13 +173,13 @@ Para este teste foi utilizada a combinação de três distribuições de artefat
 	\end{itemize}
 \end{enumerate}
 
-O número de artefados em cada frame obtido a partir desta configuração é apresentado na figura \ref{fig:histogram}.
+O número de artefados em cada \emph{frame} obtido a partir desta configuração é apresentado na figura \ref{fig:histogram}.
 
 Esta configuração foi então usada na aplicação de blocagem em três vídeos diferentes: Akiyo, CoastGuard e Foreman, todos possuindo 300 \emph{frames} de duração e obtidos em \cite{xiph}. Estes vídeos foram escolhidos pelas suas características de textura e movimento, possibilitando uma análise variada.
 
 Nas figuras \ref{fig:mse} e \ref{fig:mssim} pode-se acompanhar a evolução das métricas MSE e MSSIM quadro a quadro para os três vídeos degradados. Observando o comportamento das métricas nota-se que, apesar da natureza e da distribuição dos artefatos utilizados ser exatamente a mesma para todos os vídeos, os valores obtidos possuem picos diferentes, embora o comportamento seja semelhante.
 
-Outro fato notável é a análise individual das métricas, que dependendo do conjunto de frames análisado pode levar a conclusões diferentes a respeito do nível de degradação encontrado em cada vídeo.
+Outro fato notável é a análise individual das métricas, que dependendo do conjunto de \emph{frames} análisado pode levar a conclusões diferentes a respeito do nível de degradação encontrado em cada vídeo.
 
 \begin{figure}[!htb]
 	\centering
