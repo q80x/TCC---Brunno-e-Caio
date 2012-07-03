@@ -507,7 +507,7 @@ As sequências podem ser apresentadas lado a lado no mesmo monitor ou em monitor
 
 Distribuição de probabilidade é um conceito fundamental em Estatística, utilizado em nível prático e teórico \cite{distteoria}.
 
-As distribuições de probabilidade são funções matemáticas que mapeiam para todo valor dentro de um intervalo definido (discreto ou contínuo), valores de probabilidade de ocorrência, considerando uma variável aleatória que pode assumir qualquer valor deste intervalo\cite{distteoria}. Em outras palavras, é a função que descreve a probabilidade de uma variável aleatória assumir determinados valores \cite{wikidistribuicoes}.
+As distribuições de probabilidade são funções matemáticas que mapeiam para todo valor dentro de um intervalo definido (discreto ou contínuo), valores de probabilidade de ocorrência, considerando uma variável aleatória que pode assumir qualquer valor deste intervalo \cite{distteoria}. Em outras palavras, é a função que descreve a probabilidade de uma variável aleatória assumir determinados valores \cite{wikidistribuicoes}.
  
 Distribuições discretas são funções de probabilidade cuja variável pode assumir um número discreto de valores, não necessariamente finito. A definição matemática de uma função de probabilidade discreta, p(x), é uma função que satisfaz as seguintes propriedades:
 
@@ -517,7 +517,7 @@ Distribuições discretas são funções de probabilidade cuja variável pode as
 	\item a soma de p(x) para todos os valores possíveis de x é igual a 1.
 \end{itemize}
 
-Distribuições contínuas ou funções de probabilidade contínua são definidas para infinitos valores dentro de um intervalo. Por este fato, a probabilidade é medida para subintervalos, uma vez que a probabilidade de qualquer ponto é sempre zero\cite{distteoria}.
+Distribuições contínuas ou funções de probabilidade contínua são definidas para infinitos valores dentro de um intervalo. Por este fato, a probabilidade é medida para subintervalos, uma vez que a probabilidade de qualquer ponto é sempre zero \cite{distteoria}.
 
 A definição matemática de uma função de probabilidade contínua, f(x), é uma função que satisfaz as seguintes propriedades:
 
@@ -560,7 +560,7 @@ Uma distribuição uniforme que seja definida dentro do intervalo (0, 1) é cham
 
 Equação: \[a+[(b-a) \cdot U(0, 1)]\]
 
-Muitas linguagens de programação, assim como Java e C++, possuem funções nativas para gerar valores uniformemente distribuídos. Em Java, a classe Math possui a função random() que gera valores de acordo com uma distribuição uniforme padrão. Ainda, Java possui uma classe especializada no pacote util chamada Random, utilizada para gerar valores booleanos, de \emph{bytes}, de pontos flutuantes, etc. Esta classe também gera valores seguindo uma distribuição normal através do método nextGaussian(), que utiliza a transformada Box-Mueller, explicada na próxima seção \cite{javaapi}. 
+Muitas linguagens de programação, assim como Java e C++, possuem funções nativas para gerar valores uniformemente distribuídos. Em Java, a classe Math possui a função random() que gera valores de acordo com uma distribuição uniforme padrão. Ainda, Java possui uma classe especializada no pacote \emph{util} chamada Random, utilizada para gerar valores booleanos, de \emph{bytes}, de pontos flutuantes, etc. Esta classe também gera valores seguindo uma distribuição normal através do método nextGaussian(), que utiliza a transformada Box-Mueller, explicada na próxima seção \cite{javaapi}. 
 
 Na linguagem C++ a função rand() encontra-se na biblioteca padrão (cstdlib ou stdlib.h), assim como a função srand() que inicializa a semente do gerador. O gerador, ao contrário de Java, fornece valores inteiros no intervalo (0, RAND\_MAX). A constante RAND\_MAX, também da biblioteca padrão, tem valor 32767 \cite{cppreference}.
 
@@ -593,7 +593,7 @@ Em teoria, uma variável aleatória seguindo uma distribuição normal pode assu
 
 Existem algumas formas de se construir computacionalmente um gerador aleatório que segue uma distribuição normal. Dois métodos bastante conhecidos são: transformada de Box-Mueller e algoritmo de Ziggurat.
 
-A transformada de Box-Mueller se baseia num gerador aleatório com distribuição uniforme pode ser expresso em duas formas: a básica e a polar. Na primeira, o gerador uniforme deve gerar valores no intervalo (0, 1], na segunda forma devem ser gerados valores no intervalo [-1, +1] como valores de entrada \cite{boxmueller}.
+A transformada de Box-Mueller se baseia num gerador aleatório com distribuição uniforme que pode ser expresso em duas formas: a básica e a polar. Na primeira, o gerador uniforme deve gerar valores no intervalo (0, 1], na segunda forma devem ser gerados valores no intervalo [-1, +1] como valores de entrada \cite{boxmueller}.
 
 Supondo que \(U_{1}\) e \(U{2}\) são variáveis aleatórias com distribuição uniforme no intervalo (0, 1] (ou seja, forma básica), as variáveis \(Z_{0}\) e \(Z_{1}\), dadas conforme as equações a seguir, seguirão uma distribuição normal com desvio padrão igual a 1.
 
@@ -652,6 +652,6 @@ O PQA600 é comercializado na forma de uma \emph{workstation} completa, possuind
 
 \section{Resumo e Conclusão do Capítulo}
 
-Comparando-se as metodologias, ambas são importantes e ambas têm suas limitações. A avaliação objetiva é mais precisa considerando que ela avalie a diferença entre um vídeo original e o efetivamente observado. Porém, nem sempre o vídeo original possui uma qualidade que satisfaria o telespectador, sendo esta, portanto, uma de suas desvantagens.
+Comparando-se as metodologias, ambas são importantes e ambas têm suas limitações. A avaliação objetiva é mais precisa considerando que ela avalie a diferença entre um vídeo original e o efetivamente observado. Porém, nem sempre o vídeo original possui uma qualidade que satisfaça o telespectador, sendo esta, portanto, uma de suas desvantagens.
 
 A avaliação subjetiva embora seja um processo mais difícil de ser realizado por depender de um grande grupo de pessoas e tenha um custo mais elevado \cite{albini}, segundo \cite{wangbovik2004} esta é o tipo de avaliação mais ‘correta’, pois o próprio telespectador realiza a avaliação.
