@@ -3,7 +3,7 @@
 \chapter{Resultados} %5 --- 10 pags
 
 Com o conjunto de ferramentas desenvolvidos neste projeto aliado a uma base de vídeos originais é possível produzir e avaliar uma nova e diversificada base com vídeos degradados em qualidade e quantitade variável.
-Neste Capítulo serão verificados os resultados obtidos a partir do processamento de vídeos efuados por estas ferramentas. Primeiramente uma avaliação subjetiva das ferramentas de degradação utilizando diversas amostras retiradas de um vídeo da base. A seguir é feita a validação dos resultados obtidos pela ferramenta de métricas objetivas, tomando como base (base do wyllian!!).
+Neste Capítulo serão verificados os resultados obtidos a partir do processamento de vídeos efuados por estas ferramentas. Primeiramente uma avaliação subjetiva das ferramentas de degradação utilizando diversas amostras retiradas de um vídeo da base. A seguir é feita a validação dos resultados obtidos pela ferramenta de métricas objetivas, tomando como base os videos obtidos em \cite{xxx}.
 Por fim é feita uma análise das notas de avaliação objetivas buscando mensurar o impacto que determinadas degradações podem ter sobre um conjunto de vídeos com características diferentes.
 
 \section{Validação das Ferramentas de Artefatos}
@@ -88,7 +88,7 @@ A figura \ref{fig:netsim} contém amostras retiradas dos \emph{frames} 1, 9 e 40
 
 Para validação dos valores de MSE, PSNR e MSSIM calculados pela ferramenta \emph{metric} foi feita a comparação destes com os obtidos pela ferramenta MSU \emph{Video Quality Measurement Tool}.
 %TODO base de videos das metricas
-Foram utilizados 5 vídeos diferentes, e os respectivos vídeos degradados,  obtidos em \cite{}. Os resultados das comparações se encontram nas tabelas \ref{res:mse}, \ref{res:psnr} e \ref{res:mssim}.
+Foram utilizados 5 vídeos diferentes, e os respectivos vídeos degradados,  obtidos em \cite{xxx}. Os resultados das comparações se encontram nas tabelas \ref{res:mse}, \ref{res:psnr} e \ref{res:mssim}.
 
 \begin{table}[!htb]
 	\centering
@@ -142,6 +142,9 @@ Foram utilizados 5 vídeos diferentes, e os respectivos vídeos degradados,  obt
 \end{table}
 
 Observando os resultados para MSE e PSNR pode-se dizer que os resultados são fiéis e que a ferramenta se comporta como o esperado.
+A respeito do MSSIM é difícil dizer ao certo o motivo da pequena diferença encontrada nos resultados, especialmente pela variedade de parâmetros a serem levados em conta nesta métrica. 
+Levando em conta a documentação do MSU sabe-se que este utiliza pesos uniformes para toda a janela de cálculo, mas não se encontrou o tamanho adotado ou o método de escolha das janelas possíveis.
+O teste utilizando a ferramenta presente no SASQV2 utiliza janelas 8x8 adotando janelas não sobrepostas.
 
 \section{Análise de Impacto Sobre Métricas Objetivas}
 
@@ -204,4 +207,8 @@ Outro fato notável é a análise individual das métricas, que dependendo do co
 	\label{fig:mssim}
 	\fonte{Autoria Própria.}
 \end{figure}
+
 \section{Resumo e Conclusão do Capítulo}
+
+Neste capítulo foram apresentados resultados visuais proporcionados pelo uso das ferramentas desenvolvidas durante o projeto, demonstrando a flexibilidade e usabilidade do sistema desenvolvido.
+Também foram validados os resultados obtidos pelas avaliações objetivas e discutidos aspectos relevantes sobre as possíveis conclusões retiradas a partir dos valores obtidos.
