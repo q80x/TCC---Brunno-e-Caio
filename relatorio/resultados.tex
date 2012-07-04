@@ -15,7 +15,7 @@ Para a avaliação foram gerados 14 vídeos onde é efetuado o processo de bloca
 Na Figura \ref{fig:blockbus} são apresentados recortes de 160 por 160 \emph{pixels} a partir da posição 64x160 retirados do \emph{frame} de número 60 de cada um dos 14 vídeos obtidos, sendo que o primeiro recorte foi obtido do vídeo original.
 
 Observando os recortes com cautela é possível notar degradações extremamente sutis a partir do recorte \emph{07}, verificadas com mais facilidade nos arredores da publicidade na lateral do ônibus.No recorte de número \emph{10} as regiões de alta frequência da imagem denunciam degradações mais acentuadas, e no \emph{11} já não é mais possível identificar o que está escrito na placa de publicidade, embora ainda seja razoavél identificar a cena da imagem.
-Nos três recortes seguintes o efeito de blocagem passa a tomar conta da imagem e apenas objetos de grande escala passam a ser identificávies, sendo que no recorte de número \emph{14} até mesmo a identificação da cena fica prejudicada.
+Nos três recortes seguintes o efeito de blocagem passa a tomar conta da imagem e apenas objetos de grande escala passam a ser identificáveis, sendo que no recorte de número \emph{14} até mesmo a identificação da cena fica prejudicada.
 
 \begin{figure}[!htb]
 	\centering
@@ -47,7 +47,7 @@ Em cada um dos testes foram utilizadas máscaras matriciais de tamanhos 3x3, 5x5
 Na validação visual da ferramenta \emph{raffle} foi gerado um arquivo de sorteio contendo 5 mil elementos.
 A distribuição no tempo foi configurada como triangular no intervalo de 0 a 10 com pico no \emph{frame} 5, sendo que a duração de cada artefato foi distribuída uniformemente no intervalo de 1 a 3 \emph{frames}.
 Já a distribuição no espaço foi uniforme em toda a largura e altura do \emph{frame}. 
-A figura \ref{fig:busraffle} mostra a sequencia de recortes retirados dos 11 \emph{frames} contendo blocos gerados a partir do arquivo raffle obtido com a configuração acima, onde para facilitar a visualização foi eliminada a componente DC da DCT para cada bloco sorteado.
+A Figura \ref{fig:busraffle} mostra a sequência de recortes retirados dos 11 \emph{frames} contendo blocos gerados a partir do arquivo raffle obtido com a configuração acima, onde para facilitar a visualização foi eliminada a componente DC da DCT para cada bloco sorteado.
 
 \begin{figure}[!htb]
 	\centering
