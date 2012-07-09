@@ -8,48 +8,67 @@
 \usepackage[brazil]{babel} % pacote portugues brasileiro
 \usepackage[utf8]{inputenc} % pacote para acentuacao direta
 \usetheme{Darmstadt}
-\title[First!]{Teste com beamer}
-\author{Autor 1}
-\institute{UTFPR}
-\date{2 de julho de 2012}
+\title[First!]{SASQV2: Ambiente de adição controlada de artefatos e avaliação de vídeos digitais}
+\author{Brunno Braga e Caio Andreatta \\ ~ \\ Orientadora: Prof\textsuperscript{a}. Dr\textsuperscript{a}. Keiko Verônica Ono Fonseca}
+\institute{Universidade Tecnológica Federal do Paraná}
+\date{\today}
+
+\AtBeginSection[]
+{
+    \begin{frame}
+        \frametitle{\insertsectionhead}
+        \setcounter{tocdepth}{1}
+        \tableofcontents[currentsection]
+    \end{frame}
+}
+
 \begin{document}
 
-%slide inicial contendo as informações acima
-\begin{frame}\titlepage 
-\end{frame}
+\frame{\titlepage}
 
+\frame
+{
+    \frametitle{Apresentação}
+    \setcounter{tocdepth}{1}
+    \tableofcontents
+}
 % slides de apresentação
-\section{Introdução}
-\subsection{Início}
+\input{introducao.tex}
+\input{fundamentacao.tex}
+\input{especificacao.tex}
+\input{desenvolvimento.tex}
+\input{resultados.tex}
+\input{conclusao.tex}
 
-\begin{frame}
-    \frametitle{T11}
-    \begin{block}{Bloco de teste}
-        Testando a criação de um bloco de texto com título e descrição. Quero ver se o latex quebra a linha hahahah.
-    \end{block}
-\end{frame}
+%\subsection{Início}
+%\begin{frame}
+%    \frametitle{T11}
+%    \begin{block}{Bloco de teste}
+%        Testando a criação de um bloco de texto com título e descrição. Quero ver se o latex quebra a linha hahahah.
+%    \end{block}
+%\end{frame}
 
-\section{Metodologia}
-\subsection{Metodo}
-\subsubsection{Teste}
-\begin{frame}
-    \frametitle{T11}
-\end{frame}
-\begin{frame}
-    \frametitle{T12}
-\end{frame}
-\subsubsection{Teste2}
-\begin{frame}
-    \frametitle{T21}
-\end{frame}
-\begin{frame}
-    \frametitle{T22}
-\end{frame}
+%\section{Metodologia}
+%\subsection{Metodo}
+%\subsubsection{Teste}
+%\begin{frame}
+%    \frametitle{T11}
+%\end{frame}
+%\begin{frame}
+%    \frametitle{T12}
+%\end{frame}
+%\subsubsection{Teste2}
+%\begin{frame}
+%    \frametitle{T21}
+%\end{frame}
+%\begin{frame}
+%    \frametitle{T22}
+%\end{frame}
 
-\section{Desenvolvimento}
-blablabla
+%\section{Desenvolvimento}
+%blablabla
 
-\section{Conclusão}
-laksdjflaskdf
+%\section{Conclusão}
+%laksdjflaskdf
 
 \end{document}
