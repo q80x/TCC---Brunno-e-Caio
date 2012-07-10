@@ -7,6 +7,10 @@
 \documentclass{beamer}
 \usepackage[brazil]{babel} % pacote portugues brasileiro
 \usepackage[utf8]{inputenc} % pacote para acentuacao direta
+
+\setbeamertemplate{footline}[page number]
+\setbeamertemplate{navigation symbols}{}
+
 \usetheme{Darmstadt}
 \title[First!]{SASQV2: Ambiente de adição controlada de artefatos e avaliação de vídeos digitais}
 \author{Brunno Braga e Caio Andreatta \\ ~ \\ Orientadora: Prof\textsuperscript{a}. Dr\textsuperscript{a}. Keiko Verônica Ono Fonseca}
@@ -24,14 +28,15 @@
 
 \begin{document}
 
-\frame{\titlepage}
+\begin{frame}
+    \titlepage{ }
+\end{frame}
 
-\frame
-{
+\begin{frame}
     \frametitle{Apresentação}
     \setcounter{tocdepth}{1}
     \tableofcontents
-}
+\end{frame}
 % slides de apresentação
 \input{introducao.tex}
 \input{fundamentacao.tex}
