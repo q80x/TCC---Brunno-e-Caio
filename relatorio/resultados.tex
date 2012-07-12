@@ -47,7 +47,7 @@ Em cada um dos testes foram utilizadas máscaras matriciais de tamanhos 3x3, 5x5
 Na validação visual da ferramenta \emph{raffle} foi gerado um arquivo de sorteio contendo 5 mil elementos.
 A distribuição no tempo foi configurada como triangular no intervalo de 0 a 10 com pico no \emph{frame} 5, sendo que a duração de cada artefato foi distribuída uniformemente no intervalo de 1 a 3 \emph{frames}.
 Já a distribuição no espaço foi uniforme em toda a largura e altura do \emph{frame}. 
-A Figura \ref{fig:busraffle} mostra a sequência de recortes retirados dos 11 \emph{frames} contendo blocos gerados a partir do arquivo raffle obtido com a configuração acima, onde para facilitar a visualização foi eliminada a componente DC da DCT para cada bloco sorteado.
+A Figura \ref{fig:busraffle} mostra a sequência de recortes retirados dos 11 \emph{frames} contendo blocos gerados a partir do arquivo raffle obtido com a configuração acima. Para facilitar a visualização, foi eliminada a componente DC da DCT para cada bloco sorteado.
 
 \begin{figure}[!htb]
 	\centering
@@ -57,7 +57,7 @@ A Figura \ref{fig:busraffle} mostra a sequência de recortes retirados dos 11 \e
 	\fonte{Autoria Própria.}
 \end{figure}
 
-Para o processo de validação da ferramenta \emph{netsim} foi necessário obter um vídeo encapsulado em um TS, para isso foi utilizada a ferramenta ffmpeg para converter o vídeo bus para a codificação MPEG-2 encapsulado em um TS com o seguinte comando:
+Para o processo de validação da ferramenta \emph{netsim} foi necessário obter um vídeo encapsulado em um TS, para isso foi utilizada a ferramenta ffmpeg \cite{ffmpeg} para converter o vídeo bus para a codificação MPEG-2 encapsulado em um TS com o seguinte comando:
 
 {
 	\centering
@@ -79,14 +79,14 @@ A figura \ref{fig:netsim} contém amostras retiradas dos \emph{frames} 1, 9 e 40
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[height=0.9\textheight]{./imgs/netsimresult.png}
-	\caption{Amostra de artefados obtidos com a ferramenta \emph{netsim}}
+	\caption{Amostra de artefados obtidos com a ferramenta \emph{netsim} (de cima para baixo: \emph{bleeding, blocking} e \emph{jerkiness}).}
 	\label{fig:netsim}
 	\fonte{Autoria Própria.}
 \end{figure}
 
 \section{Validação da Ferramenta de Métricas}
 
-Para validação dos valores de MSE, PSNR e MSSIM calculados pela ferramenta \emph{metric} foi feita a comparação destes com os obtidos pela ferramenta MSU \emph{Video Quality Measurement Tool}.
+Para validação dos valores de MSE, PSNR e MSSIM calculados pela ferramenta \emph{metric} foi feita a comparação destes com os obtidos pela ferramenta MSU \emph{Video Quality Measurement Tool} \cite{msutool}.
 %TODO base de videos das metricas
 Foram utilizados 5 vídeos diferentes, e os respectivos vídeos degradados,  obtidos em \cite{videolab}. Os resultados das comparações se encontram nas tabelas \ref{res:mse}, \ref{res:psnr} e \ref{res:mssim}.
 
@@ -182,7 +182,7 @@ Esta configuração foi então usada na aplicação de blocagem em três vídeos
 
 Nas figuras \ref{fig:mse} e \ref{fig:mssim} pode-se acompanhar a evolução das métricas MSE e MSSIM quadro a quadro para os três vídeos degradados. Observando o comportamento das métricas nota-se que, apesar da natureza e da distribuição dos artefatos utilizados ser exatamente a mesma para todos os vídeos, os valores obtidos possuem picos diferentes, embora o comportamento seja semelhante.
 
-Outro fato notável é a análise individual das métricas, que dependendo do conjunto de \emph{frames} análisado pode levar a conclusões diferentes a respeito do nível de degradação encontrado em cada vídeo.
+Outro fato notável é a análise individual das métricas, que dependendo do conjunto de \emph{frames} analisado pode levar a conclusões diferentes a respeito do nível de degradação encontrado em cada vídeo.
 
 \begin{figure}[!htb]
 	\centering

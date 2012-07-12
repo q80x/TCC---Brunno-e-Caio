@@ -45,6 +45,20 @@ Abaixo se encontram os requisitos não funcionais levantados:
 	\item As ferramentas desenvolvidas devem estar disponíveis independentemente do sistema (\emph{stand-alone}).
 \end{itemize}
 
+\subsection{Dispositivo de Avaliação sem fio}
+
+No projeto SASQV original, foi desenvolvido um dispositivo sem fio para que os observadores pudessem realizar avaliações ao longo de sessões subjetivas. O projeto proposto não pretende realizar modificações de \emph{firmware} e \emph{hardware}, apenas utilizar as funcionalidades já implementadas.
+
+O dispositivo suporta sessões de avaliação seguindo as métricas DSIS e SDSCE, as demais estão em modo teste. A Figura \ref{fig:dispositivoavaliacao} apresenta o dispositivo desenvolvido.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./imgs/dispositivo.png}
+	\caption{Dispositivo sem fio para avaliações subjetivas.}
+	\label{fig:dispositivoavaliacao}
+	\fonte{\cite{sasqv}}
+\end{figure}
+
 \section{Especificações do Software}
 
 Esta seção tem o propósito de descrever a arquitetura proposta para o SASQV2, assim como abordar as diferentes linguagens e bibliotecas que ajudam a integrar o programa.
@@ -115,13 +129,13 @@ Já o conteúdo dos métodos que repassam as ações para o dispositivo sem-fio 
 
 O módulo ferramentas constitui um novo componente na arquitetura do \emph{software}, visto que um dos objetivos deste trabalho é desenvolver melhores ferramentas de degradação considerou-se válida a separação deste módulo que originalmente se encontrava juntamente do Service.
 
-Esse módulo é resposável por todas as ferramentas que de alguma forma manipulam vídeos digitais ou auxilíam nesta manipulação. Dessa forma foram desenvolvidas 5 ferramentas distintas, em linguagem C++:
+Esse módulo é responsável por todas as ferramentas que de alguma forma manipulam vídeos digitais ou auxiliam nesta manipulação. Dessa forma foram desenvolvidas 5 ferramentas distintas, em linguagem C++:
 
 \begin{description}
 	\item[Block] Cria o efeito de blocagem nos vídeos.
 	\item[Blur] Cria o efeito de embaçamento nos vídeos.
 	\item[Netsim] Efetua uma simulação de streaming de vídeo digital com perda informação.
-	\item[Raffle] Ferramenta auxíliar para distribuição temporal e espacial dos artefatos.
+	\item[Raffle] Ferramenta auxiliar para distribuição temporal e espacial dos artefatos.
 	\item[Metric] Efetua avaliação dos vídeos por meio de métricas objetivas.
 \end{description}
 
@@ -138,7 +152,7 @@ A independência das ferramentas permite a utilização combinada em sequência,
 
 \subsubsection{Interface Gráfica}
 
-Originalmente desenvolvida utilizando a tecnologia Adobe Flex, era necessária a utilização de uma biblioteca exclusivamente para comunicação entre os módulos de Interface e Service. A biblioteca utilizada (merapi) se encontrava em fase de desenvolvimento beta e carecia de funcionalidades, de forma que seria necessário buscar uma biblioteca alternativa para continuar o densevolvimento do projeto.
+Originalmente desenvolvida utilizando a tecnologia Adobe Flex, era necessária a utilização de uma biblioteca exclusivamente para comunicação entre os módulos de Interface e Service. A biblioteca utilizada, denominada merapi, se encontrava em fase de desenvolvimento beta e carecia de funcionalidades, de forma que seria necessário buscar uma biblioteca alternativa para continuar o densevolvimento do projeto.
 
 Além disso, as ferramentas de desenvolvimento em tecnologia Flex não são gratuitas e perderam gradativamente o suporte à sistemas operacionais Linux.
 
@@ -185,11 +199,11 @@ Concluído o \emph{login}, o usuário pode realizar atividades como criar uma se
 	\fonte{Autoria Própria}
 \end{figure}
 
-Uma das funcionalidades mais importantes do sistema proposto é a realização de sessões para avaliação subjetiva. Para criar uma sessão, primeiramente é necessário definir a identificação assim como os parâmetros de configuração. O próximo passo é a escolha dos vídeos da base de dados que serão apresentados. Por fim, são selecionados os equipamentos que serão utilizados. Todos os passos interagem com o SGBD, seja realizando consultas, seja atualizando-o.
+Uma das funcionalidades mais importantes do sistema proposto é a realização de sessões para avaliação subjetiva, apresentados na Figura \ref{fig:ucdsessao}. Para criar uma sessão, primeiramente é necessário definir a identificação assim como os parâmetros de configuração. O próximo passo é a escolha dos vídeos da base de dados que serão apresentados. Por fim, são selecionados os equipamentos que serão utilizados. Todos os passos interagem com o SGBD, seja realizando consultas, seja atualizando-o.
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.9\textwidth]{./diagramas/sessao.png}
+	\includegraphics[width=0.7\textwidth]{./diagramas/sessao.png}
 	\caption{Diagrama de Caso de Uso de sessão.}
 	\label{fig:ucdsessao}
 	\fonte{Autoria Própria}
@@ -199,7 +213,7 @@ O próximo diagrama, na Figura \ref{fig:ucddegradacao}, apresenta duas funcional
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.9\textwidth]{./diagramas/degradacao.png}
+	\includegraphics[width=0.7\textwidth]{./diagramas/degradacao.png}
 	\caption{Diagrama de Caso de Uso de degradação.}
 	\label{fig:ucddegradacao}
 	\fonte{Autoria Própria}
